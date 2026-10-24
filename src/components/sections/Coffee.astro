@@ -1,0 +1,123 @@
+---
+import { Image, Picture } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import packImg from '../../assets/images/cafe-empaque.jpg';
+import coffeeLogo from '../../assets/logo-cafe-trim.png';
+import coopLogo from '../../assets/logo-trim.png';
+import { site } from '../../config/site';
+import { formatCopAmount } from '../../lib/price';
+import { buildCoffeeOrderMessage, buildWhatsAppUrl } from '../../lib/whatsapp';
+import { t, altitudeLabel, formatNumber, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang);
+const c = d.coffee;
+const altitude = altitudeLabel(site.altitudeMsnm, lang);
+const orderUrl = buildWhatsAppUrl(site.whatsapp, buildCoffeeOrderMessage(lang));
+const specs = [
+  { label: c.specs.origin, value: c.specs.originValue },
+  { label: c.specs.altitude, value: altitude },
+  { label: c.specs.process, value: c.specs.processValue },
+  { label: c.specs.variety, value: c.specs.varietyValue },
+];
+---
+
+<section id="cafe" aria-labelledby="cafe-title" class="w-full border-t border-surface-container bg-background py-space-xl lg:py-28">
+  <div class="container-site flex flex-col gap-space-md lg:gap-16">
+    <div class="mx-auto flex max-w-2xl flex-col items-center gap-1 text-center">
+      <Image src={coffeeLogo} alt={c.logoAlt} width={280} class="mb-space-sm h-28 w-auto lg:mb-space-md lg:h-36" />
+      <p class="font-label-caps text-label-caps tracking-widest text-secondary uppercase">{c.eyebrow}</p>
+      <h2 id="cafe-title" class="font-headline-md text-headline-md text-primary lg:mb-3 lg:font-headline-lg lg:text-headline-lg">{c.title}</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">{c.text}</p>
+    </div>
+
+    <!-- Destacado: café de altura -->
+    <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm rounded-2xl bg-primary-container p-space-lg text-center text-on-primary shadow-md sm:flex-row sm:gap-space-lg sm:text-left lg:p-8">
+      <div class="flex shrink-0 flex-col items-center sm:border-r sm:border-on-primary-container/30 sm:pr-space-lg">
+        <Icon name="material-symbols:landscape-outline" class="h-9 w-9 text-tertiary-fixed" aria-hidden="true" />
+        <span class="mt-1 font-display-hero-mobile text-display-hero-mobile text-surface">{formatNumber(site.altitudeMsnm, lang)}</span>
+        <span class="font-label-caps text-label-caps tracking-widest text-primary-fixed uppercase">{lang === 'es' ? 'msnm' : 'm a.s.l.'}</span>
+      </div>
+      <div>
+        <p class="font-label-caps text-label-caps tracking-widest text-secondary-fixed-dim uppercase">{c.altitudeBadge}</p>
+        <p class="mt-1 font-body-md text-body-md leading-relaxed text-inverse-on-surface lg:text-body-lg">{c.altitudeHighlight}</p>
+      </div>
+    </div>
+
+    <article class="mx-auto grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-2xl border border-surface-container bg-surface-container-lowest shadow-lg md:grid-cols-[5fr_6fr] lg:shadow-xl">
+      <!-- Modelo del empaque -->
+      <div class="group relative aspect-[4/5] overflow-hidden bg-surface-container md:aspect-auto md:min-h-full">
+        <Picture
+          src={packImg}
+          alt={c.packAlt}
+          formats={['avif', 'webp']}
+          widths={[360, 480, 640, 900]}
+          quality={70}
+          sizes="(min-width: 1024px) 460px, (min-width: 768px) 45vw, 100vw"
+          class="h-full w-full object-cover object-[center_45%] transition-transform duration-700 group-hover:scale-105"
+        />
+        <span class="absolute top-3 left-3 rounded-lg bg-primary px-2.5 py-1 font-label-caps text-label-caps tracking-wider text-on-primary uppercase shadow-sm">{c.special}</span>
+      </div>
+
+      <div class="flex flex-col gap-space-sm p-space-md sm:p-space-lg lg:gap-space-md lg:p-10">
+        <!-- Logo del café y logo de la cooperativa: misma altura, centrados y alineados -->
+        <div class="flex flex-col items-center gap-space-sm border-b border-surface-container pb-space-md">
+          <div class="flex items-center justify-center gap-space-lg sm:gap-space-xl">
+            <Image src={coffeeLogo} alt={c.logoAlt} width={240} class="h-24 w-auto sm:h-28" />
+            <span class="h-14 w-px bg-outline-variant sm:h-16" aria-hidden="true"></span>
+            <Image src={coopLogo} alt={d.a11y.logoAlt} width={200} class="h-[76px] w-auto sm:h-[88px]" />
+          </div>
+          <p class="max-w-xs text-center font-label-caps text-[10px] tracking-widest text-balance text-on-surface-variant uppercase">
+            {c.madeBy} {site.shortName}
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="rounded-lg bg-primary-container px-2.5 py-0.5 font-label-caps text-label-caps tracking-wider text-on-primary uppercase">{c.altitudeBadge} · {altitude}</span>
+          <span class="font-label-caps text-label-caps font-bold tracking-wider text-secondary uppercase">{c.sizes}</span>
+        </div>
+        <div>
+          <h3 class="font-headline-sm text-headline-sm font-semibold text-primary lg:text-headline-md">{c.name}</h3>
+          <span class="block font-subhead text-subhead font-normal text-secondary">{c.edition}</span>
+          <p class="mt-2 font-body-md text-body-md leading-relaxed text-on-surface-variant">{c.description}</p>
+        </div>
+
+        <ul class="flex flex-wrap gap-1.5 py-1" aria-label={lang === 'es' ? 'Notas de sabor' : 'Tasting notes'}>
+          {c.notes.map((n) => <li class="rounded-full bg-surface-container px-2.5 py-1 font-label-caps text-label-caps font-semibold text-primary">{n}</li>)}
+        </ul>
+
+        <dl class="space-y-1.5 border-t border-surface-container pt-3 font-caption text-caption text-on-surface-variant">
+          {
+            specs.map((s) => (
+              <div class="flex justify-between gap-4">
+                <dt>{s.label}:</dt>
+                <dd class="text-right font-bold text-on-surface">{s.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <div class="flex items-center justify-between gap-4 border-t border-surface-container pt-3">
+          <div>
+            <span class="block font-caption text-[11px] text-on-surface-variant uppercase">{c.priceLabel}</span>
+            <span class="font-headline-sm text-headline-sm font-bold text-primary lg:text-headline-md">{formatCopAmount(site.coffeePriceCop)} <span class="font-sans text-caption font-normal">COP</span></span>
+          </div>
+          <a
+            href={orderUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex min-h-11 items-center gap-1.5 rounded-lg bg-secondary px-space-md py-2.5 font-label-lg text-label-lg tracking-wider text-on-secondary uppercase shadow-sm transition-transform hover:bg-on-secondary-fixed-variant active:scale-95"
+          >
+            <Icon name="material-symbols:shopping-bag-outline" class="h-[18px] w-[18px]" aria-hidden="true" />
+            {c.order}
+            <span class="sr-only">{d.a11y.newTab}</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

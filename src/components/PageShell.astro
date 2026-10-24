@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import BottomNav from './BottomNav.astro';
+import WhatsAppFloat from './WhatsAppFloat.astro';
+import Footer from './Footer.astro';
+import type { Lang, PageKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  page?: PageKey;
+  title?: string;
+  description?: string;
+}
+
+const { lang, page = '', title, description } = Astro.props;
+---
+
+<BaseLayout lang={lang} page={page} title={title} description={description}>
+  <slot name="head" slot="head" />
+  <Header lang={lang} page={page} />
+  <main id="contenido" class="w-full">
+    <slot />
+  </main>
+  <Footer lang={lang} />
+  <BottomNav lang={lang} page={page} />
+  <WhatsAppFloat lang={lang} />
+</BaseLayout>

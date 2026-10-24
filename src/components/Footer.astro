@@ -1,0 +1,127 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import logo from '../assets/logo-trim.png';
+import { site } from '../config/site';
+import { sections } from '../config/sections';
+import { buildGenericBookingMessage, buildWhatsAppUrl } from '../lib/whatsapp';
+import { t, navHref, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang);
+const f = d.footer;
+const year = new Date().getFullYear();
+const phoneDisplay = `+57 ${site.whatsapp.slice(2, 5)} ${site.whatsapp.slice(5, 8)} ${site.whatsapp.slice(8)}`;
+
+const socials = [
+  { name: 'Facebook', icon: 'simple-icons:facebook', url: site.social.facebook },
+  { name: 'TikTok', icon: 'simple-icons:tiktok', url: site.social.tiktok },
+  { name: 'Instagram', icon: 'simple-icons:instagram', url: site.social.instagram },
+];
+const socialClass = 'flex h-11 w-11 items-center justify-center rounded-lg bg-surface/10 text-on-primary-container';
+---
+
+<footer class="w-full bg-primary-container pt-space-xl pb-28 text-on-primary xl:pb-space-lg">
+  <div class="container-site">
+    <div class="grid grid-cols-1 gap-space-xl md:grid-cols-2 lg:grid-cols-12 lg:gap-gutter">
+      <div class="flex flex-col gap-space-md lg:col-span-5">
+        <div class="flex items-center gap-3">
+          <span class="flex h-14 w-12 items-center justify-center rounded-lg bg-surface p-1">
+            <Image src={logo} alt={d.a11y.logoAlt} width={96} class="h-full w-full object-contain" />
+          </span>
+          <div class="flex flex-col">
+            <span class="font-headline-sm text-[18px] leading-tight text-on-primary lg:text-headline-sm">{site.shortName}</span>
+            <span class="font-caption text-caption text-primary-fixed">NIT: {site.nit}</span>
+          </div>
+        </div>
+        <div class="space-y-1">
+          <span class="block font-label-caps text-label-caps font-semibold text-surface uppercase">{site.legalName}</span>
+          <span class="block font-caption text-caption text-on-primary-container">
+            {site.address.locality} · {site.address.municipality}, {site.address.region}, {site.address.country}
+          </span>
+        </div>
+        <p class="max-w-md font-body-md text-body-md leading-relaxed text-on-primary-container">{f.text}</p>
+        <ul class="flex flex-wrap items-center gap-2">
+          <li class="flex items-center gap-1.5 rounded-lg bg-surface/10 px-2.5 py-1">
+            <Icon name="material-symbols:eco-outline" class="h-4 w-4 text-on-primary-container" aria-hidden="true" />
+            <span class="font-label-caps text-[10px] text-on-primary uppercase lg:text-label-caps">{f.tag1}</span>
+          </li>
+          <li class="flex items-center gap-1.5 rounded-lg bg-surface/10 px-2.5 py-1">
+            <Icon name="material-symbols:water-drop-outline" class="h-4 w-4 text-on-primary-container" aria-hidden="true" />
+            <span class="font-label-caps text-[10px] text-on-primary uppercase lg:text-label-caps">{f.tag2}</span>
+          </li>
+        </ul>
+      </div>
+
+      <nav aria-label={f.navTitle} class="flex flex-col gap-space-sm lg:col-span-3">
+        <h2 class="font-label-caps text-label-caps tracking-widest text-on-primary uppercase">{f.navTitle}</h2>
+        <ul class="grid grid-cols-2 gap-x-4 md:grid-cols-1">
+          {
+            sections.map((s) => (
+              <li>
+                <a href={navHref(s.id, lang)} class="inline-flex min-h-11 items-center font-body-md text-body-md text-on-primary-container transition-colors hover:text-on-primary md:min-h-9">
+                  {d.nav[s.label]}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="flex flex-col gap-space-md lg:col-span-4">
+        <div class="flex flex-col gap-space-sm">
+          <h2 class="font-label-caps text-label-caps tracking-widest text-on-primary uppercase">{f.contactTitle}</h2>
+          <a
+            href={buildWhatsAppUrl(site.whatsapp, buildGenericBookingMessage(lang))}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex min-h-11 items-center gap-2 self-start font-body-lg text-body-lg text-on-primary hover:underline"
+          >
+            <Icon name="simple-icons:whatsapp" class="h-5 w-5" aria-hidden="true" />
+            WhatsApp {phoneDisplay}
+            <span class="sr-only">{d.a11y.newTab}</span>
+          </a>
+        </div>
+        <div class="flex flex-col gap-space-sm">
+          <h2 class="font-label-caps text-label-caps tracking-widest text-on-primary uppercase">{f.socialTitle}</h2>
+          <ul class="flex items-center gap-space-sm">
+            {
+              socials.map((s) => (
+                <li>
+                  {s.url ? (
+                    <a
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${s.name} ${d.a11y.newTab}`}
+                      class={`${socialClass} transition-all hover:bg-surface/20 hover:text-on-primary`}
+                    >
+                      <Icon name={s.icon} class="h-5 w-5" aria-hidden="true" />
+                    </a>
+                  ) : (
+                    <span class={`${socialClass} opacity-60`} title={f.instagramSoon}>
+                      <Icon name={s.icon} class="h-5 w-5" aria-hidden="true" />
+                      <span class="sr-only">{f.instagramSoon}</span>
+                    </span>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-space-xl flex flex-col gap-1 border-t border-on-primary-container/20 pt-space-md font-caption text-caption text-on-primary-container sm:flex-row sm:items-center sm:justify-between">
+      <span>© {year} {site.legalName} · NIT {site.nit}. {f.rights}</span>
+      <span class="flex items-center gap-1">
+        <Icon name="material-symbols:water-drop-outline" class="h-3.5 w-3.5" aria-hidden="true" />
+        {f.basin}
+      </span>
+    </div>
+  </div>
+</footer>

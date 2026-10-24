@@ -1,0 +1,54 @@
+---
+import { t, pagePath, type Lang, type PageKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  page?: PageKey;
+}
+
+const { lang, page = '' } = Astro.props;
+const d = t(lang);
+const options: { code: Lang; label: string; aria: string }[] = [
+  { code: 'es', label: 'ES', aria: d.a11y.switchToEs },
+  { code: 'en', label: 'EN', aria: d.a11y.switchToEn },
+];
+---
+
+<div role="group" aria-label={d.a11y.languageSwitch} class="flex items-center rounded-full bg-surface-container p-0.5">
+  {
+    options.map((o) =>
+      o.code === lang ? (
+        <span
+          aria-current="true"
+          class="flex h-8 min-w-9 items-center justify-center rounded-full bg-primary-container px-2 font-label-caps text-label-caps text-on-primary"
+        >
+          {o.label}
+        </span>
+      ) : (
+        <a
+          href={pagePath(page, o.code)}
+          hreflang={o.code}
+          lang={o.code}
+          aria-label={`${o.label} – ${o.aria}`}
+          data-lang-link
+          class="flex h-8 min-w-9 items-center justify-center rounded-full px-2 font-label-caps text-label-caps text-on-surface-variant transition-colors hover:text-primary"
+        >
+          {o.label}
+        </a>
+      ),
+    )
+  }
+</div>
+
+<script>
+  // Conserva la sección actual (#hash) al cambiar de idioma.
+  function syncHash() {
+    document.querySelectorAll<HTMLAnchorElement>('a[data-lang-link]').forEach((a) => {
+      const url = new URL(a.href);
+      url.hash = window.location.hash;
+      a.href = url.toString();
+    });
+  }
+  syncHash();
+  window.addEventListener('hashchange', syncHash);
+</script>

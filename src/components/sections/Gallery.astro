@@ -1,0 +1,103 @@
+---
+import { Picture } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import { getHomeGallery } from '../../lib/gallery';
+import { t, pagePath, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang);
+const g = d.gallery;
+const photos = await getHomeGallery(6);
+const galleryUrl = pagePath('galeria', lang);
+---
+
+<section id="galeria" aria-labelledby="galeria-title" class="w-full border-t border-surface-container bg-surface py-space-xl lg:bg-background lg:py-28">
+  <div class="container-site flex flex-col gap-space-md lg:gap-10">
+    <div class="flex flex-col gap-1 text-center md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
+      <div>
+        <p class="mb-1 inline-flex items-center justify-center gap-1.5 text-secondary">
+          <Icon name="material-symbols:photo-camera-outline" class="h-[18px] w-[18px]" aria-hidden="true" />
+          <span class="font-label-caps text-label-caps tracking-widest uppercase">{g.eyebrow}</span>
+        </p>
+        <h2 id="galeria-title" class="font-headline-md text-headline-md text-primary lg:font-headline-lg lg:text-headline-lg">{g.title}</h2>
+      </div>
+      <p class="max-w-md font-body-md text-body-md leading-relaxed text-on-surface-variant">{g.text}</p>
+    </div>
+
+    <ul class="grid grid-cols-2 gap-space-xs sm:gap-space-md lg:grid-cols-3 lg:gap-6">
+      {
+        photos.map((p, i) => {
+          const title = p.title?.[lang];
+          const alt = p.alt?.[lang] ?? title ?? `${g.altFallback} ${g.categories[p.category]}`;
+          return (
+            <li class="group flex flex-col overflow-hidden rounded-xl border border-surface-container bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl lg:rounded-2xl lg:border-0">
+              <div class="relative h-40 overflow-hidden sm:h-56 lg:h-72">
+                <Picture
+                  src={p.image}
+                  alt={alt}
+                  formats={['avif', 'webp']}
+                  widths={[240, 360, 480, 800]}
+                  quality={60}
+                  sizes="(min-width: 1024px) 33vw, 50vw"
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <span
+                  class:list={[
+                    'absolute top-2 left-2 rounded-lg px-1.5 py-0.5 font-label-caps text-[9px] tracking-wider uppercase lg:top-4 lg:left-4 lg:px-2.5 lg:py-1 lg:text-label-caps',
+                    i % 2 === 0 ? 'bg-primary/90 text-on-primary' : 'bg-secondary text-on-secondary',
+                  ]}
+                >
+                  {g.categories[p.category]}
+                </span>
+                <span class="absolute bottom-3 left-3 hidden items-center gap-1 rounded-full bg-surface/90 px-2.5 py-1 font-label-caps text-label-caps font-semibold text-primary backdrop-blur-md lg:flex">
+                  <Icon name="material-symbols:pin-drop-outline" class="h-3.5 w-3.5 text-secondary" aria-hidden="true" />
+                  {g.location}
+                </span>
+              </div>
+              {(title || p.description) && (
+                <div class="flex flex-1 flex-col gap-1 p-2.5 lg:p-6">
+                  {title && <h3 class="font-headline-sm text-[14px] leading-tight font-semibold text-primary sm:text-[18px] lg:mb-1 lg:text-headline-sm">{title}</h3>}
+                  {p.description && (
+                    <p class="font-caption text-[11px] leading-tight text-on-surface-variant sm:text-caption lg:font-body-md lg:text-body-md lg:leading-relaxed">
+                      {p.description[lang]}
+                    </p>
+                  )}
+                </div>
+              )}
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <a
+      href={galleryUrl}
+      class="group mx-auto flex min-h-12 items-center justify-center gap-2 rounded-lg border border-primary-container px-6 py-3 font-label-lg text-label-lg tracking-wider text-primary-container uppercase transition-colors hover:bg-primary-container hover:text-on-primary"
+    >
+      <Icon name="material-symbols:photo-library-outline" class="h-5 w-5" aria-hidden="true" />
+      {g.viewAll}
+      <Icon name="material-symbols:arrow-forward" class="h-5 w-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+    </a>
+
+    <div class="flex flex-col items-center gap-2 rounded-xl border border-surface-container bg-surface-container-low p-space-md text-center shadow-sm sm:flex-row sm:justify-between sm:gap-6 sm:text-left lg:rounded-2xl lg:p-8">
+      <div class="flex items-center gap-4">
+        <Icon name="material-symbols:nature-people-outline" class="hidden h-9 w-9 shrink-0 text-primary sm:block" aria-hidden="true" />
+        <div>
+          <p class="font-headline-sm text-[16px] font-semibold text-primary lg:text-headline-sm">{g.ctaTitle}</p>
+          <p class="font-caption text-caption text-on-surface-variant lg:font-body-md lg:text-body-md">{g.ctaText}</p>
+        </div>
+      </div>
+      <a
+        href="#reservas"
+        class="flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-secondary px-6 py-2.5 font-label-lg text-label-lg tracking-wider text-on-secondary uppercase shadow-sm transition-all hover:bg-on-secondary-fixed-variant active:scale-95 sm:w-auto"
+      >
+        <Icon name="material-symbols:calendar-month-outline" class="h-[18px] w-[18px]" aria-hidden="true" />
+        {g.ctaButton}
+      </a>
+    </div>
+  </div>
+</section>

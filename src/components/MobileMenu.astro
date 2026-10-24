@@ -1,0 +1,64 @@
+---
+import { Icon } from 'astro-icon/components';
+import { sections } from '../config/sections';
+import { t, navHref, sectionHref, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang);
+---
+
+<div
+  id="menu-movil"
+  class="fixed inset-0 z-[60] hidden xl:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label={d.a11y.mobileNav}
+  data-menu
+>
+  <div class="absolute inset-0 bg-primary/60 backdrop-blur-sm" data-menu-close></div>
+  <nav class="absolute top-0 right-0 flex h-full w-[min(20rem,85vw)] flex-col gap-space-sm bg-surface p-space-lg pt-[calc(env(safe-area-inset-top)+1rem)] shadow-xl">
+    <div class="mb-space-sm flex items-center justify-between">
+      <span class="font-headline-sm text-headline-sm text-primary">RÍO TÉLLEZ</span>
+      <button
+        type="button"
+        class="flex min-h-11 min-w-11 items-center justify-center rounded-lg text-primary hover:bg-surface-container"
+        aria-label={d.a11y.closeMenu}
+        data-menu-close
+      >
+        <Icon name="material-symbols:close" class="h-6 w-6" aria-hidden="true" />
+      </button>
+    </div>
+    <ul class="flex flex-col gap-1">
+      {
+        sections.map((s) => (
+          <li>
+            <a
+              href={navHref(s.id, lang)}
+              class="flex min-h-12 items-center gap-3 rounded-lg px-space-sm font-label-lg text-label-lg tracking-wider text-on-surface uppercase hover:bg-surface-container-low"
+              data-menu-link
+            >
+              <Icon name={s.icon} class="h-5 w-5 text-secondary" aria-hidden="true" />
+              {d.nav[s.label]}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a
+      href={sectionHref('reservas', lang)}
+      class="mt-auto flex min-h-12 items-center justify-center rounded-lg bg-secondary px-space-md font-label-lg text-label-lg tracking-wider text-on-secondary uppercase shadow-md"
+      data-menu-link
+    >
+      {d.header.cta}
+    </a>
+  </nav>
+</div>
+
+<script>
+  import { initMobileMenu } from '../scripts/mobile-menu';
+  initMobileMenu();
+</script>

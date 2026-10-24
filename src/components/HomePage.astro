@@ -1,0 +1,27 @@
+---
+import PageShell from './PageShell.astro';
+import Hero from './sections/Hero.astro';
+import Essence from './sections/Essence.astro';
+import Experiences from './sections/Experiences.astro';
+import Booking from './sections/Booking.astro';
+import Gallery from './sections/Gallery.astro';
+import HowToArrive from './sections/HowToArrive.astro';
+import Coffee from './sections/Coffee.astro';
+import type { Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<PageShell lang={lang}>
+  <Hero lang={lang} />
+  <Essence lang={lang} />
+  <Experiences lang={lang} />
+  <Gallery lang={lang} />
+  <Coffee lang={lang} />
+  <HowToArrive lang={lang} />
+  <Booking lang={lang} />
+</PageShell>

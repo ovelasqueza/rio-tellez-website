@@ -1,0 +1,26 @@
+order: 2
+image: ../../assets/images/experiencias/almuerzo-campesino.jpg
+imageAlt:
+  es: Mesa campesina con trucha asada, patacones y arepas frente a las montañas
+  en: Farm table with grilled trout, fried plantain and arepas facing the mountains
+duration:
+  es: Gastronomía
+  en: Food
+chip:
+  es: Cocina viva
+  en: Living kitchen
+badgeColor: secondary
+category:
+  es: Tradición culinaria
+  en: Culinary tradition
+title:
+  es: Almuerzos campesinos al fogón
+  en: Farm lunches over firewood
+description:
+  es: "Sabores auténticos nariñenses cocinados a fuego de leña por las familias asociadas: sancocho campesino, envueltos de choclo y cuajada fresca."
+  en: "Authentic Nariño flavors cooked over firewood by the member families: farmhouse sancocho stew, sweet-corn envueltos and fresh cuajada cheese."
+includes:
+  - es: Ingredientes agroecológicos
+    en: Agroecological ingredients
+  - es: Compartir en cocina tradicional
+    en: Shared time in a traditional kitchen

@@ -1,0 +1,107 @@
+# Detalles OPCIONALES de las fotos de la galería.
+#
+# Para AGREGAR una foto no hace falta editar este archivo: basta con copiarla en
+#   src/assets/galeria/<categoria>/   (rio, cafe, senderos, gastronomia, familias)
+#
+# Agregue una entrada aquí solo si quiere darle título, descripción, destacarla
+# o mostrarla en la página principal. El id es "categoria/nombre-del-archivo" (sin extensión).
+#
+#   portada: true    → aparece en la galería de la página principal (máximo 6)
+#   destacada: true  → se ve el doble de grande en la página de galería
+#   orden: 1         → posición (las que no tienen orden van después, por nombre)
+
+- id: rio/canon-cascadas
+  orden: 1
+  portada: true
+  destacada: true
+  title:
+    es: Cañón y cascadas andinas
+    en: Canyon & Andean waterfalls
+  description:
+    es: Miradores naturales donde convergen las brumas del páramo y el rumor permanente del río.
+    en: Natural viewpoints where the páramo mist meets the constant murmur of the river.
+  alt:
+    es: Vista panorámica del cañón del Río Téllez entre montañas con neblina
+    en: Panoramic view of the Río Téllez canyon between misty mountains
+
+- id: rio/corrientes-rio-tellez
+  orden: 2
+  portada: true
+  title:
+    es: Corrientes vivas del Río Téllez
+    en: Living currents of the Río Téllez
+  description:
+    es: Aguas puras que riegan los cafetales de altura y nutren las pozas cuidadas por las familias asociadas.
+    en: Pure waters that feed the high-altitude coffee farms and the pools cared for by member families.
+  alt:
+    es: Río de montaña corriendo entre piedras con musgo en el bosque
+    en: Mountain river flowing between mossy rocks in the forest
+
+- id: familias/cosecha-en-familia
+  orden: 3
+  portada: true
+  destacada: true
+  title:
+    es: Cosecha en familia
+    en: Harvesting as a family
+  description:
+    es: Las familias asociadas recolectan a mano las cerezas maduras de café de altura en la ladera.
+    en: Member families hand-pick ripe high-altitude coffee cherries on the hillside.
+  alt:
+    es: Campesinos con canastos recolectando cerezas de café en la ladera
+    en: Farmers with baskets picking coffee cherries on the hillside
+
+- id: senderos/cumbres-bosques
+  orden: 4
+  portada: true
+  title:
+    es: Cumbres y bosques de montaña
+    en: Summits & mountain forests
+  description:
+    es: Caminatas sobre crestas montañosas con vistas a las cordilleras y valles profundos de Nariño.
+    en: Ridge hikes with views over the mountain ranges and deep valleys of Nariño.
+  alt:
+    es: Dos caminantes en un sendero de cresta con vista a valles y cascadas
+    en: Two hikers on a ridge trail overlooking valleys and waterfalls
+
+- id: gastronomia/fogon-trucha
+  orden: 5
+  portada: true
+  title:
+    es: Fogón campesino y trucha de río
+    en: Farm stove & river trout
+  description:
+    es: Mesa tradicional con trucha fresca, patacones, ensalada y el calor de las cocinas locales.
+    en: A traditional table with fresh trout, patacones (fried plantain), salad and the warmth of local kitchens.
+  alt:
+    es: Mesa campesina con trucha asada, patacones, arepas y ensalada
+    en: Farm table with grilled trout, fried plantain, arepas and salad
+
+- id: cafe/cafetales-altura
+  orden: 6
+  portada: true
+  title:
+    es: Cafetales de altura
+    en: High-altitude coffee farms
+  description:
+    es: Laderas cafeteras al amanecer, donde la altura forma el carácter de nuestro café.
+    en: Coffee slopes at sunrise, where altitude shapes the character of our coffee.
+  alt:
+    es: Cafetales en las laderas de la montaña al amanecer
+    en: Coffee farms on mountain slopes at sunrise
+
+- id: cafe/recoleccion-a-mano
+  title:
+    es: Recolección a mano
+    en: Hand-picked
+  alt:
+    es: Manos campesinas recogiendo cerezas maduras de café en un canasto
+    en: A farmer’s hands picking ripe coffee cherries into a basket
+
+- id: senderos/mirador-canon
+  title:
+    es: Mirador del cañón
+    en: Canyon viewpoint
+  alt:
+    es: Caminante en un sendero de montaña con vista al cañón y al río
+    en: Hiker on a mountain trail overlooking the canyon and the river

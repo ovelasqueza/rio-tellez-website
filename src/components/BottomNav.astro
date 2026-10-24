@@ -1,0 +1,56 @@
+---
+import { Icon } from 'astro-icon/components';
+import { sections } from '../config/sections';
+import { t, navHref, type Lang, type PageKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  page?: PageKey;
+}
+
+const { lang, page = '' } = Astro.props;
+const d = t(lang);
+---
+
+<nav
+  aria-label={d.a11y.mobileNav}
+  class="pb-safe fixed inset-x-0 bottom-0 z-40 bg-surface/95 shadow-[0_-2px_12px_rgba(28,20,13,0.08)] backdrop-blur-xl xl:hidden"
+>
+  <ul class="mx-auto flex h-16 max-w-lg items-center justify-around px-space-xs">
+    {
+      sections.map((s) => (
+        <li>
+          <a
+            href={navHref(s.id, lang)}
+            data-bottom-link={s.id}
+            aria-current={page === 'galeria' && s.id === 'galeria' ? 'true' : undefined}
+            class="flex min-h-11 min-w-11 flex-col items-center justify-center text-on-surface-variant transition-colors hover:text-primary-container aria-[current=true]:font-semibold aria-[current=true]:text-primary-container"
+          >
+            <Icon name={s.icon} class="h-5 w-5" aria-hidden="true" />
+            <span class="mt-0.5 font-label-caps text-[10px] tracking-normal uppercase">{d.nav[s.short]}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  // En la página principal, resalta en la barra inferior la sección visible.
+  const links = new Map<string, HTMLElement>();
+  document.querySelectorAll<HTMLElement>('[data-bottom-link]').forEach((a) => links.set(a.dataset.bottomLink!, a));
+  const targets = [...links.keys()].map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+
+  if (targets.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          links.forEach((a, id) => a.setAttribute('aria-current', String(id === entry.target.id)));
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    targets.forEach((el) => observer.observe(el));
+  }
+</script>

@@ -1,0 +1,23 @@
+order: 1
+image: ../../assets/images/experiencias/caminatas-cascadas.jpg
+imageAlt:
+  es: Caminante en un sendero de montaña con vista al cañón y al río
+  en: Hiker on a mountain trail overlooking the canyon and the river
+duration:
+  es: 4 horas
+  en: 4 hours
+badgeColor: primary
+category:
+  es: Senderismo y agua
+  en: Hiking & water
+title:
+  es: Caminatas ecológicas y cascadas
+  en: Eco hikes & waterfalls
+description:
+  es: Ruta por los senderos del cañón bordeando el Río Téllez, visita a cascadas naturales y miradores con avistamiento de aves andinas.
+  en: A route along the canyon trails beside the Río Téllez, visiting natural waterfalls and viewpoints for Andean birdwatching.
+includes:
+  - es: Guianza comunitaria local
+    en: Local community guides
+  - es: Pozas naturales y caídas de agua
+    en: Natural pools and waterfalls

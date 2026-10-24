@@ -1,0 +1,81 @@
+---
+import { Picture } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import { site } from '../../config/site';
+import { formatCopAmount } from '../../lib/price';
+import type { Experience } from '../../lib/content';
+import { t, altitudeLabel, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+  experience: Experience;
+}
+
+const { lang, experience: e } = Astro.props;
+const d = t(lang);
+const isPrimary = e.badgeColor === 'primary';
+const chip = e.chip ? e.chip[lang] : altitudeLabel(site.altitudeMsnm, lang);
+---
+
+<article class="group flex flex-col overflow-hidden rounded-xl border border-surface-container bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl lg:rounded-2xl lg:border-0">
+  <div class="relative h-44 overflow-hidden lg:h-56">
+    <Picture
+      src={e.image}
+      alt={e.imageAlt[lang]}
+      formats={['avif', 'webp']}
+      widths={[320, 480, 640, 900]}
+      quality={60}
+      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+      class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+    <span
+      class:list={[
+        'absolute top-3 left-3 rounded-lg px-2.5 py-1 font-label-caps text-label-caps uppercase',
+        isPrimary ? 'bg-primary text-on-primary' : 'bg-secondary text-on-secondary',
+      ]}
+    >
+      {e.duration[lang]}
+    </span>
+    <span class="absolute right-2 bottom-2 rounded-full bg-surface-container/90 px-2.5 py-0.5 font-label-caps text-[10px] font-semibold text-on-surface">
+      {chip}
+    </span>
+  </div>
+
+  <div class="flex flex-grow flex-col justify-between gap-space-sm p-space-md lg:p-6">
+    <div>
+      <p class="mb-0.5 font-label-caps text-label-caps tracking-widest text-secondary uppercase">{e.category[lang]}</p>
+      <h3 class="font-headline-sm text-headline-sm text-primary">{e.title[lang]}</h3>
+      <p class="mt-1 font-caption text-caption leading-relaxed text-on-surface-variant lg:mt-2 lg:font-body-md lg:text-body-md">
+        {e.description[lang]}
+      </p>
+      <ul class="mt-2 space-y-1 font-caption text-caption text-on-surface-variant lg:mt-4">
+        {
+          e.includes.map((inc) => (
+            <li class="flex items-center gap-1.5">
+              <Icon name="material-symbols:check-circle-outline" class="h-4 w-4 shrink-0 text-on-tertiary-fixed-variant" aria-hidden="true" />
+              {inc[lang]}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="flex items-center justify-between border-t border-surface-container pt-3 lg:pt-4">
+      <div>
+        <span class="block font-caption text-[11px] text-on-surface-variant uppercase">{d.experiences.perPerson}</span>
+        <span class="font-headline-sm text-headline-sm font-bold text-primary">{formatCopAmount(e.price)} <span class="font-sans text-caption font-normal">COP</span></span>
+      </div>
+      <a
+        href="#reservas"
+        data-choose-experience={e.id}
+        aria-label={`${d.experiences.chooseAria}: ${e.title[lang]}`}
+        class:list={[
+          'flex min-h-11 items-center rounded-lg px-4 font-label-caps text-label-caps tracking-wider uppercase transition-transform active:scale-95',
+          isPrimary ? 'bg-primary text-on-primary hover:bg-primary-container' : 'bg-secondary text-on-secondary hover:bg-on-secondary-fixed-variant',
+        ]}
+      >
+        {d.experiences.choose}
+      </a>
+    </div>
+  </div>
+</article>

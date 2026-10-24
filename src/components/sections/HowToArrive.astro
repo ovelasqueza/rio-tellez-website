@@ -1,0 +1,84 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site, mapsUrl, mapsEmbedUrl } from '../../config/site';
+import { t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang);
+const a = d.arrive;
+const address = `${site.address.locality} · ${site.address.municipality}, ${site.address.region}, ${site.address.country}.`;
+---
+
+<section id="como-llegar" aria-labelledby="como-llegar-title" class="w-full border-t border-surface-container bg-surface-container-low py-space-xl lg:py-28">
+  <div class="container-site flex flex-col gap-space-md lg:gap-12">
+    <div class="mx-auto flex max-w-2xl flex-col gap-1 text-center">
+      <p class="font-label-caps text-label-caps tracking-widest text-secondary uppercase">{a.eyebrow}</p>
+      <h2 id="como-llegar-title" class="font-headline-md text-headline-md text-primary lg:mb-3 lg:font-headline-lg lg:text-headline-lg">{a.title}</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">{address}</p>
+    </div>
+
+    <div class="grid grid-cols-1 items-stretch gap-space-sm lg:grid-cols-12 lg:gap-8">
+      <div class="flex flex-col gap-space-sm lg:col-span-5 lg:justify-between lg:gap-6 lg:rounded-2xl lg:bg-surface lg:p-8 lg:shadow-md">
+        <div class="hidden items-center gap-3 lg:flex">
+          <Icon name="material-symbols:pin-drop-outline" class="h-7 w-7 text-secondary" aria-hidden="true" />
+          <div>
+            <h3 class="font-headline-sm text-headline-sm leading-tight text-primary">{a.place}</h3>
+            <span class="font-caption text-caption text-on-surface-variant">{a.placeSub}</span>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 rounded-xl bg-surface p-space-md shadow-sm lg:bg-surface-container-low lg:shadow-none">
+          <Icon name="material-symbols:directions-car-outline" class="mt-0.5 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
+          <div>
+            <h3 class="font-label-lg text-label-lg text-primary">{a.fromPasto}</h3>
+            <p class="mt-0.5 font-caption text-caption leading-relaxed text-on-surface-variant">{a.fromPastoText}</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 rounded-xl bg-surface p-space-md shadow-sm lg:bg-surface-container-low lg:shadow-none">
+          <Icon name="material-symbols:explore-outline" class="mt-0.5 h-6 w-6 shrink-0 text-secondary" aria-hidden="true" />
+          <div>
+            <h3 class="font-label-lg text-label-lg text-primary">{a.fromIpiales}</h3>
+            <p class="mt-0.5 font-caption text-caption leading-relaxed text-on-surface-variant">{a.fromIpialesText}</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 rounded-xl bg-primary-container p-space-md text-on-primary shadow-sm">
+          <Icon name="material-symbols:shield-outline" class="mt-0.5 h-6 w-6 shrink-0 text-tertiary-fixed" aria-hidden="true" />
+          <div>
+            <p class="font-label-caps text-label-caps font-bold text-primary-fixed uppercase">{a.communityTitle}</p>
+            <p class="mt-0.5 font-caption text-caption leading-relaxed text-on-primary-container">{a.communityText}</p>
+          </div>
+        </div>
+
+        <a
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="order-last flex min-h-12 items-center justify-center gap-2 rounded-lg bg-primary py-3 text-center font-label-lg text-label-lg tracking-wider text-on-primary uppercase shadow-md transition-all hover:bg-primary-container active:scale-[0.98] lg:order-none"
+        >
+          <Icon name="material-symbols:map-outline" class="h-5 w-5" aria-hidden="true" />
+          {a.openMaps}
+          <span class="sr-only">{d.a11y.newTab}</span>
+        </a>
+      </div>
+
+      <div class="lg:col-span-7 lg:flex lg:flex-col lg:rounded-2xl lg:bg-surface lg:p-4 lg:shadow-md">
+        <div class="relative h-56 w-full overflow-hidden rounded-xl border border-on-surface-variant/20 shadow-sm sm:h-80 lg:h-full lg:min-h-[340px] lg:shadow-none">
+          <iframe
+            src={mapsEmbedUrl}
+            title={a.mapTitle}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            class="h-full w-full border-0"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

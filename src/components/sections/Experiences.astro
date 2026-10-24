@@ -1,0 +1,31 @@
+---
+import ExperienceCard from './ExperienceCard.astro';
+import { getExperiences } from '../../lib/content';
+import { t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang);
+const experiences = await getExperiences();
+---
+
+<section id="rutas" aria-labelledby="rutas-title" class="w-full bg-background py-space-xl lg:py-28">
+  <div class="container-site flex flex-col gap-space-md lg:gap-16">
+    <div class="flex flex-col gap-1 md:flex-row md:items-end md:justify-between md:gap-6">
+      <div>
+        <p class="mb-1 font-label-caps text-label-caps font-bold tracking-widest text-secondary uppercase">{d.experiences.eyebrow}</p>
+        <h2 id="rutas-title" class="font-headline-md text-headline-md text-primary lg:font-headline-lg lg:text-headline-lg">
+          {d.experiences.title}
+        </h2>
+      </div>
+      <p class="max-w-md font-body-md text-body-md text-on-surface-variant">{d.experiences.text}</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-space-md pt-space-xs sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 lg:pt-0">
+      {experiences.map((e) => <ExperienceCard lang={lang} experience={e} />)}
+    </div>
+  </div>
+</section>

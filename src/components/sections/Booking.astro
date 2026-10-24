@@ -1,0 +1,167 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site } from '../../config/site';
+import { getExperiences } from '../../lib/content';
+import { formatCop, estimateTotal } from '../../lib/price';
+import { buildGenericBookingMessage } from '../../lib/whatsapp';
+import { t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang);
+const b = d.booking;
+const experiences = await getExperiences();
+const initialTravelers = 2;
+const initialTotal = estimateTotal(experiences[0]?.price ?? site.defaultPriceCop, initialTravelers);
+
+const config = {
+  lang,
+  phone: site.whatsapp,
+  min: site.minTravelers,
+  max: site.maxTravelers,
+  errors: b.errors,
+};
+
+const inputClass =
+  'w-full min-h-12 rounded-lg border border-outline-variant bg-surface-container-low px-space-sm font-body-md text-body-md text-on-surface shadow-sm transition-colors focus:border-primary-container focus:bg-surface-container-lowest focus:outline-none focus:ring-3 focus:ring-primary-container/15 aria-[invalid=true]:border-error';
+const labelClass = 'block font-label-caps text-label-caps font-semibold text-on-surface uppercase';
+---
+
+<section id="reservas" aria-labelledby="reservas-title" class="w-full bg-surface-container-high py-space-xl lg:py-28">
+  <div class="container-site grid grid-cols-1 items-center gap-space-md lg:grid-cols-12 lg:gap-12">
+    <div class="flex flex-col gap-space-sm lg:col-span-5 lg:gap-6">
+      <p class="inline-flex items-center gap-1.5 text-secondary">
+        <Icon name="material-symbols:calendar-month-outline" class="h-5 w-5" aria-hidden="true" />
+        <span class="font-label-caps text-label-caps tracking-widest uppercase">{b.eyebrow}</span>
+      </p>
+      <h2 id="reservas-title" class="font-headline-md text-headline-md text-primary lg:font-headline-lg lg:text-headline-lg">{b.title}</h2>
+      <p class="font-body-md text-body-md leading-relaxed text-on-surface-variant">{b.text}</p>
+      <div class="flex items-start gap-3 rounded-xl bg-surface p-space-md shadow-sm">
+        <Icon name="simple-icons:whatsapp" class="mt-0.5 h-5 w-5 shrink-0 text-whatsapp" aria-hidden="true" />
+        <p class="font-caption text-caption text-on-surface-variant">{b.whatsappNote}</p>
+      </div>
+    </div>
+
+    <div class="mt-2 rounded-xl bg-surface p-space-md shadow-md lg:col-span-7 lg:mt-0 lg:rounded-2xl lg:p-10 lg:shadow-xl">
+      <form
+        id="booking-form"
+        class="flex flex-col gap-space-md lg:gap-6"
+        method="get"
+        action={`https://wa.me/${site.whatsapp}`}
+        target="_blank"
+        novalidate
+        data-booking={JSON.stringify(config)}
+      >
+        <!-- Sin JavaScript solo se envía este mensaje genérico a WhatsApp -->
+        <input type="hidden" name="text" value={buildGenericBookingMessage(lang)} />
+
+        <div class="flex items-center justify-between border-b border-surface-container pb-2">
+          <h3 class="font-headline-sm text-headline-sm text-primary">{b.formTitle}</h3>
+          <span class="font-caption text-caption font-semibold text-secondary">{b.limited}</span>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class={labelClass} for="bk-experience">{b.experience}</label>
+          <div class="relative">
+            <select id="bk-experience" class={`${inputClass} appearance-none pr-10`}>
+              {
+                experiences.map((e) => (
+                  <option value={e.id} data-price={e.price} data-title={e.title[lang]}>
+                    {e.title[lang]} — {formatCop(e.price)}
+                  </option>
+                ))
+              }
+            </select>
+            <Icon name="material-symbols:expand-more" class="pointer-events-none absolute top-3 right-3 h-6 w-6 text-on-surface-variant" aria-hidden="true" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-space-md min-[400px]:grid-cols-2 min-[400px]:gap-space-sm lg:gap-4">
+          <div class="flex flex-col gap-1.5">
+            <label class={labelClass} for="bk-date">{b.date}</label>
+            <input id="bk-date" type="date" required class={inputClass} aria-describedby="bk-date-error" />
+            <p id="bk-date-error" class="hidden font-caption text-caption text-error" role="alert"></p>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label class={labelClass} for="bk-time">{b.time}</label>
+            <div class="relative">
+              <select id="bk-time" class={`${inputClass} appearance-none pr-9`}>
+                {site.departureTimes.map((time) => <option value={time}>{b.timeLabels[time]}</option>)}
+              </select>
+              <Icon name="material-symbols:expand-more" class="pointer-events-none absolute top-3 right-2 h-6 w-6 text-on-surface-variant" aria-hidden="true" />
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between gap-space-sm rounded-lg bg-surface-container-low p-space-sm shadow-sm">
+          <div class="flex flex-col">
+            <span id="bk-travelers-label" class={labelClass}>{b.travelers}</span>
+            <span class="font-caption text-caption text-on-surface-variant">{b.travelersHint}</span>
+          </div>
+          <div class="flex items-center gap-space-sm" role="group" aria-labelledby="bk-travelers-label">
+            <button
+              type="button"
+              data-travelers-step="-1"
+              aria-label={b.decrease}
+              aria-controls="bk-travelers"
+              class="flex h-11 w-11 items-center justify-center rounded-lg bg-surface text-primary shadow-sm transition-transform active:scale-90 disabled:opacity-40"
+            >
+              <Icon name="material-symbols:remove" class="h-5 w-5" aria-hidden="true" />
+            </button>
+            <output id="bk-travelers" aria-live="polite" class="min-w-6 text-center font-headline-sm text-headline-sm font-bold text-primary">
+              {initialTravelers}
+            </output>
+            <button
+              type="button"
+              data-travelers-step="1"
+              aria-label={b.increase}
+              aria-controls="bk-travelers"
+              class="flex h-11 w-11 items-center justify-center rounded-lg bg-surface text-primary shadow-sm transition-transform active:scale-90 disabled:opacity-40"
+            >
+              <Icon name="material-symbols:add" class="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class={labelClass} for="bk-name">{b.name}</label>
+          <input
+            id="bk-name"
+            type="text"
+            autocomplete="name"
+            required
+            maxlength="80"
+            placeholder={b.namePlaceholder}
+            class={inputClass}
+            aria-describedby="bk-name-error"
+          />
+          <p id="bk-name-error" class="hidden font-caption text-caption text-error" role="alert"></p>
+        </div>
+
+        <div class="flex items-center justify-between rounded-xl bg-surface-container-low p-3 lg:p-4">
+          <div>
+            <span class="block font-caption text-[11px] text-on-surface-variant uppercase">{b.total}</span>
+            <output id="bk-total" aria-live="polite" class="font-headline-sm text-headline-sm font-bold text-primary">{formatCop(initialTotal)}</output>
+          </div>
+          <Icon name="material-symbols:payments-outline" class="h-7 w-7 text-on-tertiary-fixed-variant" aria-hidden="true" />
+        </div>
+
+        <button
+          type="submit"
+          class="flex min-h-13 items-center justify-center gap-2 rounded-lg bg-secondary px-space-md py-3 font-label-lg text-label-lg tracking-wider text-on-secondary uppercase shadow-md transition-all hover:bg-on-secondary-fixed-variant active:scale-[0.98]"
+        >
+          <Icon name="simple-icons:whatsapp" class="h-5 w-5" aria-hidden="true" />
+          {b.submit}
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initBookingForm } from '../../scripts/booking-form';
+  initBookingForm();
+</script>

@@ -1,0 +1,27 @@
+# build
+dist/
+.astro/
+
+# dependencias
+node_modules/
+
+# logs
+npm-debug.log*
+
+# entorno
+.env
+.env.*
+!.env.example
+
+# sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# capturas de Stitch (11 MB, solo referencia visual; no se usan en el sitio)
+_stitch/pantallas/

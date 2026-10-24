@@ -1,0 +1,91 @@
+---
+import '../styles/global.css';
+import jakartaLatin from '../assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2?url';
+import playfairLatin from '../assets/fonts/playfair-display-latin-wght-normal.woff2?url';
+import { site, mapsUrl } from '../config/site';
+import { t, pagePath, languages, type Lang, type PageKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  /** Página actual ('' = inicio). */
+  page?: PageKey;
+  title?: string;
+  description?: string;
+}
+
+const { lang, page = '' } = Astro.props;
+const d = t(lang);
+const title = Astro.props.title ?? d.meta.title;
+const description = Astro.props.description ?? d.meta.description;
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(pagePath(page, lang), siteUrl).href;
+const ogImage = new URL('/og-image.jpg', siteUrl).href;
+const socialLinks = Object.values(site.social).filter(Boolean);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'TouristAttraction'],
+  name: `${site.name} – ${site.shortName}`,
+  legalName: site.legalName,
+  description: d.meta.description,
+  url: new URL(pagePath('', lang), siteUrl).href,
+  image: ogImage,
+  telephone: `+${site.whatsapp}`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.locality,
+    addressLocality: site.address.municipality,
+    addressRegion: site.address.region,
+    addressCountry: site.address.countryCode,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+  hasMap: mapsUrl,
+  sameAs: socialLinks,
+};
+---
+
+<!doctype html>
+<html lang={lang === 'es' ? 'es-CO' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <link rel="preload" href={jakartaLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={playfairLatin} as="font" type="font/woff2" crossorigin />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {languages.map((l) => <link rel="alternate" hreflang={l} href={new URL(pagePath(page, l), siteUrl).href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(pagePath(page, 'es'), siteUrl).href} />
+
+    <meta name="theme-color" content="#0f3d2e" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={d.meta.ogAlt} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_CO' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_CO'} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen">
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-primary-container focus:px-4 focus:py-2 focus:text-on-primary"
+    >
+      {d.a11y.skipToContent}
+    </a>
+    <slot />
+  </body>
+</html>

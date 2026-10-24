@@ -1,0 +1,26 @@
+order: 3
+image: ../../assets/images/experiencias/pesca-trucha.jpg
+imageAlt:
+  es: Aguas del río corriendo entre piedras con musgo
+  en: River water flowing between mossy rocks
+duration:
+  es: 3 horas
+  en: 3 hours
+chip:
+  es: Río Téllez
+  en: Río Téllez
+badgeColor: primary
+category:
+  es: Vivencial y pesca
+  en: Hands-on & fishing
+title:
+  es: Pesca de trucha y cocina de río
+  en: Trout fishing & river cooking
+description:
+  es: Jornada de pesca deportiva y artesanal en estanques y aguas del río, con preparación guiada de trucha arcoíris asada con hierbas andinas.
+  en: A day of recreational and traditional fishing in ponds and river waters, with a guided rainbow trout cook-up using Andean herbs.
+includes:
+  - es: Equipo de pesca y carnada incluidos
+    en: Fishing gear and bait included
+  - es: Almuerzo con la trucha preparada
+    en: Lunch with your prepared trout

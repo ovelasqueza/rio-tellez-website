@@ -1,0 +1,24 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site } from '../config/site';
+import { buildGenericBookingMessage, buildWhatsAppUrl } from '../lib/whatsapp';
+import { t, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang);
+const href = buildWhatsAppUrl(site.whatsapp, buildGenericBookingMessage(lang));
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={`${d.a11y.whatsappFloat} ${d.a11y.newTab}`}
+  class="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-40 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-lg transition-transform hover:scale-105 active:scale-95 xl:right-6 xl:bottom-6"
+>
+  <Icon name="simple-icons:whatsapp" class="h-7 w-7" aria-hidden="true" />
+</a>

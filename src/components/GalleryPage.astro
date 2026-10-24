@@ -1,0 +1,303 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import PageShell from './PageShell.astro';
+import { galleryCategories } from '../config/gallery';
+import { getGalleryPhotos } from '../lib/gallery';
+import { t, sectionHref, homePath, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang);
+const g = d.gallery;
+const gp = d.galleryPage;
+
+const all = await getGalleryPhotos();
+const cover = all.find((p) => p.destacada) ?? all[0];
+
+// Versión grande de cada foto para el visor (WebP, tamaños según pantalla).
+const photos = await Promise.all(
+  all.map(async (p, index) => {
+    const widths = [800, 1200, 1600].filter((w) => w <= p.image.width);
+    const full = await getImage({
+      src: p.image,
+      widths: widths.length ? widths : [p.image.width],
+      format: 'webp',
+      quality: 75,
+    });
+    const title = p.title?.[lang] ?? '';
+    return {
+      ...p,
+      index,
+      title,
+      alt: p.alt?.[lang] ?? (title || `${g.altFallback} ${g.categories[p.category]}`),
+      fullSrc: full.src,
+      fullSrcset: full.srcSet.attribute,
+    };
+  }),
+);
+
+const counts = Object.fromEntries(galleryCategories.map((c) => [c, all.filter((p) => p.category === c).length]));
+---
+
+<PageShell lang={lang} page="galeria" title={gp.metaTitle} description={gp.metaDescription}>
+  <script is:inline slot="head">
+    document.documentElement.classList.add('js');
+  </script>
+
+  <!-- Portada a pantalla completa -->
+  <section aria-labelledby="galeria-page-title" class="relative flex h-[100svh] min-h-[560px] w-full items-end overflow-hidden bg-primary-container">
+    {
+      cover && (
+        <Picture
+          src={cover.image}
+          alt=""
+          formats={['avif', 'webp']}
+          widths={[480, 768, 1024, 1376].filter((w) => w <= cover.image.width)}
+          sizes="100vw"
+          quality={65}
+          loading="eager"
+          fetchpriority="high"
+          class="hero-kenburns absolute inset-0 h-full w-full object-cover"
+        />
+      )
+    }
+    <div class="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/20 to-primary/95"></div>
+
+    <div class="relative z-10 container-site flex flex-col gap-space-md pb-28 xl:pb-24">
+      <a href={homePath(lang)} class="inline-flex min-h-11 items-center gap-1 self-start font-label-lg text-label-lg tracking-wider text-primary-fixed uppercase hover:text-on-primary">
+        <Icon name="material-symbols:arrow-back" class="h-5 w-5" aria-hidden="true" />
+        {gp.back}
+      </a>
+      <p class="inline-flex items-center gap-2 self-start rounded-full bg-surface/15 px-3 py-1 backdrop-blur-md">
+        <Icon name="material-symbols:photo-camera-outline" class="h-4 w-4 text-secondary-fixed-dim" aria-hidden="true" />
+        <span class="font-label-caps text-label-caps tracking-widest text-primary-fixed uppercase">{gp.eyebrow}</span>
+      </p>
+      <h1
+        id="galeria-page-title"
+        class="max-w-3xl font-display-hero-mobile text-display-hero-mobile text-surface-container-lowest drop-shadow-md xl:font-display-hero xl:text-display-hero"
+      >
+        {gp.title}
+      </h1>
+      <p class="max-w-xl font-body-lg text-body-lg text-inverse-on-surface/90">{gp.text}</p>
+      <p class="font-label-caps text-label-caps tracking-widest text-primary-fixed uppercase">
+        <span class="font-display-hero-mobile text-headline-md text-surface">{all.length}</span>
+        {gp.photos} · {g.location}
+      </p>
+    </div>
+
+    <a
+      href="#fotos"
+      class="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 font-label-caps text-[10px] tracking-widest text-primary-fixed uppercase max-xl:bottom-24 max-xl:hidden"
+    >
+      {gp.scroll}
+      <Icon name="material-symbols:keyboard-arrow-down" class="h-6 w-6 animate-bounce" aria-hidden="true" />
+    </a>
+  </section>
+
+  <!-- Filtros fijos bajo el encabezado -->
+  <div id="fotos" class="sticky top-16 z-30 border-b border-surface-container bg-background/90 backdrop-blur-md xl:top-20">
+    <div
+      role="group"
+      aria-label={g.filtersLabel}
+      class="no-scrollbar container-site flex items-center gap-2 overflow-x-auto py-3"
+      data-gallery-filters
+    >
+      <button
+        type="button"
+        data-filter="all"
+        aria-pressed="true"
+        class="min-h-11 shrink-0 rounded-full bg-surface-container px-4 font-label-caps text-label-caps tracking-wider text-on-surface uppercase transition-colors hover:text-primary aria-pressed:bg-primary aria-pressed:text-on-primary"
+      >
+        {g.all} <span class="opacity-70">({all.length})</span>
+      </button>
+      {
+        galleryCategories.map((c) => (
+          <button
+            type="button"
+            data-filter={c}
+            aria-pressed="false"
+            class="min-h-11 shrink-0 rounded-full bg-surface-container px-4 font-label-caps text-label-caps tracking-wider text-on-surface uppercase transition-colors hover:text-primary aria-pressed:bg-primary aria-pressed:text-on-primary"
+          >
+            {g.categories[c]} <span class="opacity-70">({counts[c]})</span>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Mosaico -->
+  <section aria-label={gp.title} class="w-full bg-background py-space-lg lg:py-space-xl">
+    <ul
+      class="container-site grid grid-flow-dense auto-rows-[140px] grid-cols-2 gap-2 sm:auto-rows-[190px] sm:gap-3 md:grid-cols-3 xl:auto-rows-[230px] xl:grid-cols-4 xl:gap-4"
+      data-gallery-grid
+    >
+      {
+        photos.map((p) => (
+          <li
+            data-category={p.category}
+            data-reveal
+            class:list={[
+              'reveal relative overflow-hidden rounded-xl bg-surface-container shadow-sm',
+              p.destacada ? 'col-span-2 row-span-2' : p.orientation === 'portrait' ? 'row-span-2' : '',
+            ]}
+          >
+            <button
+              type="button"
+              class="group block h-full w-full cursor-zoom-in text-left"
+              aria-label={`${gp.open}: ${p.title || p.alt}`}
+              data-viewer-open={p.index}
+              data-full-src={p.fullSrc}
+              data-full-srcset={p.fullSrcset}
+              data-alt={p.alt}
+              data-title={p.title}
+              data-category-label={g.categories[p.category]}
+            >
+              <Picture
+                src={p.image}
+                alt={p.alt}
+                formats={['avif', 'webp']}
+                widths={[240, 360, 480, 720, 960].filter((w) => w <= p.image.width)}
+                sizes={p.destacada ? '(min-width: 1280px) 50vw, (min-width: 768px) 66vw, 100vw' : '(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw'}
+                quality={60}
+                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/10 to-transparent opacity-90 transition-opacity group-hover:opacity-100"></span>
+              <span class="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-0.5 p-2.5 sm:p-4">
+                <span class="font-label-caps text-[9px] tracking-widest text-secondary-fixed-dim uppercase sm:text-label-caps">{g.categories[p.category]}</span>
+                {p.title && <span class="font-headline-sm text-[14px] leading-tight text-surface sm:text-[18px]">{p.title}</span>}
+              </span>
+              <span class="pointer-events-none absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-surface/20 text-surface opacity-0 backdrop-blur-md transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                <Icon name="material-symbols:zoom-in" class="h-5 w-5" aria-hidden="true" />
+              </span>
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="container-site hidden py-space-xl text-center font-body-lg text-body-lg text-on-surface-variant" data-gallery-empty>{gp.empty}</p>
+  </section>
+
+  <!-- Invitación a reservar -->
+  <section class="w-full bg-primary-container py-space-xl text-on-primary lg:py-24">
+    <div class="container-site flex flex-col items-center gap-space-md text-center">
+      <Icon name="material-symbols:nature-people-outline" class="h-10 w-10 text-tertiary-fixed" aria-hidden="true" />
+      <h2 class="max-w-2xl font-headline-md text-headline-md text-surface lg:font-headline-lg lg:text-headline-lg">{g.ctaTitle}</h2>
+      <p class="max-w-xl font-body-md text-body-md text-on-primary-container lg:text-body-lg">{g.ctaText}</p>
+      <a
+        href={sectionHref('reservas', lang)}
+        class="flex min-h-12 items-center justify-center gap-2 rounded-lg bg-secondary px-8 py-3 font-label-lg text-label-lg tracking-wider text-on-secondary uppercase shadow-md transition-all hover:-translate-y-0.5 hover:bg-on-secondary-fixed-variant"
+      >
+        <Icon name="material-symbols:calendar-month-outline" class="h-5 w-5" aria-hidden="true" />
+        {g.ctaButton}
+      </a>
+    </div>
+  </section>
+
+  <!-- Visor a pantalla completa -->
+  <dialog
+    id="visor"
+    aria-label={gp.viewer}
+    class="m-0 h-[100dvh] max-h-none w-screen max-w-none overflow-hidden bg-primary p-0 text-surface backdrop:bg-black/80"
+    data-viewer
+  >
+    <div class="flex h-full w-full flex-col">
+      <div class="flex items-center justify-between px-3 pt-[calc(env(safe-area-inset-top)+0.5rem)] pb-2 sm:px-6">
+        <span class="font-label-caps text-label-caps tracking-widest text-primary-fixed" aria-live="polite" data-viewer-counter></span>
+        <button
+          type="button"
+          class="flex h-11 w-11 items-center justify-center rounded-full bg-surface/10 text-surface hover:bg-surface/20"
+          aria-label={gp.close}
+          data-viewer-close
+        >
+          <Icon name="material-symbols:close" class="h-6 w-6" aria-hidden="true" />
+        </button>
+      </div>
+
+      <figure class="relative flex min-h-0 flex-1 touch-pan-y items-center justify-center px-2 sm:px-20" data-viewer-stage>
+        <img alt="" class="viewer-img max-h-full max-w-full rounded-lg object-contain shadow-2xl select-none" data-viewer-img draggable="false" />
+        <button
+          type="button"
+          class="absolute top-1/2 left-2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-surface/10 text-surface hover:bg-surface/25 sm:flex"
+          aria-label={gp.prev}
+          data-viewer-prev
+        >
+          <Icon name="material-symbols:arrow-back-ios-new" class="h-6 w-6" aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          class="absolute top-1/2 right-2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-surface/10 text-surface hover:bg-surface/25 sm:flex"
+          aria-label={gp.next}
+          data-viewer-next
+        >
+          <Icon name="material-symbols:arrow-forward-ios" class="h-6 w-6" aria-hidden="true" />
+        </button>
+      </figure>
+
+      <figcaption class="flex flex-col items-center gap-0.5 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+1rem)] text-center">
+        <span class="font-label-caps text-label-caps tracking-widest text-secondary-fixed-dim uppercase" data-viewer-category></span>
+        <span class="font-headline-sm text-headline-sm text-surface" data-viewer-title></span>
+        <span class="mt-1 flex gap-6 sm:hidden">
+          <button type="button" class="flex h-11 w-11 items-center justify-center rounded-full bg-surface/10" aria-label={gp.prev} data-viewer-prev>
+            <Icon name="material-symbols:arrow-back-ios-new" class="h-5 w-5" aria-hidden="true" />
+          </button>
+          <button type="button" class="flex h-11 w-11 items-center justify-center rounded-full bg-surface/10" aria-label={gp.next} data-viewer-next>
+            <Icon name="material-symbols:arrow-forward-ios" class="h-5 w-5" aria-hidden="true" />
+          </button>
+        </span>
+      </figcaption>
+    </div>
+  </dialog>
+</PageShell>
+
+<style>
+  /* Aparición suave al hacer scroll (solo con JavaScript activo). */
+  :global(html.js) .reveal {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  :global(html.js) .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Movimiento lento de la foto de portada. */
+  .hero-kenburns {
+    animation: kenburns 18s ease-out both;
+  }
+  @keyframes kenburns {
+    from {
+      transform: scale(1.12);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .viewer-img {
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .reveal {
+      opacity: 1;
+      transform: none;
+    }
+    .hero-kenburns {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { initGalleryPage } from '../scripts/gallery-page';
+  initGalleryPage();
+</script>

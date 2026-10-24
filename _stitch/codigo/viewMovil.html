@@ -1,0 +1,679 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type"><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#00261a", "on-tertiary-fixed-variant": "#2c4f20", "surface-container-high": "#f7e6cd", "on-primary-fixed-variant": "#234f3f", "tertiary-fixed-dim": "#a9d295", "error": "#ba1a1a", "outline-variant": "#c0c8c3", "tertiary-fixed": "#c4eeaf", "background": "#fff8f3", "surface": "#fff8f3", "tertiary-container": "#1b3d10", "surface-container": "#fdecd2", "primary-container": "#0f3d2e", "on-secondary-fixed-variant": "#891d13", "on-surface-variant": "#414944", "surface-dim": "#e8d8bf", "on-error": "#ffffff", "inverse-primary": "#a2d1bb", "primary-fixed-dim": "#a2d1bb", "surface-container-lowest": "#ffffff", "on-secondary": "#ffffff", "on-tertiary": "#ffffff", "inverse-on-surface": "#ffefd7", "surface-container-low": "#fff2e0", "secondary-fixed": "#ffdad4", "secondary": "#aa3528", "inverse-surface": "#392f1e", "on-tertiary-container": "#82a970", "primary-fixed": "#beedd7", "outline": "#717974", "on-tertiary-fixed": "#042100", "on-secondary-container": "#6f0804", "on-background": "#221a0b", "secondary-fixed-dim": "#ffb4a8", "on-surface": "#221a0b", "tertiary": "#052700", "on-primary-fixed": "#002116", "error-container": "#ffdad6", "surface-container-highest": "#f1e0c7", "on-secondary-fixed": "#410000", "on-primary": "#ffffff", "surface-bright": "#fff8f3", "on-error-container": "#93000a", "secondary-container": "#fe735f", "on-primary-container": "#7ba894", "surface-variant": "#f1e0c7", "surface-tint": "#3b6756" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "gutter": "1.5rem", "space-xs": "0.25rem", "margin-mobile": "1.25rem", "space-sm": "0.5rem", "space-xl": "2.5rem", "gutter-mobile": "1rem", "space-md": "1rem", "space-lg": "1.5rem", "margin": "3rem" }, fontFamily: { "caption": ["Plus Jakarta Sans"], "headline-md": ["Playfair Display"], "label-caps": ["Plus Jakarta Sans"], "headline-lg": ["Playfair Display"], "body-md": ["Plus Jakarta Sans"], "display-hero": ["Playfair Display"], "body-lg": ["Plus Jakarta Sans"], "subhead": ["Plus Jakarta Sans"], "display-hero-mobile": ["Playfair Display"], "headline-sm": ["Playfair Display"], "headline-lg-mobile": ["Playfair Display"], "label-lg": ["Plus Jakarta Sans"] }, fontSize: { "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "400" }], "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "500" }], "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.14em", "fontWeight": "700" }], "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "500" }], "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-hero": ["56px", { "lineHeight": "68px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }], "subhead": ["18px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "500" }], "display-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-sm": ["22px", { "lineHeight": "30px", "letterSpacing": "0em", "fontWeight": "600" }], "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.06em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen antialiased"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><div class="h-9 w-9 rounded-lg bg-surface-container-lowest p-0.5 shadow-sm flex items-center justify-center overflow-hidden shrink-0"><img alt="Río Téllez - ATURTELLEZCOOP Logo" class="h-full w-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBccU2AiW3AYgyrAwfrZzymLW2LJ2Ze73Ukk1DnvdbycV9X6VUydmgMNBJyr8HzeVJjSMx8LdPuPuBQu6tLYicBZEvDrqI-wIdbD0Xet0h20uw366ZSaWYNnPDxz2KTfsd42lQnxxzsCf-O6-O05CvVd2655kAVitiwiIuJdi9auHJk6u0aB5LC9uW3WvQQThLRkXwQWFYW7kwjrOxFE8m1FL6x4h0OnMC4ADDwE7IihaCspz_uN4yCaJ1Dpm-_QUT3Rmg"></div><div class="flex flex-col"><span class="font-headline-sm text-[16px] text-primary font-semibold leading-none">RÍO TÉLLEZ</span><span class="font-label-caps text-[9px] text-on-surface-variant uppercase tracking-wider mt-0.5">ATURTELLEZCOOP · Nariño</span></div></div><div class="flex items-center gap-space-xs"><div aria-label="Selector de idioma" class="flex items-center bg-surface-container rounded-full p-0.5" role="group"><button aria-pressed="true" class="min-w-[32px] h-7 px-1.5 rounded-full bg-primary-container text-on-primary font-label-caps text-label-caps transition-colors flex items-center justify-center" type="button">ES</button><button aria-pressed="false" class="min-w-[32px] h-7 px-1.5 rounded-full text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps transition-colors flex items-center justify-center" type="button">EN</button></div><button aria-label="Abrir menú territorial" class="min-w-[44px] min-h-[44px] flex items-center justify-center text-primary-container hover:text-primary transition-colors"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 bg-surface"><div class="flex flex-col w-full">
+<!-- 1. Mobile Hero Section -->
+<section class="relative w-full overflow-hidden bg-primary-container text-surface-container-lowest">
+<div class="absolute inset-0 bg-cover bg-center opacity-45 mix-blend-overlay" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_Kq7OtMAzgCyk33EsmQMTQQFAyghnDyiTy8p6EXytUCuf-WgLebgIjNrQFi3pv7sVmFCbqzHnjdAvPi7VwXJdnjUr-nwlhiURBYG2x0Nj1_VzPVvBloDwTomnWzupbSX59DlnOk0anK4CRKkG9CS4r8y_GO7gG9y2u1CnSbYlugBfGGVtJFFWMZg44h6Y3mTGNgtDZfgqWtDbLSK2b5swDhEXxbvBasAt6NyTMrCRbgrZ6z584lULlw');"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary-container/90 to-primary"></div>
+<div class="relative z-10 px-margin-mobile pt-space-lg pb-space-xl flex flex-col gap-space-md">
+<!-- Badge Origin -->
+<div class="inline-flex items-center gap-1.5 self-start px-space-sm py-1 rounded-full bg-surface/15 backdrop-blur-md shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-primary-fixed tracking-wider uppercase">ATURTELLEZCOOP · FUNES, NARIÑO · VEREDA LA VEGA</span>
+</div>
+<!-- Headline & Subhead -->
+<div class="flex flex-col gap-space-xs">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-surface-container-lowest font-medium leading-tight">
+Donde el río esculpe el alma del café
+</h1>
+<p class="font-body-md text-body-md text-on-primary-container leading-relaxed pt-1">
+Familias y comunidades campesinas unidas en torno al Cañón del Río Téllez en Funes, Nariño. Cuidamos el agua, la flora y fauna nativa mientras cultivamos café especial de altura y compartimos el agroturismo comunitario sostenible.
+</p>
+</div>
+<!-- Dual Mobile CTAs -->
+<div class="flex flex-col gap-2.5 pt-space-xs">
+<a class="min-h-[48px] px-space-md py-3 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform" href="#reservas">
+<span class="material-symbols-outlined text-[20px]">hiking</span>
+Reservar Experiencia
+</a>
+<a class="min-h-[48px] px-space-md py-3 rounded-lg bg-surface text-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-colors" href="#linea-cafe">
+<span class="material-symbols-outlined text-[20px]">local_cafe</span>
+Conocer Nuestro Café
+</a>
+</div>
+</div>
+</section>
+
+<!-- 2. Nuestra Esencia & Pilares -->
+<section class="w-full px-margin-mobile py-space-xl flex flex-col gap-space-lg bg-surface-container-low" id="origen">
+<div class="flex flex-col gap-1">
+<div class="inline-flex items-center gap-1.5 text-secondary mb-1">
+<span class="material-symbols-outlined text-[18px]">nature</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest">Nuestra Esencia</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary font-medium leading-snug">
+Naturaleza que fluye en cada taza
+</h2>
+<div class="p-space-md rounded-xl bg-surface border border-surface-container shadow-sm mt-2 text-on-surface-variant space-y-2">
+<p class="font-body-md text-body-md font-semibold text-primary leading-relaxed">
+COOPERATIVA MULTIACTIVA AGROTURÍSTICA DEL RÍO TÉLLEZ – ATURTELLEZCOOP <span class="text-caption font-normal block">(NIT: 901.851.272-6) · Vereda La Vega, sector Puente Río Téllez, Funes, Nariño.</span>
+</p>
+<p class="font-body-md text-body-md leading-relaxed">
+Nuestras familias campesinas son guardianas activas de las fuentes hídricas, los bosques de niebla y la biodiversidad andina, integrando la producción de café especial con agroturismo comunitario regenerativo.
+</p>
+</div>
+</div>
+
+<!-- 4 Pilares matching Desktop -->
+<div class="flex flex-col gap-space-sm">
+<!-- 01 Cuidado del Agua -->
+<div class="p-space-md rounded-xl bg-surface shadow-sm flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">water</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-secondary font-semibold">01 / RECURSO VITAL</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Cuenca Río Téllez</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-0.5">Cuidado del Agua</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1 leading-normal">
+Protegemos las fuentes hídricas y el río cristalino que desciende de los páramos andinos, promoviendo cosechas limpias sin contaminación.
+</p>
+</div>
+</div>
+<!-- 02 Flora y Fauna -->
+<div class="p-space-md rounded-xl bg-surface shadow-sm flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">forest</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-secondary font-semibold">02 / BIODIVERSIDAD</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Santuario Silvestre</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-0.5">Flora y Fauna</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1 leading-normal">
+Conservamos corredores ecológicos donde habitan colibríes de montaña, tangaras y orquídeas nativas en equilibrio con el cafetal.
+</p>
+</div>
+</div>
+<!-- 03 Café Campesino -->
+<div class="p-space-md rounded-xl bg-surface shadow-sm flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">grain</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-secondary font-semibold">03 / CALIDAD</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">1.900+ msnm</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-0.5">Café Campesino</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1 leading-normal">
+Cultivado en laderas de alta pendiente por familias asociadas de Funes, con recolección manual de granos en maduración óptima.
+</p>
+</div>
+</div>
+<!-- 04 Comunidad Viva -->
+<div class="p-space-md rounded-xl bg-surface shadow-sm flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-primary-container text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">groups</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-secondary font-semibold">04 / ASOCIATIVIDAD</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">ATURTELLEZCOOP</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-0.5">Comunidad Viva</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1 leading-normal">
+Cooperativa multiactiva que genera economía campesina justa mediante agroturismo, cocina típica y desarrollo rural digno.
+</p>
+</div>
+</div>
+</div>
+<!-- Sensory Strip -->
+<div class="p-space-md rounded-xl bg-primary-container text-on-primary flex flex-col gap-2 shadow-sm">
+<div class="flex items-center gap-2 text-tertiary-fixed">
+<span class="material-symbols-outlined text-[22px]">spa</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-surface">Nariño Terroir Certified · Cosecha 2024</span>
+</div>
+<span class="font-headline-sm text-[16px] text-surface font-semibold">Un solo origen, infinitos matices sensoriales</span>
+<p class="font-caption text-caption text-on-primary-container">Trazabilidad completa desde el lote familiar de recolección hasta la molienda final.</p>
+</div>
+</section>
+
+<!-- 3. Rutas Vivas por el Cañón (4 Updated Itineraries Matching Desktop) -->
+<section class="w-full bg-background py-space-xl px-margin-mobile flex flex-col gap-space-md" id="rutas">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-secondary font-bold uppercase tracking-widest">Agroturismo &amp; Naturaleza</span>
+<h2 class="font-headline-md text-headline-md text-primary font-medium">Rutas Vivas por el Cañón</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+Adéntrese en los cafetales colgantes guiado por familias productoras locales. Viva la cosecha, la ciencia del tueste y la paz de los senderos andinos.
+</p>
+</div>
+
+<div class="flex flex-col gap-space-md pt-space-xs">
+<!-- Route 1: Caminatas Ecológicas & Cascadas -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-44 relative overflow-hidden">
+<img alt="Caminata ecológica cañón y cascadas" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNfrLyg2ehDJ-tNHaoabGF6fOyIDSthnD2Wt4r5vq6HpE6uWoHo7QVuFGBEt306iQ3btUejlO3dUp3lUeR934j28wjH4C0bdYWM2CTrx_krKDwPc-HsiUKhGUXWwSNMtyQauVfpmau7cXC4liL-f9vxG8g29tyF_8BHgs8JuWc3sNzZbzg6r0gHSleNXkK_Xe2RWatnnCayca4GM32zWuR-Ch_vA5vdYNObjFEvNlaoNTu6Kv0e0kIAQ">
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-label-caps text-label-caps uppercase">4 Horas</span>
+</div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-full bg-surface-container/90 text-on-surface font-label-caps text-[10px] font-semibold">1.920 msnm</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-sm">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest block mb-0.5">Senderismo &amp; Agua</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Caminatas Ecológicas &amp; Cascadas</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1 leading-relaxed">Ruta por los senderos del cañón bordeando el Río Téllez, visita a cascadas naturales y miradores con avistamiento de aves andinas.</p>
+<div class="space-y-1 mt-2 text-caption font-caption text-on-surface-variant">
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span><span class="">Guianza comunitaria local</span></div>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span><span class="">Pozas naturales y caídas de agua</span></div>
+</div>
+</div>
+<div class="pt-3 border-t border-surface-container flex items-center justify-between">
+<div>
+<span class="font-caption text-[11px] text-on-surface-variant block uppercase">Por Persona</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">$85.000 <span class="text-caption font-normal">COP</span></span>
+</div>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-wider active:scale-95 transition-transform" onclick="selectExperienceMobile('Caminatas Ecológicas &amp; Cascadas', 85000)" type="button">Elegir</button>
+</div>
+</div>
+</div>
+
+<!-- Route 2: Almuerzos Campesinos al Fogón -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-44 relative overflow-hidden">
+<img alt="Almuerzo campesino al fogón de leña" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKn75voBgKSgRExlR1FJyir7NYkIElm2wi_34b8iB7g_VJjR0DJp21IUW-kV5hsA16opK3xs8y5K8zGJ2N1l2041zIb2AQl3Mr-KipKlRp7-LzaaUFLr-Yw4146Pvhy3jEz6HtVYz1gDvVbF_rXKJhxxCV1c9QWGB21F_ynOpKkUn5YN_nFA46rL4U1Fn087vGOqzhT1A6-xTSDLx_OYEGpvxsnzKU81u0dcChusOh8_AVOhQ9fk_iTQ">
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase">Gastronomía</span>
+</div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-full bg-surface-container/90 text-on-surface font-label-caps text-[10px] font-semibold">Cocina Viva</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-sm">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest block mb-0.5">Tradición Culinaria</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Almuerzos Campesinos al Fogón</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1 leading-relaxed">Sabores auténticos nariñenses cocinados a fuego de leña por las familias asociadas: sancocho campesino, envueltos de choclo y cuajada fresca.</p>
+<div class="space-y-1 mt-2 text-caption font-caption text-on-surface-variant">
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span><span class="">Ingredientes 100% agroecológicos</span></div>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span><span class="">Compartir en cocina tradicional</span></div>
+</div>
+</div>
+<div class="pt-3 border-t border-surface-container flex items-center justify-between">
+<div>
+<span class="font-caption text-[11px] text-on-surface-variant block uppercase">Por Persona</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">$55.000 <span class="text-caption font-normal">COP</span></span>
+</div>
+<button class="px-4 py-2 rounded-lg bg-secondary text-on-secondary font-label-caps text-label-caps uppercase tracking-wider active:scale-95 transition-transform" onclick="selectExperienceMobile('Almuerzos Campesinos al Fogón', 55000)" type="button">Elegir</button>
+</div>
+</div>
+</div>
+
+<!-- Route 3: Pesca de Trucha & Cocina de Río -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-44 relative overflow-hidden">
+<img alt="Pesca de trucha fresca y gastronomía de río" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9hNDhGaTZLQM_vh1GmAtfymPgMYErFKYW-Amj-dZ5SGyATSOg3MyXXxq-W9dVht78SJOz4kRI9igtXC_-fmyx-vs1OH7lIo9Lon_UbsirVAI--wPXOfS3TrBbvh4BWxBma5n0aC1pcKVfYa6A52thZ4qrZzkopvg1M9TVtR5ukyBCo_lLiZh2lOxsQaJNKorTI4rqt2iSPMPdcxpcBRiKWs9Sgt-z_IbNey_JkIVuu1CJWWhK5laMLQ">
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-label-caps text-label-caps uppercase">3 Horas</span>
+</div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-full bg-surface-container/90 text-on-surface font-label-caps text-[10px] font-semibold">Río Téllez</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-sm">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest block mb-0.5">Vivencial &amp; Pesca</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Pesca de Trucha &amp; Cocina de Río</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1 leading-relaxed">Jornada de pesca deportiva y artesanal en estanques y aguas del río, con preparación guiada de trucha arcoíris asada con hierbas andinas.</p>
+<div class="space-y-1 mt-2 text-caption font-caption text-on-surface-variant">
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span><span class="">Equipo de pesca y carnada incluida</span></div>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span><span class="">Almuerzo con trucha preparada</span></div>
+</div>
+</div>
+<div class="pt-3 border-t border-surface-container flex items-center justify-between">
+<div>
+<span class="font-caption text-[11px] text-on-surface-variant block uppercase">Por Persona</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">$95.000 <span class="text-caption font-normal">COP</span></span>
+</div>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-wider active:scale-95 transition-transform" onclick="selectExperienceMobile('Pesca de Trucha &amp; Cocina de Río', 95000)" type="button">Elegir</button>
+</div>
+</div>
+</div>
+
+<!-- Route 4: Ruta del Café Campesino -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-44 relative overflow-hidden">
+<img alt="Ruta del café campesino y conservación" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_6iJaaPZLCOhr-pcyUWBIZ3GAHQoRF7US2RNXdl_24W1HsGjSIurkqZw7rfB1Jaj-VQyCsWTG-oy4PQGv-K83zzjAlgGsLaJQiM5zpZvnjd9RCtsDqtD-6Gh30eHvvGTT22clkWxk8mVfCX6XuBWcu_HTpJ6vzrHMOFpSgD2N0UdCjAhcMU1_FdG73cHurrp34PhMREaRW0lbCYT3mS3J5PLCU-gHIXloonwkAKG86x9vATJcC0h8og">
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase">Día Completo</span>
+</div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-full bg-surface-container/90 text-on-surface font-label-caps text-[10px] font-semibold">2.050 msnm</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-sm">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest block mb-0.5">Conservación &amp; Café</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Ruta del Café Campesino</h3>
+<p class="font-caption text-caption text-on-surface-variant mt-1 leading-relaxed">Recorrido por cafetales bajo sombra y parcelas agroecológicas, avistamiento de flora y fauna silvestre, taller de tueste y cata campesina.</p>
+<div class="space-y-1 mt-2 text-caption font-caption text-on-surface-variant">
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span><span class="">Muestra de café 250g de regalo</span></div>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span><span class="">Cata sensorial de microlotes</span></div>
+</div>
+</div>
+<div class="pt-3 border-t border-surface-container flex items-center justify-between">
+<div>
+<span class="font-caption text-[11px] text-on-surface-variant block uppercase">Por Persona</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">$160.000 <span class="text-caption font-normal">COP</span></span>
+</div>
+<button class="px-4 py-2 rounded-lg bg-secondary text-on-secondary font-label-caps text-label-caps uppercase tracking-wider active:scale-95 transition-transform" onclick="selectExperienceMobile('Ruta del Café Campesino', 160000)" type="button">Elegir</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 4. Formulario de Reserva Móvil -->
+<section class="w-full bg-surface-container-high py-space-xl px-margin-mobile flex flex-col gap-space-md" id="reservas">
+<div class="flex flex-col gap-1">
+<div class="inline-flex items-center gap-1.5 text-secondary mb-1">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest">Reservas Directas</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary font-medium">Planee su Inmersión en Nariño</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+Grupos reducidos de máximo 8 personas para garantizar un impacto ambiental mínimo y una experiencia sensorial profunda. Traslado disponible desde San Juan de Pasto o Ipiales.
+</p>
+<!-- Trust Badges -->
+<div class="space-y-2 pt-2">
+<div class="flex items-start gap-2.5 bg-surface p-3 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">verified</span>
+<div>
+<strong class="font-label-lg text-label-lg text-primary block">Cancelación Flexible</strong>
+<span class="font-caption text-caption text-on-surface-variant">Reembolso del 100% notificando hasta 48 horas previas al viaje.</span>
+</div>
+</div>
+<div class="flex items-start gap-2.5 bg-surface p-3 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">translate</span>
+<div>
+<strong class="font-label-lg text-label-lg text-primary block">Guías Bilingües Oficiales</strong>
+<span class="font-caption text-caption text-on-surface-variant">Acompañamiento en Español e Inglés sin costo adicional.</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Booking Form Card -->
+<div class="p-space-md rounded-xl bg-surface shadow-md flex flex-col gap-space-md mt-2">
+<div class="flex items-center justify-between border-b border-surface-container pb-2">
+<h3 class="font-headline-sm text-headline-sm text-primary">Formulario de Reserva</h3>
+<span class="font-caption text-caption text-secondary font-semibold">Cupos Limitados</span>
+</div>
+
+<div class="flex flex-col gap-1.5">
+<label class="font-label-caps text-label-caps text-on-surface font-semibold uppercase" for="mobileRouteSelect">Seleccione la Experiencia</label>
+<div class="relative">
+<select class="w-full min-h-[48px] px-space-sm bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="mobileRouteSelect" onchange="updateTotalMobile()">
+<option selected="" value="85000">Caminatas Ecológicas &amp; Cascadas — $85.000 COP</option>
+<option value="55000">Almuerzos Campesinos al Fogón — $55.000 COP</option>
+<option value="95000">Pesca de Trucha &amp; Cocina de Río — $95.000 COP</option>
+<option value="160000">Ruta del Café Campesino — $160.000 COP</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-3 top-3 text-[22px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-caps text-label-caps text-on-surface font-semibold uppercase" for="mobileExpeditionDate">Fecha</label>
+<input class="w-full min-h-[48px] px-space-xs bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="mobileExpeditionDate" type="date" value="2025-04-15">
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-caps text-label-caps text-on-surface font-semibold uppercase" for="mobileDepartureTime">Horario</label>
+<div class="relative">
+<select class="w-full min-h-[48px] px-space-xs bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="mobileDepartureTime">
+<option value="06:30">06:30 AM (Amanecer)</option>
+<option value="08:30">08:30 AM (Mañana)</option>
+<option value="13:30">01:30 PM (Tarde)</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2 top-3 text-[18px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low shadow-sm">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface font-semibold uppercase">Número de Viajeros</span>
+<span class="font-caption text-caption text-on-surface-variant">Máximo 8 cupos</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="w-11 h-11 rounded-lg bg-surface text-primary flex items-center justify-center font-subhead text-subhead active:scale-90 transition-transform shadow-sm" onclick="adjustTravelersMobile(-1)" type="button">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<span class="font-headline-sm text-headline-sm text-primary font-bold min-w-[24px] text-center" id="mobileTravelerCount">2</span>
+<button class="w-11 h-11 rounded-lg bg-surface text-primary flex items-center justify-center font-subhead text-subhead active:scale-90 transition-transform shadow-sm" onclick="adjustTravelersMobile(1)" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+
+<div class="flex flex-col gap-space-xs">
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface font-semibold uppercase" for="mobileLeadName">Nombre Completo</label>
+<input class="w-full min-h-[48px] px-space-sm bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="mobileLeadName" placeholder="p. ej. Mariana Gómez" type="text">
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface font-semibold uppercase" for="mobileLeadContact">Correo Electrónico / WhatsApp</label>
+<input class="w-full min-h-[48px] px-space-sm bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="mobileLeadContact" placeholder="+57 310 000 0000" type="text">
+</div>
+</div>
+
+<div class="pt-2 flex flex-col gap-space-sm">
+<div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between">
+<div>
+<span class="font-caption text-[11px] text-on-surface-variant block uppercase">Total Estimado (Sin anticipo)</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold" id="mobileBookingTotal">$170.000 COP</span>
+</div>
+<span class="material-symbols-outlined text-[28px] text-tertiary">payments</span>
+</div>
+<button class="min-h-[52px] px-space-md py-3 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform" onclick="submitBookingMobile()" type="button">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+Confirmar Pre-Reserva Gratuita
+</button>
+<span class="font-caption text-caption text-center text-on-surface-variant">Sin cobro anticipado · Pago seguro el día de tu llegada</span>
+</div>
+</div>
+</section>
+
+<!-- 5. Cómo Llegar a ATURTELLEZCOOP (Location Section Synchronized) -->
+<section class="w-full bg-surface py-space-xl px-margin-mobile flex flex-col gap-space-md border-t border-surface-container" id="galeria">
+<div class="flex flex-col gap-1 text-center">
+<div class="inline-flex items-center justify-center gap-1.5 text-secondary mb-1">
+<span class="material-symbols-outlined text-[18px]">photo_library</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest">Memoria Visual Campesina</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary font-medium leading-snug">Registro Fotográfico del Cañón</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+Descubra la belleza natural, el trabajo agrícola y las aguas cristalinas protegidas por las familias de ATURTELLEZCOOP en Funes, Nariño.
+</p>
+</div>
+
+<!-- Horizontal Category Chips -->
+<div class="flex items-center gap-2 overflow-x-auto pb-2 -mx-margin-mobile px-margin-mobile" style="scrollbar-width:none;">
+<button type="button" class="px-3 py-1.5 rounded-full bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-wider shrink-0 shadow-sm">Todos</button>
+<button type="button" class="px-3 py-1.5 rounded-full bg-surface-container text-on-surface font-label-caps text-label-caps uppercase tracking-wider shrink-0 hover:text-primary transition-colors">Río Téllez</button>
+<button type="button" class="px-3 py-1.5 rounded-full bg-surface-container text-on-surface font-label-caps text-label-caps uppercase tracking-wider shrink-0 hover:text-primary transition-colors">Café</button>
+<button type="button" class="px-3 py-1.5 rounded-full bg-surface-container text-on-surface font-label-caps text-label-caps uppercase tracking-wider shrink-0 hover:text-primary transition-colors">Senderos</button>
+<button type="button" class="px-3 py-1.5 rounded-full bg-surface-container text-on-surface font-label-caps text-label-caps uppercase tracking-wider shrink-0 hover:text-primary transition-colors">Gastronomía</button>
+</div>
+
+<!-- Gallery Grid (Mobile Friendly 2-Column Grid) -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<!-- Card 1: Cañón y cascadas -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-40 relative overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1UzqyMHePWMrICnC5K3RaNRM53r6WxL_p8zMmw_q7X9BBuZzmeXeGFb2ajSfAPVKIf5q9gwx8q3ZI9WBPQVrSi3aj9rqdrVr0U_u4l7aZsmjNiLRLjQ0LoCE7YERkNBDW_HgpdSfzPgaU6JfFBYGAZtW2aDVrabkm8CZ9yV88rx1mulrVMZZpW9_FAyhpfGGJ5_p7s_Z5ez15D1bmO81xqrb1F2VFg5YEKCOUrr0aLU9Vza8GaoMdGhmhWr" alt="Cañón del Río Téllez y cascadas naturales">
+<span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-primary/90 text-on-primary font-label-caps text-[9px] uppercase tracking-wider">Cañón</span>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-1 gap-1">
+<div>
+<span class="font-label-caps text-[9px] text-secondary uppercase block">Vereda La Vega · Funes</span>
+<h4 class="font-headline-sm text-[14px] text-primary font-semibold leading-tight mt-0.5">Cañón &amp; Cascadas</h4>
+</div>
+<p class="font-caption text-[11px] text-on-surface-variant leading-tight">Aguas que nacen en las altas cumbres nariñenses.</p>
+</div>
+</div>
+
+<!-- Card 2: Aguas cristalinas del Río Téllez -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-40 relative overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHcy52CIi-GsiAI8cHOsrU0BcF3JNMA2Aff8Y070NQdOsQe4NtiZhjJZgzOo7cE8TlicEMw3GZf82KHUf887DQdXZRurrpXqBTpVVQMctQPekbjw0_BVI01WgpEXZhzjddJoRcYeNg1RunOuOJeQmh1KDD3_TRemcxJlghkolLMl3DJ5q6JrxT1Ldd7mJU2Md4eNar3CmOoIQTOaa2fgsi7DAmh95Z6o0GFHmBUqsRRXdygIujlLEDcA" alt="Aguas cristalinas del Río Téllez">
+<span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-primary/90 text-on-primary font-label-caps text-[9px] uppercase tracking-wider">Río</span>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-1 gap-1">
+<div>
+<span class="font-label-caps text-[9px] text-secondary uppercase block">Vereda La Vega · Funes</span>
+<h4 class="font-headline-sm text-[14px] text-primary font-semibold leading-tight mt-0.5">Río Téllez Cristalino</h4>
+</div>
+<p class="font-caption text-[11px] text-on-surface-variant leading-tight">Corredores hídricos protegidos por la comunidad.</p>
+</div>
+</div>
+
+<!-- Card 3: Cosecha campesina en Funes -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-40 relative overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlZx5JfgQIvVEO9H0-BIaEVCgDGgqjmgByrcB5-Z6fPUfd5rZt1ZW4OZZYvXHPDsumOinYNtSA0Zbp5_kxUHxCYzd93ZusVyMOG4OTBgXoa7tL99Z--dfm6xKoOiMJ1l-bDS6sE7FqxrHB4mCZrFNHZc5E0bKoCNnL6OixL09OS97kY6VnV9CFACExJpCGFxSZCPxRDSqIiQhCBRR9IdQPJvsNCyvNMoH6d0fp5yHOUsnU1LDv38nlpA" alt="Cosecha campesina de café en laderas andinas">
+<span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-[9px] uppercase tracking-wider">Café</span>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-1 gap-1">
+<div>
+<span class="font-label-caps text-[9px] text-secondary uppercase block">Vereda La Vega · Funes</span>
+<h4 class="font-headline-sm text-[14px] text-primary font-semibold leading-tight mt-0.5">Cosecha Campesina</h4>
+</div>
+<p class="font-caption text-[11px] text-on-surface-variant leading-tight">Granos recolectados a mano en su punto óptimo.</p>
+</div>
+</div>
+
+<!-- Card 4: Senderismo en cumbres -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-40 relative overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwWkPchteaTYmmYYKUnmGClpSJgNCSxDUAduME3_YSFAYZEcBi_0F-9WcJFZlwif1mWYpI3qABIyNrtjxcuIQt8WNbqmKEYceIuhEd7pEHgsrRoFLs0KIZJb8wRXvNa9nCFaxSSI0OMMfM32VCeCSsNbAjK_QEnWm2ndEEbLPOWrMsj3baTMuSYdPvrZIhCd_N6NiTW_IQi3n939qor9_RrWbkzIgJwk5OoN-p0DRWcdr57QkwxjW68g" alt="Senderismo en cumbres y cañones andinos">
+<span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-primary/90 text-on-primary font-label-caps text-[9px] uppercase tracking-wider">Senderos</span>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-1 gap-1">
+<div>
+<span class="font-label-caps text-[9px] text-secondary uppercase block">Vereda La Vega · Funes</span>
+<h4 class="font-headline-sm text-[14px] text-primary font-semibold leading-tight mt-0.5">Rutas Andinas</h4>
+</div>
+<p class="font-caption text-[11px] text-on-surface-variant leading-tight">Caminatas con panorámicas imponentes del cañón.</p>
+</div>
+</div>
+
+<!-- Card 5: Almuerzo campesino y trucha -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-40 relative overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCw1x__garZDWikkH8kPjWAfnEg_VTgV1i-3Z7pryrERoRYhaoYkXMQl01etF--cRNPSWIgdz-QSZoHr3PACaEqm6wT7N8CXlVa3i6Wy1PdJSitSuQDsh69FgjxCRJFrn8UTyTJmsZG-XykOg7RhLLykYGNKP1ZeV38cg3iM9AfojcyyelU0swc22LI0qxra06Iq-TBwm6xNNTT6lXrYa7LU9Z30gJ4dIYMmSf0CABfH1wjDfuA4ECfQ" alt="Almuerzo campesino y trucha fresca al aire libre">
+<span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-[9px] uppercase tracking-wider">Cocina</span>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-1 gap-1">
+<div>
+<span class="font-label-caps text-[9px] text-secondary uppercase block">Vereda La Vega · Funes</span>
+<h4 class="font-headline-sm text-[14px] text-primary font-semibold leading-tight mt-0.5">Trucha al Fogón</h4>
+</div>
+<p class="font-caption text-[11px] text-on-surface-variant leading-tight">Gastronomía tradicional preparada con amor campesino.</p>
+</div>
+</div>
+
+<!-- Card 6: Café de origen -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container flex flex-col">
+<div class="h-40 relative overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VQ7eIE7LX14P88zgmERUWTegsLN5HZl23IM8zx2j6UtTKEnR_-7npxPNpbJ7o8Xjel-GbZ149_BRcfetaQHkSixdVfOp1zSCN6byjxNKZ2ml4ia9ZFTjC81n9fG-vlLCbSrWz9vpEg6UXS0GN4CKW45-zr_v7J_1II91Q-7KoqXlsD1ob3YnpMC7jQ_H6TE5-rM2MuR2jEAk04bg1_5fib_ItldhZq4zKfouzuZX9VPlyFgRy0MV6GJhf0" alt="Café de origen Río Téllez en grano">
+<span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-primary/90 text-on-primary font-label-caps text-[9px] uppercase tracking-wider">Origen</span>
+</div>
+<div class="p-2.5 flex flex-col justify-between flex-1 gap-1">
+<div>
+<span class="font-label-caps text-[9px] text-secondary uppercase block">Vereda La Vega · Funes</span>
+<h4 class="font-headline-sm text-[14px] text-primary font-semibold leading-tight mt-0.5">Café de Altura</h4>
+</div>
+<p class="font-caption text-[11px] text-on-surface-variant leading-tight">Café arábica de altura cultivado a 1.980 msnm.</p>
+</div>
+</div>
+</div>
+
+<!-- Quick CTA to Reservar Visita -->
+<div class="p-space-md rounded-xl bg-surface-container-low border border-surface-container flex flex-col items-center text-center gap-2 mt-1 shadow-sm">
+<span class="font-headline-sm text-[16px] text-primary font-semibold">¿Desea vivir estos paisajes en persona?</span>
+<p class="font-caption text-caption text-on-surface-variant">Reserve su cupo en grupos reducidos con guías campesinos locales de ATURTELLEZCOOP.</p>
+<a href="#reservas" class="w-full min-h-[44px] px-space-md py-2.5 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+Reservar Visita
+</a>
+</div>
+</section><section class="w-full bg-surface-container-high py-space-xl px-margin-mobile flex flex-col gap-space-md border-t border-surface-container" id="como-llegar">
+<div class="flex flex-col gap-1 text-center">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary block">UBICACIÓN &amp; ACCESO TERRITORIAL</span>
+<h2 class="font-headline-md text-headline-md text-primary font-medium">Cómo Llegar a ATURTELLEZCOOP</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+Vereda La Vega, sector Puente Río Téllez · Funes, Nariño, Colombia.<br>
+<span class="font-mono font-semibold text-primary text-[13px]">GPS: 1.0083266692228996, -77.43155836414786</span>
+</p>
+</div>
+
+<div class="flex flex-col gap-space-sm">
+<div class="p-space-md rounded-xl bg-surface shadow-sm flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[24px] shrink-0 mt-0.5">directions_car</span>
+<div>
+<strong class="font-label-lg text-label-lg text-primary block">Desde Pasto (aprox. 1h 30m)</strong>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5 leading-relaxed">Tomar la Carretera Panamericana Sur hacia Funes / Iles. Continuar por el desvío a la Vereda La Vega hasta el sector del Puente Río Téllez.</p>
+</div>
+</div>
+
+<div class="p-space-md rounded-xl bg-surface shadow-sm flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[24px] shrink-0 mt-0.5">explore</span>
+<div>
+<strong class="font-label-lg text-label-lg text-primary block">Desde Ipiales (aprox. 1h 15m)</strong>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5 leading-relaxed">Ruta hacia el norte por la vía Panamericana vía Funes. Transporte de la cooperativa y guías locales disponibles para coordinación previa.</p>
+</div>
+</div>
+
+<div class="p-space-md rounded-xl bg-primary-container text-on-primary flex items-start gap-3 shadow-sm">
+<span class="material-symbols-outlined text-[24px] text-tertiary-fixed shrink-0 mt-0.5">shield</span>
+<div>
+<span class="font-label-caps text-label-caps uppercase text-primary-fixed block font-bold">Comunidad Campesina Protectora</span>
+<p class="font-caption text-caption text-on-primary-container mt-0.5 leading-relaxed">Al visitarnos apoya de forma directa a las familias campesinas que custodian los nacimientos de agua y la biodiversidad del río.</p>
+</div>
+</div>
+
+<!-- Map iframe container -->
+<div class="w-full h-56 rounded-xl overflow-hidden relative border border-on-surface-variant/20 shadow-sm mt-1">
+<iframe allowfullscreen="" class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=1.0083266692228996,-77.43155836414786&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" title="Mapa de Ubicación ATURTELLEZCOOP"></iframe>
+</div>
+
+<a class="min-h-[48px] py-3 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg uppercase tracking-wider flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform text-center mt-1" href="https://www.google.com/maps?q=1.0083266692228996,-77.43155836414786" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[20px]">map</span>
+Abrir en Google Maps
+</a>
+</div>
+</section>
+
+<!-- 6. Café de Origen Río Téllez (Single Flagship Showcase Matching Desktop) -->
+<section class="w-full bg-background py-space-xl px-margin-mobile flex flex-col gap-space-md border-t border-surface-container" id="linea-cafe">
+<div class="flex flex-col gap-1 text-center">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary block">EDICIÓN INSIGNIA DE ORIGEN</span>
+<h2 class="font-headline-md text-headline-md text-primary font-medium">Café de Origen Río Téllez</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+Nuestra cosecha insignia: la pureza, altitud y trabajo cooperativo de las familias campesinas de Funes, Nariño.
+</p>
+</div>
+
+<div class="bg-surface-container-lowest rounded-2xl shadow-lg overflow-hidden border border-surface-container flex flex-col">
+<div class="h-60 relative overflow-hidden">
+<img alt="Café de Origen Río Téllez - Edición Insignia Campesina" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VQ7eIE7LX14P88zgmERUWTegsLN5HZl23IM8zx2j6UtTKEnR_-7npxPNpbJ7o8Xjel-GbZ149_BRcfetaQHkSixdVfOp1zSCN6byjxNKZ2ml4ia9ZFTjC81n9fG-vlLCbSrWz9vpEg6UXS0GN4CKW45-zr_v7J_1II91Q-7KoqXlsD1ob3YnpMC7jQ_H6TE5-rM2MuR2jEAk04bg1_5fib_ItldhZq4zKfouzuZX9VPlyFgRy0MV6GJhf0">
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="px-2.5 py-1 rounded bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-wider">Cosecha Especial</span>
+</div>
+<div class="absolute bottom-3 left-3 right-3 bg-primary/90 backdrop-blur-md p-2.5 rounded-lg text-on-primary">
+<span class="font-label-caps text-label-caps uppercase text-primary-fixed block">Empaque Eco-Sostenible</span>
+<p class="font-caption text-[11px] text-on-primary-container">Válvula desgasificadora y foil biodegradable</p>
+</div>
+</div>
+
+<div class="p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded bg-primary-container text-on-primary font-label-caps text-label-caps tracking-wider uppercase">Bosque #0F3D2E</span>
+<span class="font-label-caps text-label-caps text-secondary font-bold uppercase tracking-wider">Bolsa 340g / 454g</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Café de Origen Río Téllez</h3>
+<span class="text-secondary font-subhead text-subhead font-normal block">Edición Insignia Campesina</span>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mt-2">
+Cultivado con esmero por familias asociadas a <strong>ATURTELLEZCOOP</strong> a orillas del Cañón del Río Téllez en Funes, Nariño (1.980 msnm). Café 100% Arábica de altura, lavado en frío con aguas de montaña y secado solar. Notas dulces a chocolate de origen, panela y frutos secos.
+</p>
+</div>
+
+<div class="flex flex-wrap gap-1.5 py-1">
+<span class="px-2.5 py-1 rounded-full bg-surface-container text-primary font-label-caps text-label-caps font-semibold">Chocolate de Origen</span>
+<span class="px-2.5 py-1 rounded-full bg-surface-container text-primary font-label-caps text-label-caps font-semibold">Panela Melosa</span>
+<span class="px-2.5 py-1 rounded-full bg-surface-container text-primary font-label-caps text-label-caps font-semibold">Frutos Secos</span>
+<span class="px-2.5 py-1 rounded-full bg-surface-container text-primary font-label-caps text-label-caps font-semibold">Grano o Molido</span>
+</div>
+
+<ul class="text-caption font-caption text-on-surface-variant space-y-1.5 border-t border-surface-container pt-3">
+<li class="flex justify-between"><span class="">Origen:</span><strong class="text-on-surface">Vereda La Vega · Funes, Nariño</strong></li>
+<li class="flex justify-between"><span class="">Altura:</span><strong class="text-on-surface">1.980 msnm</strong></li>
+<li class="flex justify-between"><span class="">Beneficio:</span><strong class="text-on-surface">Lavado en Frío &amp; Secado Solar</strong></li>
+<li class="flex justify-between"><span class="">Variedad:</span><strong class="text-on-surface">100% Arábica Suave Colombiano</strong></li>
+</ul>
+
+<div class="pt-3 border-t border-surface-container flex items-center justify-between">
+<div>
+<span class="font-caption text-[11px] text-on-surface-variant block uppercase">Precio por Bolsa</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">$38.000 <span class="text-caption font-normal">COP</span></span>
+</div>
+<a class="min-h-[44px] px-space-md py-2.5 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg uppercase tracking-wider flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform" href="#reservas">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+Pedir Café
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 7. Mobile Footer -->
+<footer class="w-full bg-primary-container text-on-primary py-space-xl px-margin-mobile flex flex-col gap-space-md shadow-inner">
+<div class="flex items-center gap-3">
+<img alt="ATURTELLEZCOOP Logo" class="h-10 w-auto object-contain rounded bg-surface p-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBccU2AiW3AYgyrAwfrZzymLW2LJ2Ze73Ukk1DnvdbycV9X6VUydmgMNBJyr8HzeVJjSMx8LdPuPuBQu6tLYicBZEvDrqI-wIdbD0Xet0h20uw366ZSaWYNnPDxz2KTfsd42lQnxxzsCf-O6-O05CvVd2655kAVitiwiIuJdi9auHJk6u0aB5LC9uW3WvQQThLRkXwQWFYW7kwjrOxFE8m1FL6x4h0OnMC4ADDwE7IihaCspz_uN4yCaJ1Dpm-_QUT3Rmg">
+<div class="flex flex-col">
+<span class="font-headline-sm text-[18px] text-on-primary leading-tight">ATURTELLEZCOOP</span>
+<span class="font-caption text-caption text-primary-fixed">NIT: 901.851.272-6</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-primary-container leading-relaxed">
+Familias campesinas asociadas protegiendo los ecosistemas, la fauna, la flora nativa y las fuentes hídricas del cañón. Fomentamos el café especial de altura y el agroturismo comunitario sostenible.
+</p>
+<div class="flex flex-wrap items-center gap-2 pt-1">
+<div class="flex items-center gap-1.5 bg-surface/10 px-2.5 py-1 rounded">
+<span class="material-symbols-outlined text-on-primary-container text-[16px]">eco</span>
+<span class="font-label-caps text-[10px] text-on-primary uppercase">Café Especial</span>
+</div>
+<div class="flex items-center gap-1.5 bg-surface/10 px-2.5 py-1 rounded">
+<span class="material-symbols-outlined text-on-primary-container text-[16px]">water_drop</span>
+<span class="font-label-caps text-[10px] text-on-primary uppercase">Guardianes del Agua</span>
+</div>
+</div>
+<div class="pt-space-sm border-t border-on-primary-container/20 flex flex-col gap-1 text-on-primary-container text-caption font-caption">
+<span class="">© 2024 ATURTELLEZCOOP · Vereda La Vega · Funes, Nariño</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">water_drop</span> Cuenca Río Téllez</span>
+</div>
+</footer>
+</div>
+
+<script>
+let currentTravelersMobile = 2;
+function adjustTravelersMobile(delta) {
+  currentTravelersMobile = Math.max(1, Math.min(8, currentTravelersMobile + delta));
+  document.getElementById('mobileTravelerCount').innerText = currentTravelersMobile;
+  updateTotalMobile();
+}
+
+function selectExperienceMobile(name, price) {
+  const select = document.getElementById('mobileRouteSelect');
+  if (select) {
+    select.value = price;
+    updateTotalMobile();
+  }
+  const target = document.getElementById('reservas');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function updateTotalMobile() {
+  const select = document.getElementById('mobileRouteSelect');
+  if (!select) return;
+  const pricePerPerson = parseInt(select.value, 10);
+  const total = pricePerPerson * currentTravelersMobile;
+  const formatted = new Intl.NumberFormat('es-CO').format(total);
+  document.getElementById('mobileBookingTotal').innerText = '$' + formatted + ' COP';
+}
+
+function submitBookingMobile() {
+  const name = document.getElementById('mobileLeadName').value.trim();
+  if (!name) {
+    alert('Por favor ingrese su nombre completo para confirmar la pre-reserva.');
+    return;
+  }
+  alert('¡Solicitud recibida para ' + name + '! Nos comunicaremos a su número en menos de 2 horas.');
+}
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(28,20,13,0.06)]" data-active-classes="text-primary-container font-medium"><div class="flex justify-around items-center h-16 px-space-xs"><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center transition-colors text-primary-container font-medium" href="#origen"><span class="material-symbols-outlined text-[20px]">nature</span><span class="font-label-caps text-[10px] uppercase mt-0.5">Origen</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" href="#rutas"><span class="material-symbols-outlined text-[20px]">hiking</span><span class="font-label-caps text-[10px] uppercase mt-0.5">Rutas</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" href="#galeria"><span class="material-symbols-outlined text-[20px]">photo_library</span><span class="font-label-caps text-[10px] uppercase mt-0.5">Galería</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" href="#reservas"><span class="material-symbols-outlined text-[20px]">calendar_month</span><span class="font-label-caps text-[10px] uppercase mt-0.5">Reservas</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" href="#como-llegar"><span class="material-symbols-outlined text-[20px]">pin_drop</span><span class="font-label-caps text-[10px] uppercase mt-0.5">Llegar</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" href="#linea-cafe"><span class="material-symbols-outlined text-[20px]">local_cafe</span><span class="font-label-caps text-[10px] uppercase mt-0.5">Café</span></a></div></nav>
+
+
+
+</body></html>

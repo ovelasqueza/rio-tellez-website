@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://riotellez.example.com/sitemap-index.xml

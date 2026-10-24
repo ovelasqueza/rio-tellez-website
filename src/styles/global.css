@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+/* No escanear la referencia de diseño ni las specs (generarían clases que no se usan). */
+@source not "../../_stitch";
+@source not "../../.kiro";
+/* Fuentes autoalojadas (solo latín y latín extendido; copiadas de @fontsource-variable, licencia OFL). */
+@font-face {
+  font-family: "Plus Jakarta Sans Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("../assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Plus Jakarta Sans Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("../assets/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Playfair Display Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 900;
+  src: url("../assets/fonts/playfair-display-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Playfair Display Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 900;
+  src: url("../assets/fonts/playfair-display-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Fuentes de respaldo con métricas ajustadas para evitar saltos de diseño mientras cargan. */
+@font-face {
+  font-family: "Playfair Fallback";
+  src: local("Georgia"), local("Times New Roman");
+  size-adjust: 104%;
+  ascent-override: 104%;
+  descent-override: 24%;
+}
+@font-face {
+  font-family: "Jakarta Fallback";
+  src: local("Arial"), local("Helvetica");
+  size-adjust: 104%;
+  ascent-override: 98%;
+  descent-override: 21%;
+}
+
+/* Tokens del sistema de diseño "Río Téllez Origin" (Google Stitch).
+   Se conservan los nombres de Stitch para poder trasladar el marcado casi literal. */
+@theme {
+  /* ---------- Colores ---------- */
+  --color-background: #fff8f3;
+  --color-on-background: #221a0b;
+  --color-surface: #fff8f3;
+  --color-surface-dim: #e8d8bf;
+  --color-surface-bright: #fff8f3;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fff2e0;
+  --color-surface-container: #fdecd2;
+  --color-surface-container-high: #f7e6cd;
+  --color-surface-container-highest: #f1e0c7;
+  --color-surface-variant: #f1e0c7;
+  --color-on-surface: #221a0b;
+  --color-on-surface-variant: #414944;
+  --color-inverse-surface: #392f1e;
+  --color-inverse-on-surface: #ffefd7;
+  --color-outline: #717974;
+  --color-outline-variant: #c0c8c3;
+  --color-surface-tint: #3b6756;
+
+  --color-primary: #00261a;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #0f3d2e; /* Bosque */
+  --color-on-primary-container: #9cc7b3; /* aclarado desde #7ba894 para contraste AA */
+  --color-inverse-primary: #a2d1bb;
+  --color-primary-fixed: #beedd7;
+  --color-primary-fixed-dim: #a2d1bb;
+  --color-on-primary-fixed: #002116;
+  --color-on-primary-fixed-variant: #234f3f;
+
+  --color-secondary: #aa3528; /* Cereza */
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fe735f;
+  --color-on-secondary-container: #6f0804;
+  --color-secondary-fixed: #ffdad4;
+  --color-secondary-fixed-dim: #ffb4a8;
+  --color-on-secondary-fixed: #410000;
+  --color-on-secondary-fixed-variant: #891d13;
+
+  --color-tertiary: #052700;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #1b3d10;
+  --color-on-tertiary-container: #82a970;
+  --color-tertiary-fixed: #c4eeaf;
+  --color-tertiary-fixed-dim: #a9d295;
+  --color-on-tertiary-fixed: #042100;
+  --color-on-tertiary-fixed-variant: #2c4f20;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-whatsapp: #1f7a4d; /* verde WhatsApp oscurecido para contraste con texto blanco */
+
+  /* ---------- Familias tipográficas ---------- */
+  --font-serif: "Playfair Display Variable", "Playfair Fallback", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans Variable", "Jakarta Fallback", system-ui, sans-serif;
+
+  --font-display-hero: var(--font-serif);
+  --font-display-hero-mobile: var(--font-serif);
+  --font-headline-lg: var(--font-serif);
+  --font-headline-lg-mobile: var(--font-serif);
+  --font-headline-md: var(--font-serif);
+  --font-headline-sm: var(--font-serif);
+  --font-subhead: var(--font-sans);
+  --font-body-lg: var(--font-sans);
+  --font-body-md: var(--font-sans);
+  --font-label-lg: var(--font-sans);
+  --font-label-caps: var(--font-sans);
+  --font-caption: var(--font-sans);
+
+  /* ---------- Escala tipográfica ---------- */
+  --text-display-hero: 56px;
+  --text-display-hero--line-height: 68px;
+  --text-display-hero--letter-spacing: -0.02em;
+  --text-display-hero--font-weight: 600;
+
+  --text-display-hero-mobile: 36px;
+  --text-display-hero-mobile--line-height: 44px;
+  --text-display-hero-mobile--letter-spacing: -0.01em;
+  --text-display-hero-mobile--font-weight: 600;
+
+  --text-headline-lg: 40px;
+  --text-headline-lg--line-height: 48px;
+  --text-headline-lg--letter-spacing: -0.015em;
+  --text-headline-lg--font-weight: 500;
+
+  --text-headline-lg-mobile: 28px;
+  --text-headline-lg-mobile--line-height: 36px;
+  --text-headline-lg-mobile--letter-spacing: -0.01em;
+  --text-headline-lg-mobile--font-weight: 500;
+
+  --text-headline-md: 28px;
+  --text-headline-md--line-height: 36px;
+  --text-headline-md--font-weight: 500;
+
+  --text-headline-sm: 22px;
+  --text-headline-sm--line-height: 30px;
+  --text-headline-sm--font-weight: 600;
+
+  --text-subhead: 18px;
+  --text-subhead--line-height: 26px;
+  --text-subhead--font-weight: 500;
+
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 26px;
+
+  --text-body-md: 14px;
+  --text-body-md--line-height: 22px;
+  --text-body-md--letter-spacing: 0.01em;
+
+  --text-label-lg: 13px;
+  --text-label-lg--line-height: 18px;
+  --text-label-lg--letter-spacing: 0.06em;
+  --text-label-lg--font-weight: 600;
+
+  --text-label-caps: 11px;
+  --text-label-caps--line-height: 16px;
+  --text-label-caps--letter-spacing: 0.14em;
+  --text-label-caps--font-weight: 700;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-caption--letter-spacing: 0.02em;
+
+  /* ---------- Espaciado ---------- */
+  --spacing-gutter: 1.5rem;
+  --spacing-gutter-mobile: 1rem;
+  --spacing-margin: 3rem;
+  --spacing-margin-mobile: 1.25rem;
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+
+  /* ---------- Radios (como en el HTML de Stitch) ---------- */
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-on-surface font-body-md text-body-md antialiased;
+  }
+
+  /* Evita que el encabezado fijo tape los títulos al navegar por anclas */
+  section[id] {
+    scroll-margin-top: 4.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    section[id] {
+      scroll-margin-top: 5rem;
+    }
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-secondary);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-primary-container);
+    color: var(--color-on-primary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility container-site {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--spacing-margin-mobile);
+  @media (min-width: 1024px) {
+    padding-inline: var(--spacing-margin);
+  }
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

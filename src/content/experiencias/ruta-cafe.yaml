@@ -1,0 +1,23 @@
+order: 4
+image: ../../assets/images/experiencias/ruta-cafe.jpg
+imageAlt:
+  es: Cafetales de altura en las laderas de la montaña al amanecer
+  en: High-altitude coffee farms on the mountain slopes at sunrise
+duration:
+  es: Día completo
+  en: Full day
+badgeColor: secondary
+category:
+  es: Conservación y café de altura
+  en: Conservation & high-altitude coffee
+title:
+  es: Ruta del café campesino
+  en: Farmers’ coffee route
+description:
+  es: Recorrido por cafetales de altura bajo sombra y parcelas agroecológicas, avistamiento de flora y fauna silvestre, taller de tueste y cata campesina.
+  en: A walk through shade-grown high-altitude coffee farms and agroecological plots, wildlife spotting, a roasting workshop and a farmers’ cupping.
+includes:
+  - es: Muestra de café de regalo
+    en: Complimentary coffee sample
+  - es: Cata sensorial de café de altura
+    en: Sensory tasting of high-altitude coffee
