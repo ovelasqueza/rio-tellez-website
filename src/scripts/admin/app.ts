@@ -29,6 +29,7 @@ interface BuildData {
   categories: Record<string, string>;
   localGallery: Record<string, LocalPhoto>;
   localExperienceThumbs: Record<string, string>;
+  defaultHeroThumb?: string;
 }
 
 type Section = 'gallery' | 'experiences' | 'site';
@@ -684,8 +685,65 @@ function renderSite() {
   const n = (v: string) => Number(v.replace(/[^\d.-]/g, ''));
   const group = (title: string, ...fields: Child[]) => h('fieldset', { class: 'adm-group' }, h('legend', {}, title), ...fields);
 
+  const heroThumb = s.heroCloudinary ? thumbOf(s.heroCloudinary, 800) : build.defaultHeroThumb;
+  const heroStatus = h('small', { class: 'adm-hint' });
+  const heroInput = h('input', {
+    type: 'file',
+    accept: 'image/*,.heic,.heif',
+    hidden: true,
+    onChange: async (e: Event) => {
+      const el = e.target as HTMLInputElement;
+      const file = el.files?.[0];
+      el.value = '';
+      if (!file) return;
+      heroStatus.textContent = 'Subiendo a Cloudinary…';
+      try {
+        const res = await uploadToCloudinary(file, 'hero', (p) => (heroStatus.textContent = `Subiendo… ${p}%`));
+        s.heroCloudinary = { id: res.id, width: res.width, height: res.height };
+        markDirty(sec);
+        if (res.note) toast(res.note, 'info');
+        toast('Foto de portada actualizada. Presiona “Guardar y publicar” para aplicarla.', 'ok');
+        renderSite();
+      } catch (err) {
+        heroStatus.textContent = '';
+        toast(err instanceof Error ? err.message : String(err), 'error');
+      }
+    },
+  });
+
   $('#adm-panel').replaceChildren(
-    saveBar('site', 'Datos del sitio', 'Contacto, precios, horarios y redes sociales.'),
+    saveBar('site', 'Datos del sitio', 'Portada inicial, contacto, precios, horarios y redes sociales.'),
+    group(
+      'Foto de fondo principal (Pantalla inicial / Hero)',
+      h(
+        'div',
+        { style: 'display: flex; flex-direction: column; gap: 10px;' },
+        heroThumb ? h('img', { src: heroThumb, alt: '', style: 'width: 100%; max-height: 240px; object-fit: cover; border-radius: 8px;' }) : null,
+        h(
+          'div',
+          { class: 'adm-row', style: 'align-items: center;' },
+          h('button', { type: 'button', class: 'adm-btn adm-btn--primary', onClick: () => heroInput.click() }, '📷 Cambiar foto de portada'),
+          s.heroCloudinary
+            ? h(
+                'button',
+                {
+                  type: 'button',
+                  class: 'adm-btn adm-btn--danger',
+                  onClick: () => {
+                    delete s.heroCloudinary;
+                    markDirty(sec);
+                    renderSite();
+                  },
+                },
+                'Restablecer foto original',
+              )
+            : null,
+          heroStatus,
+        ),
+        h('small', { class: 'adm-muted' }, 'Esta imagen se muestra a pantalla completa en el fondo de la página de inicio.'),
+        heroInput,
+      ),
+    ),
     group(
       'Reservas y contacto',
       field('WhatsApp (con indicativo, solo números)', s.whatsapp, (v) => (s.whatsapp = v.replace(/\D/g, '')), sec, { type: 'tel', placeholder: '573001234567' }),

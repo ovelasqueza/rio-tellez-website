@@ -1,7 +1,9 @@
 ---
-import { Picture } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import heroImg from '../../assets/images/hero-canon.jpg';
+import ResponsivePhoto from '../ResponsivePhoto.astro';
+import { localSource, cloudSource } from '../../lib/photo';
+import { site } from '../../config/site';
 import { t, type Lang } from '../../i18n';
 
 interface Props {
@@ -10,6 +12,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const d = t(lang);
+const heroSource = site.heroCloudinary ? cloudSource(site.heroCloudinary) : localSource(heroImg);
 ---
 
 <section
@@ -17,11 +20,10 @@ const d = t(lang);
   class="relative flex w-full items-center overflow-hidden bg-primary-container pt-16 xl:min-h-[92vh] xl:justify-center xl:pt-20"
 >
   <div class="pointer-events-none absolute inset-0">
-    <Picture
-      src={heroImg}
+    <ResponsivePhoto
+      source={heroSource}
       alt=""
-      formats={['avif', 'webp']}
-      widths={[480, 768, 1024, 1376]}
+      widths={[480, 768, 1024, 1376, 1920]}
       quality={60}
       sizes="100vw"
       loading="eager"

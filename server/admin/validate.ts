@@ -159,5 +159,6 @@ export function validateSite(raw: unknown, current: SiteData): SiteData {
       tiktok: url(social.tiktok, 'TikTok'),
       instagram: url(social.instagram, 'Instagram'),
     },
+    heroCloudinary: cloudImage(raw.heroCloudinary, 'foto de portada principal'),
   };
 }

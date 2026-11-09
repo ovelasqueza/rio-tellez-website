@@ -193,7 +193,7 @@ export async function handleAdmin(ctx: PagesContext): Promise<Response> {
 
     if (method === 'POST' && route === 'sign-upload') {
       const { folder } = await body<{ folder?: string }>(request);
-      const ok = folder === 'experiencias' || galleryCategories.some((c) => folder === `galeria/${c}`);
+      const ok = folder === 'experiencias' || folder === 'hero' || galleryCategories.some((c) => folder === `galeria/${c}`);
       if (!ok) throw new HttpError(400, 'Carpeta de subida inválida.');
       return json(await signUpload(env, folder!));
     }

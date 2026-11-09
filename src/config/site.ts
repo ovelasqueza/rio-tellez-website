@@ -34,6 +34,7 @@ export interface Site {
   maxTravelers: number;
   departureTimes: string[];
   social: { facebook: string; tiktok: string; instagram: string };
+  heroCloudinary?: { id: string; width: number; height: number };
 }
 
 export const site: Readonly<Site> = data;
