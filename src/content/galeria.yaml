@@ -12,7 +12,6 @@
 
 - id: rio/canon-cascadas
   orden: 1
-  portada: true
   destacada: true
   title:
     es: Cañón y cascadas andinas
@@ -91,6 +90,7 @@
     en: Coffee farms on mountain slopes at sunrise
 
 - id: cafe/recoleccion-a-mano
+  orden: 7
   title:
     es: Recolección a mano
     en: Hand-picked
@@ -99,9 +99,19 @@
     en: A farmer’s hands picking ripe coffee cherries into a basket
 
 - id: senderos/mirador-canon
+  orden: 8
   title:
     es: Mirador del cañón
     en: Canyon viewpoint
   alt:
     es: Caminante en un sendero de montaña con vista al cañón y al río
     en: Hiker on a mountain trail overlooking the canyon and the river
+
+- id: rio/whatsapp-image-2026-11-09-at-3-31-07-pm-d9k5mi
+  orden: 9
+  portada: true
+  destacada: true
+  cloudinary:
+    id: rio-tellez/galeria/rio/tmsxmp3larxvrhd9k5mi
+    width: 4160
+    height: 3120
