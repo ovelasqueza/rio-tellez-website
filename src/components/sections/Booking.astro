@@ -15,6 +15,12 @@ const d = t(lang);
 const b = d.booking;
 const experiences = await getExperiences();
 const initialTravelers = 2;
+
+/** "13:30" → "01:30 PM" (para horarios agregados desde /admin sin etiqueta traducida). */
+function formatTime12(time: string): string {
+  const [h = 0, m = 0] = time.split(':').map(Number);
+  return `${String(h % 12 || 12).padStart(2, '0')}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
+}
 const initialTotal = estimateTotal(experiences[0]?.price ?? site.defaultPriceCop, initialTravelers);
 
 const config = {
@@ -89,7 +95,7 @@ const labelClass = 'block font-label-caps text-label-caps font-semibold text-on-
             <label class={labelClass} for="bk-time">{b.time}</label>
             <div class="relative">
               <select id="bk-time" class={`${inputClass} appearance-none pr-9`}>
-                {site.departureTimes.map((time) => <option value={time}>{b.timeLabels[time]}</option>)}
+                {site.departureTimes.map((time) => <option value={time}>{(b.timeLabels as Record<string, string>)[time] ?? formatTime12(time)}</option>)}
               </select>
               <Icon name="material-symbols:expand-more" class="pointer-events-none absolute top-3 right-2 h-6 w-6 text-on-surface-variant" aria-hidden="true" />
             </div>

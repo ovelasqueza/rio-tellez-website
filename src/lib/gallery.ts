@@ -1,15 +1,16 @@
 import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import { isGalleryCategory, galleryCategories, type GalleryCategory } from '../config/gallery';
+import { cloudSource, localSource, orientationOf, type PhotoSource } from './photo';
 import type { Lang } from './price';
 
 type Localized = Record<Lang, string>;
 
 export interface GalleryPhoto {
-  /** "categoria/nombre-archivo" */
+  /** "categoria/nombre" */
   id: string;
   category: GalleryCategory;
-  image: ImageMetadata;
+  source: PhotoSource;
   orientation: 'landscape' | 'portrait';
   portada: boolean;
   destacada: boolean;
@@ -17,6 +18,8 @@ export interface GalleryPhoto {
   title?: Localized;
   description?: Localized;
   alt?: Localized;
+  /** Ruta del archivo en el repositorio si la foto es local (p. ej. "src/assets/galeria/rio/x.jpg"). */
+  repoPath?: string;
 }
 
 // Todas las imágenes dentro de src/assets/galeria/<categoria>/ (se detectan solas).
@@ -24,41 +27,68 @@ const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/galeria/
   eager: true,
 });
 
-/** Lista de fotos de la galería, ordenadas. */
-export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
-  const details = new Map((await getCollection('galeria')).map((e) => [e.id, e.data]));
+function categoryOf(id: string, context: string): GalleryCategory {
+  const folder = id.split('/')[0] ?? '';
+  if (!isGalleryCategory(folder)) {
+    throw new Error(`La categoría "${folder}" no es válida en la galería (${context}). Use: ${galleryCategories.join(', ')}.`);
+  }
+  return folder;
+}
 
-  const photos = Object.entries(files).map(([path, mod]) => {
+/** Lista de fotos de la galería (locales + Cloudinary), ordenadas. */
+export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
+  const entries = await getCollection('galeria');
+  const details = new Map(entries.map((e) => [e.id, e.data]));
+  const photos = new Map<string, GalleryPhoto>();
+
+  // 1) Fotos locales del repositorio.
+  for (const [path, mod] of Object.entries(files)) {
     const [, folder, file] = /\/src\/assets\/galeria\/([^/]+)\/([^/]+)$/.exec(path) ?? [];
-    if (!folder || !file || !isGalleryCategory(folder)) {
-      throw new Error(
-        `La carpeta "${folder}" no es una categoría válida de la galería (${path}). Use: ${galleryCategories.join(', ')}.`,
-      );
-    }
+    if (!folder || !file) continue;
     const id = `${folder}/${file.replace(/\.[^.]+$/, '')}`;
     const meta = details.get(id);
-    const image = mod.default;
-    return {
+    // Si la entrada tiene foto en la nube, la nube tiene prioridad.
+    if (meta?.cloudinary) continue;
+    const source = localSource(mod.default);
+    photos.set(id, {
       id,
-      category: folder,
-      image,
-      orientation: image.height > image.width * 1.05 ? 'portrait' : 'landscape',
+      category: categoryOf(id, path),
+      source,
+      orientation: orientationOf(source),
       portada: meta?.portada ?? false,
       destacada: meta?.destacada ?? false,
       orden: meta?.orden,
       title: meta?.title,
       description: meta?.description,
       alt: meta?.alt,
-    } satisfies GalleryPhoto;
-  });
-
-  // Avisar si galeria.yaml menciona una foto que no existe (p. ej. nombre de archivo mal escrito).
-  const found = new Set(photos.map((p) => p.id));
-  for (const id of details.keys()) {
-    if (!found.has(id)) console.warn(`[galería] "${id}" está en galeria.yaml pero no existe la foto src/assets/galeria/${id}.*`);
+      repoPath: path.replace(/^\//, ''),
+    });
   }
 
-  return photos.sort((a, b) => {
+  // 2) Fotos en Cloudinary (definidas en galeria.yaml).
+  for (const [id, meta] of details) {
+    if (!meta.cloudinary) continue;
+    const source = cloudSource(meta.cloudinary);
+    photos.set(id, {
+      id,
+      category: categoryOf(id, `galeria.yaml → ${id}`),
+      source,
+      orientation: orientationOf(source),
+      portada: meta.portada,
+      destacada: meta.destacada,
+      orden: meta.orden,
+      title: meta.title,
+      description: meta.description,
+      alt: meta.alt,
+    });
+  }
+
+  // Avisar si galeria.yaml menciona una foto que no existe (p. ej. nombre de archivo mal escrito).
+  for (const id of details.keys()) {
+    if (!photos.has(id)) console.warn(`[galería] "${id}" está en galeria.yaml pero no tiene foto (ni local ni en Cloudinary).`);
+  }
+
+  return [...photos.values()].sort((a, b) => {
     const oa = a.orden ?? Number.POSITIVE_INFINITY;
     const ob = b.orden ?? Number.POSITIVE_INFINITY;
     return oa !== ob ? oa - ob : a.id.localeCompare(b.id);

@@ -17,6 +17,8 @@ export default defineConfig({
   integrations: [
     icon(),
     sitemap({
+      // El panel /admin no debe aparecer en buscadores.
+      filter: (page) => !page.includes('/admin'),
       i18n: { defaultLocale: 'es', locales: { es: 'es-CO', en: 'en' } },
     }),
   ],

@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import ResponsivePhoto from '../ResponsivePhoto.astro';
 import { Icon } from 'astro-icon/components';
 import { site } from '../../config/site';
 import { formatCopAmount } from '../../lib/price';
@@ -19,10 +19,9 @@ const chip = e.chip ? e.chip[lang] : altitudeLabel(site.altitudeMsnm, lang);
 
 <article class="group flex flex-col overflow-hidden rounded-xl border border-surface-container bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl lg:rounded-2xl lg:border-0">
   <div class="relative h-44 overflow-hidden lg:h-56">
-    <Picture
-      src={e.image}
+    <ResponsivePhoto
+      source={e.source}
       alt={e.imageAlt[lang]}
-      formats={['avif', 'webp']}
       widths={[320, 480, 640, 900]}
       quality={60}
       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"

@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import ResponsivePhoto from '../ResponsivePhoto.astro';
 import { Icon } from 'astro-icon/components';
 import { getHomeGallery } from '../../lib/gallery';
 import { t, pagePath, type Lang } from '../../i18n';
@@ -36,10 +36,9 @@ const galleryUrl = pagePath('galeria', lang);
           return (
             <li class="group flex flex-col overflow-hidden rounded-xl border border-surface-container bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl lg:rounded-2xl lg:border-0">
               <div class="relative h-40 overflow-hidden sm:h-56 lg:h-72">
-                <Picture
-                  src={p.image}
+                <ResponsivePhoto
+                  source={p.source}
                   alt={alt}
-                  formats={['avif', 'webp']}
                   widths={[240, 360, 480, 800]}
                   quality={60}
                   sizes="(min-width: 1024px) 33vw, 50vw"

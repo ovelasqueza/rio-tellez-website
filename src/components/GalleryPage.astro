@@ -1,9 +1,10 @@
 ---
-import { Picture, getImage } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import PageShell from './PageShell.astro';
+import ResponsivePhoto from './ResponsivePhoto.astro';
 import { galleryCategories } from '../config/gallery';
 import { getGalleryPhotos } from '../lib/gallery';
+import { fullSize } from '../lib/photo';
 import { t, sectionHref, homePath, type Lang } from '../i18n';
 
 interface Props {
@@ -21,13 +22,7 @@ const cover = all.find((p) => p.destacada) ?? all[0];
 // Versión grande de cada foto para el visor (WebP, tamaños según pantalla).
 const photos = await Promise.all(
   all.map(async (p, index) => {
-    const widths = [800, 1200, 1600].filter((w) => w <= p.image.width);
-    const full = await getImage({
-      src: p.image,
-      widths: widths.length ? widths : [p.image.width],
-      format: 'webp',
-      quality: 75,
-    });
+    const full = await fullSize(p.source);
     const title = p.title?.[lang] ?? '';
     return {
       ...p,
@@ -35,7 +30,7 @@ const photos = await Promise.all(
       title,
       alt: p.alt?.[lang] ?? (title || `${g.altFallback} ${g.categories[p.category]}`),
       fullSrc: full.src,
-      fullSrcset: full.srcSet.attribute,
+      fullSrcset: full.srcset,
     };
   }),
 );
@@ -52,11 +47,10 @@ const counts = Object.fromEntries(galleryCategories.map((c) => [c, all.filter((p
   <section aria-labelledby="galeria-page-title" class="relative flex h-[100svh] min-h-[560px] w-full items-end overflow-hidden bg-primary-container">
     {
       cover && (
-        <Picture
-          src={cover.image}
+        <ResponsivePhoto
+          source={cover.source}
           alt=""
-          formats={['avif', 'webp']}
-          widths={[480, 768, 1024, 1376].filter((w) => w <= cover.image.width)}
+          widths={[480, 768, 1024, 1376, 1920]}
           sizes="100vw"
           quality={65}
           loading="eager"
@@ -156,11 +150,10 @@ const counts = Object.fromEntries(galleryCategories.map((c) => [c, all.filter((p
               data-title={p.title}
               data-category-label={g.categories[p.category]}
             >
-              <Picture
-                src={p.image}
+              <ResponsivePhoto
+                source={p.source}
                 alt={p.alt}
-                formats={['avif', 'webp']}
-                widths={[240, 360, 480, 720, 960].filter((w) => w <= p.image.width)}
+                widths={[240, 360, 480, 720, 960]}
                 sizes={p.destacada ? '(min-width: 1280px) 50vw, (min-width: 768px) 66vw, 100vw' : '(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw'}
                 quality={60}
                 class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"

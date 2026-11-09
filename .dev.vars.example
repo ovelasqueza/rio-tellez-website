@@ -1,0 +1,25 @@
+# Variables secretas para Cloudflare Pages Functions (servidor /api/admin/*)
+# En producción: agréguelas en Cloudflare Pages → Settings → Environment variables (Production)
+# En local con wrangler: copie este archivo como .dev.vars (NO lo suba a Git)
+
+# 1. GitHub (para guardar cambios directamente en el repositorio)
+# Cree un token personal (fine-grained) con permisos Contents: Read and write sobre este repositorio
+GITHUB_TOKEN=github_pat_xxxxxxxxxxxxxxxxxxxx
+GITHUB_REPO=ovelasqueza/rio-tellez-website
+GITHUB_BRANCH=main
+
+# 2. Cloudinary (cuenta gratuita en cloudinary.com)
+CLOUDINARY_CLOUD_NAME=tu-cloud-name
+CLOUDINARY_API_KEY=123456789012345
+CLOUDINARY_API_SECRET=abcdefghijklmnopqrstuvwx_yz
+
+# 3. Cloudflare Zero Trust / Cloudflare Access (login seguro con código al email)
+# Dashboard → Zero Trust → Access → Applications (proteger /admin* y /api/admin*)
+CF_ACCESS_TEAM_DOMAIN=https://tu-equipo.cloudflareaccess.com
+CF_ACCESS_AUD=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Opcional: lista de correos autorizados separados por coma
+ADMIN_EMAILS=tucorreo@gmail.com,otro@ejemplo.com
+
+# SOLO desarrollo local (wrangler pages dev): simula que inició sesión con este correo
+DEV_ADMIN_EMAIL=admin@localhost

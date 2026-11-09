@@ -1,0 +1,56 @@
+---
+/**
+ * Imagen responsive para fotos locales (Astro <Picture>, AVIF/WebP al compilar)
+ * o en Cloudinary (<img> con srcset; f_auto entrega WebP/AVIF desde su CDN).
+ */
+import { Picture } from 'astro:assets';
+import type { HTMLAttributes } from 'astro/types';
+import { cloudSrcset } from '../lib/cloudinary';
+import type { PhotoSource } from '../lib/photo';
+
+interface Props {
+  source: PhotoSource;
+  alt: string;
+  widths: number[];
+  sizes: string;
+  /** Calidad para fotos locales (1-100). En la nube se usa q_auto. */
+  quality?: number;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: HTMLAttributes<'img'>['fetchpriority'];
+}
+
+const { source, alt, widths, sizes, quality = 60, class: className, loading = 'lazy', fetchpriority } = Astro.props;
+const valid = widths.filter((w) => w <= source.width);
+const list = valid.length ? valid : [source.width];
+const cloud = source.kind === 'cloud' ? cloudSrcset(source.cloud, list, 'auto:good') : undefined;
+---
+
+{
+  source.kind === 'local' ? (
+    <Picture
+      src={source.image}
+      alt={alt}
+      formats={['avif', 'webp']}
+      widths={list}
+      sizes={sizes}
+      quality={quality}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      class={className}
+    />
+  ) : (
+    <img
+      src={cloud!.src}
+      srcset={cloud!.srcset}
+      sizes={sizes}
+      alt={alt}
+      width={source.width}
+      height={source.height}
+      loading={loading}
+      decoding="async"
+      fetchpriority={fetchpriority}
+      class={className}
+    />
+  )
+}

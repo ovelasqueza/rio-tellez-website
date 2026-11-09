@@ -1,0 +1,26 @@
+{
+  "name": "Río Téllez",
+  "shortName": "ATURTELLEZCOOP",
+  "legalName": "Cooperativa Multiactiva Agroturística del Río Téllez – ATURTELLEZCOOP",
+  "nit": "901.851.272-6",
+  "address": {
+    "locality": "Vereda La Vega, sector Puente Río Téllez",
+    "municipality": "Funes",
+    "region": "Nariño",
+    "country": "Colombia",
+    "countryCode": "CO"
+  },
+  "geo": { "lat": 1.0083266692228996, "lng": -77.43155836414786 },
+  "altitudeMsnm": 2144,
+  "whatsapp": "573206807016",
+  "defaultPriceCop": 50000,
+  "coffeePriceCop": 50000,
+  "minTravelers": 1,
+  "maxTravelers": 8,
+  "departureTimes": ["06:30", "08:30", "13:30"],
+  "social": {
+    "facebook": "https://www.facebook.com/profile.php?id=61553108319451",
+    "tiktok": "https://www.tiktok.com/@agroecoturism",
+    "instagram": ""
+  }
+}
