@@ -14,14 +14,9 @@ export interface CloudImage {
 
 export type CloudQuality = 'auto:good' | 'auto:best' | 'auto:eco';
 
-const CLOUD_NAME = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME as string | undefined;
+const CLOUD_NAME = (import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME as string | undefined) || 'enjl5syu';
 
 export function cloudName(): string {
-  if (!CLOUD_NAME) {
-    throw new Error(
-      'Falta PUBLIC_CLOUDINARY_CLOUD_NAME. Defínalo en .env (local) y en Cloudflare Pages → Settings → Variables.',
-    );
-  }
   return CLOUD_NAME;
 }
 
