@@ -1,6 +1,6 @@
 /** Rutas de la API del panel: /api/admin/* */
 import { parse, parseDocument, stringify, isSeq } from 'yaml';
-import { requireAdmin } from './access';
+import { createSessionToken, requireAdmin, SESSION_COOKIE_NAME } from './access';
 import { destroyImages, signUpload } from './cloudinary';
 import { HttpError, type AdminEnv, type PagesContext } from './env';
 import { commit, headSha, listDir, readFile, type FileChange } from './github';
@@ -132,7 +132,6 @@ async function saveSite(env: AdminEnv, email: string, req: Request): Promise<Sav
 export async function handleAdmin(ctx: PagesContext): Promise<Response> {
   const { request, env } = ctx;
   try {
-    const email = await requireAdmin(request, env);
     const route = [ctx.params.path ?? []].flat().join('/');
     const method = request.method.toUpperCase();
 
@@ -141,6 +140,40 @@ export async function handleAdmin(ctx: PagesContext): Promise<Response> {
       const origin = request.headers.get('Origin');
       if (origin && origin !== new URL(request.url).origin) throw new HttpError(403, 'Origen no permitido.');
     }
+
+    // Ruta de Login (método contraseña directas)
+    if (method === 'POST' && route === 'login') {
+      if (!env.ADMIN_PASSWORD) {
+        throw new HttpError(500, 'ADMIN_PASSWORD no está configurado en las variables de Cloudflare.');
+      }
+      const { password } = await body<{ password?: string }>(request);
+      if (!password || password !== env.ADMIN_PASSWORD) {
+        throw new HttpError(401, 'Contraseña incorrecta.');
+      }
+      const token = await createSessionToken(env);
+      const isHttps = request.url.startsWith('https://');
+      const secure = isHttps ? '; Secure' : '';
+      return new Response(JSON.stringify({ ok: true, user: 'admin' }), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Set-Cookie': `${SESSION_COOKIE_NAME}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000${secure}`,
+        },
+      });
+    }
+
+    // Ruta de Logout
+    if (method === 'POST' && route === 'logout') {
+      return new Response(JSON.stringify({ ok: true }), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Set-Cookie': `${SESSION_COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`,
+        },
+      });
+    }
+
+    const email = await requireAdmin(request, env);
 
     if (method === 'GET' && route === 'me') return json({ email });
 

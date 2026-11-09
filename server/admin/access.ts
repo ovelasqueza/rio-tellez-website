@@ -1,11 +1,66 @@
 /**
- * Verificación del token de Cloudflare Access (Zero Trust).
+ * Autenticación del panel administrativo.
  *
- * Cloudflare Access pide el login (código por email) ANTES de llegar aquí y añade el
- * encabezado `Cf-Access-Jwt-Assertion`. Igual lo verificamos (firma, audiencia, emisor y
- * vencimiento) para que la API nunca quede abierta si Access se configura mal.
+ * Soporta dos métodos:
+ * 1) Contraseña directa (ADMIN_PASSWORD): 100% gratuita, sin tarjetas ni servicios externos.
+ *    Genera una cookie segura firmada con HMAC-SHA256 válida por 30 días.
+ * 2) Cloudflare Access (Zero Trust): si están definidas CF_ACCESS_TEAM_DOMAIN y CF_ACCESS_AUD.
  */
 import { HttpError, type AdminEnv } from './env';
+
+export const SESSION_COOKIE_NAME = 'admin_session';
+
+function readCookie(header: string | null, name: string): string | undefined {
+  return header
+    ?.split(';')
+    .map((c) => c.trim())
+    .find((c) => c.startsWith(`${name}=`))
+    ?.slice(name.length + 1);
+}
+
+function isLocal(url: URL): boolean {
+  return url.hostname === 'localhost' || url.hostname === '127.0.0.1';
+}
+
+function authSecret(env: AdminEnv): string {
+  return env.CLOUDINARY_API_SECRET || env.GITHUB_TOKEN || env.ADMIN_PASSWORD || 'secret-salt';
+}
+
+/** Genera la firma HMAC de la sesión */
+async function signSession(secret: string, timestamp: number): Promise<string> {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw',
+    enc.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign'],
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(`rio-tellez-session:${timestamp}`));
+  return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+/** Crea el token de sesión para la cookie */
+export async function createSessionToken(env: AdminEnv): Promise<string> {
+  const now = Date.now();
+  const sig = await signSession(authSecret(env), now);
+  return `${now}.${sig}`;
+}
+
+/** Verifica si una cookie de sesión es válida */
+export async function verifySessionToken(token: string, env: AdminEnv): Promise<boolean> {
+  const [timeStr, sig] = token.split('.');
+  if (!timeStr || !sig) return false;
+  const time = parseInt(timeStr, 10);
+  // Válido por 30 días
+  if (isNaN(time) || Date.now() - time > 30 * 24 * 3600 * 1000 || time > Date.now() + 60_000) {
+    return false;
+  }
+  const expected = await signSession(authSecret(env), time);
+  return expected === sig;
+}
+
+// ---------- Soporte Cloudflare Access (Zero Trust) ----------
 
 interface Jwk {
   kid: string;
@@ -38,41 +93,20 @@ async function getKeys(team: string, force = false): Promise<Jwk[]> {
   return keys;
 }
 
-function readCookie(header: string | null, name: string): string | undefined {
-  return header
-    ?.split(';')
-    .map((c) => c.trim())
-    .find((c) => c.startsWith(`${name}=`))
-    ?.slice(name.length + 1);
-}
-
-function isLocal(url: URL): boolean {
-  return url.hostname === 'localhost' || url.hostname === '127.0.0.1';
-}
-
-/** Devuelve el email del usuario autenticado o lanza 401/403. */
-export async function requireAdmin(request: Request, env: AdminEnv): Promise<string> {
-  const url = new URL(request.url);
-
-  // Desarrollo local (wrangler pages dev): solo si DEV_ADMIN_EMAIL existe en .dev.vars.
-  if (env.DEV_ADMIN_EMAIL && isLocal(url)) return env.DEV_ADMIN_EMAIL;
-
-  if (!env.CF_ACCESS_TEAM_DOMAIN || !env.CF_ACCESS_AUD) {
-    throw new HttpError(500, 'Cloudflare Access no está configurado (CF_ACCESS_TEAM_DOMAIN / CF_ACCESS_AUD).');
-  }
-  const team = env.CF_ACCESS_TEAM_DOMAIN.replace(/\/+$/, '');
+async function verifyCfAccess(request: Request, env: AdminEnv): Promise<string> {
+  const team = env.CF_ACCESS_TEAM_DOMAIN!.replace(/\/+$/, '');
   const token = request.headers.get('Cf-Access-Jwt-Assertion') ?? readCookie(request.headers.get('Cookie'), 'CF_Authorization');
-  if (!token) throw new HttpError(401, 'Sesión no iniciada. Recargue la página para entrar.');
+  if (!token) throw new HttpError(401, 'Sesión no iniciada.');
 
   const parts = token.split('.');
   if (parts.length !== 3) throw new HttpError(401, 'Token inválido.');
   const [h, p, s] = parts as [string, string, string];
   const header = b64urlJson<{ kid?: string; alg?: string }>(h);
-  if (header.alg !== 'RS256') throw new HttpError(401, 'Algoritmo de token no soportado.');
+  if (header.alg !== 'RS256') throw new HttpError(401, 'Algoritmo no soportado.');
 
   let jwk = (await getKeys(team)).find((k) => k.kid === header.kid);
   if (!jwk) jwk = (await getKeys(team, true)).find((k) => k.kid === header.kid);
-  if (!jwk) throw new HttpError(401, 'Llave del token desconocida.');
+  if (!jwk) throw new HttpError(401, 'Llave desconocida.');
 
   const key = await crypto.subtle.importKey(
     'jwk',
@@ -82,22 +116,41 @@ export async function requireAdmin(request: Request, env: AdminEnv): Promise<str
     ['verify'],
   );
   const valid = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, b64urlToBytes(s), new TextEncoder().encode(`${h}.${p}`));
-  if (!valid) throw new HttpError(401, 'Firma del token inválida.');
+  if (!valid) throw new HttpError(401, 'Firma inválida.');
 
-  const payload = b64urlJson<{ aud?: string | string[]; exp?: number; nbf?: number; iss?: string; email?: string }>(p);
+  const payload = b64urlJson<{ aud?: string | string[]; exp?: number; iss?: string; email?: string }>(p);
   const now = Math.floor(Date.now() / 1000);
   const aud = Array.isArray(payload.aud) ? payload.aud : [payload.aud];
   if (!aud.includes(env.CF_ACCESS_AUD)) throw new HttpError(403, 'Token de otra aplicación.');
   if (payload.iss !== team) throw new HttpError(403, 'Emisor del token inválido.');
-  if (!payload.exp || payload.exp < now) throw new HttpError(401, 'La sesión venció. Recargue la página.');
-  if (payload.nbf && payload.nbf > now + 60) throw new HttpError(401, 'Token aún no válido.');
-  if (!payload.email) throw new HttpError(403, 'El token no trae email.');
-
-  const allow = env.ADMIN_EMAILS?.split(',')
-    .map((e) => e.trim().toLowerCase())
-    .filter(Boolean);
-  if (allow?.length && !allow.includes(payload.email.toLowerCase())) {
-    throw new HttpError(403, `El correo ${payload.email} no tiene permiso para el panel.`);
-  }
+  if (!payload.exp || payload.exp < now) throw new HttpError(401, 'La sesión venció.');
+  if (!payload.email) throw new HttpError(403, 'Sin email.');
   return payload.email;
+}
+
+/**
+ * Valida que la petición tenga una sesión administrativa activa.
+ * Devuelve el identificador del usuario (o 'admin').
+ */
+export async function requireAdmin(request: Request, env: AdminEnv): Promise<string> {
+  const url = new URL(request.url);
+
+  // 1. Desarrollo local
+  if (env.DEV_ADMIN_EMAIL && isLocal(url)) return env.DEV_ADMIN_EMAIL;
+
+  // 2. Método contraseña (ADMIN_PASSWORD)
+  if (env.ADMIN_PASSWORD) {
+    const sessionCookie = readCookie(request.headers.get('Cookie'), SESSION_COOKIE_NAME);
+    if (sessionCookie && (await verifySessionToken(sessionCookie, env))) {
+      return 'admin';
+    }
+    throw new HttpError(401, 'No has iniciado sesión o la sesión venció.');
+  }
+
+  // 3. Método Cloudflare Access
+  if (env.CF_ACCESS_TEAM_DOMAIN && env.CF_ACCESS_AUD) {
+    return verifyCfAccess(request, env);
+  }
+
+  throw new HttpError(500, 'No se ha configurado ADMIN_PASSWORD en las variables de Cloudflare.');
 }

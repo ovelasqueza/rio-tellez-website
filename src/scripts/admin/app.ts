@@ -767,24 +767,105 @@ function initState(data: ContentPayload) {
   sortGallery();
 }
 
-async function start() {
-  document.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach((b) =>
-    b.addEventListener('click', () => {
-      state.tab = b.dataset.tab as Section;
-      render();
-    }),
-  );
-  window.addEventListener('beforeunload', (e) => {
-    if (Object.values(state.dirty).some(Boolean)) e.preventDefault();
+let initializedTabs = false;
+
+function renderLogin(initialError?: string) {
+  const tabs = document.querySelector<HTMLElement>('.adm-tabs');
+  if (tabs) tabs.style.display = 'none';
+  const logoutBtn = document.getElementById('adm-logout-btn');
+  if (logoutBtn) logoutBtn.hidden = true;
+
+  const input = h('input', {
+    type: 'password',
+    placeholder: 'Contraseña de administración',
+    autocomplete: 'current-password',
+    required: true,
   });
+  const errorEl = h(
+    'p',
+    { class: 'adm-error-msg', style: `color: var(--adm-danger); margin: 0; font-size: 13px; display: ${initialError ? 'block' : 'none'};` },
+    initialError || '',
+  );
+  const submitBtn = h('button', { type: 'submit', class: 'adm-btn adm-btn--primary' }, 'Ingresar');
+
+  const form = h(
+    'form',
+    {
+      class: 'adm-card',
+      style: 'max-width: 380px; width: 100%; padding: 24px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.06);',
+      onSubmit: async (e: Event) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Verificando…';
+        errorEl.style.display = 'none';
+        try {
+          await api('login', { method: 'POST', body: { password: input.value } });
+          await start();
+        } catch (err) {
+          errorEl.textContent = err instanceof Error ? err.message : 'Contraseña incorrecta.';
+          errorEl.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Ingresar';
+          input.focus();
+        }
+      },
+    },
+    h('h2', { style: 'margin: 0; color: var(--adm-primary); font-size: 20px;' }, 'Acceso Administrativo'),
+    h('p', { class: 'adm-muted', style: 'margin: 0; font-size: 13px;' }, 'Ingresa la contraseña configurada para acceder al panel.'),
+    h('label', { class: 'adm-field' }, h('span', { class: 'adm-label' }, 'Contraseña'), input),
+    errorEl,
+    h('div', { style: 'margin-top: 4px;' }, submitBtn),
+  );
+
+  $('#adm-panel').replaceChildren(
+    h(
+      'div',
+      { style: 'display: flex; justify-content: center; align-items: center; min-height: 50vh; padding: 20px 10px;' },
+      form,
+    ),
+  );
+  input.focus();
+}
+
+async function start() {
+  if (!initializedTabs) {
+    document.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach((b) =>
+      b.addEventListener('click', () => {
+        state.tab = b.dataset.tab as Section;
+        render();
+      }),
+    );
+    window.addEventListener('beforeunload', (e) => {
+      if (Object.values(state.dirty).some(Boolean)) e.preventDefault();
+    });
+    const logoutBtn = document.getElementById('adm-logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async () => {
+        try {
+          await api('logout', { method: 'POST' });
+        } catch {}
+        location.reload();
+      });
+    }
+    initializedTabs = true;
+  }
 
   try {
     const data = await api<ContentPayload>('content');
+    const tabs = document.querySelector<HTMLElement>('.adm-tabs');
+    if (tabs) tabs.style.display = 'flex';
+    const logoutBtn = document.getElementById('adm-logout-btn');
+    if (logoutBtn) logoutBtn.hidden = false;
+
     initState(data);
-    $('#adm-user').textContent = data.email;
+    $('#adm-user').textContent = data.email === 'admin' ? 'Administrador' : data.email;
     render();
     (['gallery', 'experiences', 'site'] as Section[]).forEach((s) => markDirty(s, false));
   } catch (err) {
+    if (err instanceof ApiError && (err.status === 401 || err.status === 403)) {
+      renderLogin(err.status === 403 ? err.message : undefined);
+      return;
+    }
     $('#adm-panel').replaceChildren(
       h(
         'div',
