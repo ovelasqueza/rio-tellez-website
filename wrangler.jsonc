@@ -3,8 +3,15 @@
   "main": "server/index.ts",
   "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
+  "keep_vars": true,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS"
+  },
+  "vars": {
+    "CLOUDINARY_CLOUD_NAME": "enjl5syu",
+    "PUBLIC_CLOUDINARY_CLOUD_NAME": "enjl5syu",
+    "GITHUB_REPO": "ovelasqueza/rio-tellez-website",
+    "GITHUB_BRANCH": "main"
   }
 }
