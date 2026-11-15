@@ -161,6 +161,11 @@ function saveBar(section: Section, title: string, info: Child) {
     h(
       'button',
       { class: 'adm-btn adm-btn--primary', 'data-save': section, disabled: !state.dirty[section] || state.busy, onClick: () => save(section) },
+      h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
+        h('path', { d: 'M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z' }),
+        h('polyline', { points: '17 21 17 13 7 13 7 21' }),
+        h('polyline', { points: '7 3 7 8 15 8' })
+      ),
       'Guardar y publicar',
     ),
   );
@@ -357,7 +362,7 @@ function galleryCard(item: GalleryItem) {
       { type: 'button', class: 'adm-card-img', onClick: () => openPhotoEditor(item), 'aria-label': 'Editar detalles' },
       src ? h('img', { src, alt: '', loading: 'lazy' }) : h('span', { class: 'adm-noimg' }, 'Sin foto'),
       h('span', { class: 'adm-badge' }, build.categories[categoryOf(item)] ?? categoryOf(item)),
-      h('span', { class: `adm-badge adm-badge--src ${item.cloudinary ? 'is-cloud' : ''}` }, item.cloudinary ? 'Nube' : 'Repositorio'),
+      h('span', { class: `adm-badge adm-badge--src ${item.cloudinary ? 'is-cloud' : ''}` }, item.cloudinary ? '☁ Nube' : '📁 Repo'),
     ),
     h(
       'div',
@@ -367,11 +372,35 @@ function galleryCard(item: GalleryItem) {
       h(
         'div',
         { class: 'adm-row adm-row--actions' },
-        h('button', { type: 'button', class: 'adm-icon', title: 'Mover al inicio', onClick: () => move(item, 'top') }, '⤒'),
-        h('button', { type: 'button', class: 'adm-icon', title: 'Mover antes', onClick: () => move(item, -1) }, '←'),
-        h('button', { type: 'button', class: 'adm-icon', title: 'Mover después', onClick: () => move(item, 1) }, '→'),
-        h('button', { type: 'button', class: 'adm-btn adm-btn--small', onClick: () => openPhotoEditor(item) }, 'Editar'),
-        h('button', { type: 'button', class: 'adm-btn adm-btn--small adm-btn--danger', onClick: () => removePhoto(item) }, 'Eliminar'),
+        h('button', { type: 'button', class: 'adm-icon', title: 'Mover al inicio', onClick: () => move(item, 'top') },
+          h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
+            h('path', { d: 'M12 19V5M5 12l7-7 7 7' })
+          )
+        ),
+        h('button', { type: 'button', class: 'adm-icon', title: 'Mover antes', onClick: () => move(item, -1) },
+          h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
+            h('path', { d: 'M15 18l-6-6 6-6' })
+          )
+        ),
+        h('button', { type: 'button', class: 'adm-icon', title: 'Mover después', onClick: () => move(item, 1) },
+          h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
+            h('path', { d: 'M9 18l6-6-6-6' })
+          )
+        ),
+        h('button', { type: 'button', class: 'adm-btn adm-btn--small', onClick: () => openPhotoEditor(item) },
+          h('svg', { viewBox: '0 0 24 24', width: '14', height: '14', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
+            h('path', { d: 'M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7' }),
+            h('path', { d: 'M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z' })
+          ),
+          'Editar'
+        ),
+        h('button', { type: 'button', class: 'adm-btn adm-btn--small adm-btn--danger', onClick: () => removePhoto(item) },
+          h('svg', { viewBox: '0 0 24 24', width: '14', height: '14', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
+            h('polyline', { points: '3 6 5 6 21 6' }),
+            h('path', { d: 'M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2' })
+          ),
+          'Eliminar'
+        ),
       ),
     ),
   );
@@ -438,7 +467,14 @@ function renderGallery() {
         ...categories.map((c) => h('option', { value: c, selected: c === state.uploadCategory }, build.categories[c]!)),
       ),
     ),
-    h('button', { type: 'button', class: 'adm-btn adm-btn--primary', onClick: () => input.click() }, '📷 Subir fotos'),
+    h('button', { type: 'button', class: 'adm-btn adm-btn--primary', onClick: () => input.click() },
+      h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
+        h('rect', { x: '3', y: '3', width: '18', height: '18', rx: '2' }),
+        h('circle', { cx: '8.5', cy: '8.5', r: '1.5' }),
+        h('path', { d: 'M21 15l-5-5L5 21' })
+      ),
+      'Subir fotos'
+    ),
     h('p', { class: 'adm-muted' }, 'O arrástrelas aquí. Se guarda el original sin pérdida en Cloudinary y el sitio lo muestra en WebP/AVIF optimizado.'),
     input,
     h('div', { id: 'adm-upload-progress' }),
@@ -652,7 +688,13 @@ function renderExperiences() {
   const list = [...state.experiences].sort((a, b) => a.data.order - b.data.order);
   $('#adm-panel').replaceChildren(
     saveBar('experiences', 'Experiencias', 'Precios, textos y fotos de los planes turísticos.'),
-    h('button', { type: 'button', class: 'adm-btn', onClick: addExperience }, '+ Nueva experiencia'),
+    h('button', { type: 'button', class: 'adm-btn', onClick: addExperience },
+      h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
+        h('line', { x1: '12', y1: '5', x2: '12', y2: '19' }),
+        h('line', { x1: '5', y1: '12', x2: '19', y2: '12' })
+      ),
+      'Nueva experiencia'
+    ),
     h(
       'div',
       { class: 'adm-exp-list' },
@@ -828,10 +870,8 @@ function initState(data: ContentPayload) {
 let initializedTabs = false;
 
 function renderLogin(initialError?: string) {
-  const tabs = document.querySelector<HTMLElement>('.adm-tabs');
-  if (tabs) tabs.style.display = 'none';
-  const logoutBtn = document.getElementById('adm-logout-btn');
-  if (logoutBtn) logoutBtn.hidden = true;
+  const sidebar = document.querySelector<HTMLElement>('.adm-sidebar');
+  if (sidebar) sidebar.style.display = 'none';
 
   const input = h('input', {
     type: 'password',
@@ -841,7 +881,7 @@ function renderLogin(initialError?: string) {
   });
   const errorEl = h(
     'p',
-    { class: 'adm-error-msg', style: `color: var(--adm-danger); margin: 0; font-size: 13px; display: ${initialError ? 'block' : 'none'};` },
+    { class: 'adm-error-msg', style: `color: var(--adm-red-600); margin: 0; font-size: 13px; font-weight: 500; display: ${initialError ? 'block' : 'none'}` },
     initialError || '',
   );
   const submitBtn = h('button', { type: 'submit', class: 'adm-btn adm-btn--primary' }, 'Ingresar');
@@ -850,7 +890,7 @@ function renderLogin(initialError?: string) {
     'form',
     {
       class: 'adm-card',
-      style: 'max-width: 380px; width: 100%; padding: 24px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.06);',
+      style: 'max-width: 400px; width: 100%; padding: 32px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border: 1px solid var(--adm-slate-200); border-radius: var(--adm-radius);',
       onSubmit: async (e: Event) => {
         e.preventDefault();
         submitBtn.disabled = true;
@@ -868,8 +908,15 @@ function renderLogin(initialError?: string) {
         }
       },
     },
-    h('h2', { style: 'margin: 0; color: var(--adm-primary); font-size: 20px;' }, 'Acceso Administrativo'),
-    h('p', { class: 'adm-muted', style: 'margin: 0; font-size: 13px;' }, 'Ingresa la contraseña configurada para acceder al panel.'),
+    h('div', { style: 'text-align: center; margin-bottom: 8px;' },
+      h('svg', { viewBox: '0 0 32 32', width: '40', height: '40', style: 'color: var(--adm-gold-500);', 'aria-hidden': 'true' },
+        h('circle', { cx: '16', cy: '16', r: '15', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.5' }),
+        h('path', { d: 'M8 22 c4-8 8-16 16-4', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.5', 'stroke-linecap': 'round' }),
+        h('path', { d: 'M6 18 c6-2 14-2 20 2', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.2', 'stroke-linecap': 'round', opacity: '.5' }),
+      ),
+    ),
+    h('h2', { style: 'margin: 0; color: var(--adm-green-900); font-size: 20px; font-weight: 700; text-align: center; letter-spacing: -0.01em;' }, 'Acceso Administrativo'),
+    h('p', { class: 'adm-muted', style: 'margin: 0; font-size: 14px; text-align: center;' }, 'Ingresa la contraseña para gestionar el contenido del sitio.'),
     h('label', { class: 'adm-field' }, h('span', { class: 'adm-label' }, 'Contraseña'), input),
     errorEl,
     h('div', { style: 'margin-top: 4px;' }, submitBtn),
@@ -878,7 +925,7 @@ function renderLogin(initialError?: string) {
   $('#adm-panel').replaceChildren(
     h(
       'div',
-      { style: 'display: flex; justify-content: center; align-items: center; min-height: 50vh; padding: 20px 10px;' },
+      { style: 'display: flex; justify-content: center; align-items: center; min-height: calc(100vh - var(--adm-topbar-h)); padding: 24px;' },
       form,
     ),
   );
@@ -891,8 +938,20 @@ async function start() {
       b.addEventListener('click', () => {
         state.tab = b.dataset.tab as Section;
         render();
+        // Close sidebar on mobile after tab switch
+        closeSidebar();
       }),
     );
+    // Hamburger menu toggle
+    const hamburgerBtn = document.getElementById('adm-hamburger-btn');
+    const sidebar = document.querySelector<HTMLElement>('.adm-sidebar');
+    const overlay = document.getElementById('adm-sidebar-overlay');
+    if (hamburgerBtn) {
+      hamburgerBtn.addEventListener('click', openSidebar);
+    }
+    if (overlay) {
+      overlay.addEventListener('click', closeSidebar);
+    }
     window.addEventListener('beforeunload', (e) => {
       if (Object.values(state.dirty).some(Boolean)) e.preventDefault();
     });
@@ -910,8 +969,8 @@ async function start() {
 
   try {
     const data = await api<ContentPayload>('content');
-    const tabs = document.querySelector<HTMLElement>('.adm-tabs');
-    if (tabs) tabs.style.display = 'flex';
+    const sidebar = document.querySelector<HTMLElement>('.adm-sidebar');
+    if (sidebar) sidebar.style.display = 'flex';
     const logoutBtn = document.getElementById('adm-logout-btn');
     if (logoutBtn) logoutBtn.hidden = false;
 
@@ -934,6 +993,20 @@ async function start() {
       ),
     );
   }
+}
+
+function openSidebar() {
+  const sidebar = document.querySelector<HTMLElement>('.adm-sidebar');
+  const overlay = document.getElementById('adm-sidebar-overlay');
+  if (sidebar) sidebar.classList.add('is-open');
+  if (overlay) overlay.classList.add('is-active');
+}
+
+function closeSidebar() {
+  const sidebar = document.querySelector<HTMLElement>('.adm-sidebar');
+  const overlay = document.getElementById('adm-sidebar-overlay');
+  if (sidebar) sidebar.classList.remove('is-open');
+  if (overlay) overlay.classList.remove('is-active');
 }
 
 void start();
