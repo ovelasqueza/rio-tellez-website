@@ -1,0 +1,20 @@
+order: 5
+image: ../../assets/images/experiencias/ruta-cafe.jpg
+imageAlt:
+  es: Paisaje rural de montaña en Funes para alojamiento campesino tranquilo
+  en: Quiet mountain rural landscape in Funes for small-scale farm stay
+badgeColor: primary
+category:
+  es: Estadía en el campo
+  en: Rural stay
+title:
+  es: Alojamiento local rural
+  en: Small-scale rural lodging
+description:
+  es: Hospedaje rural en pequeña escala junto a familias anfitrionas del cañón, ideal para descansar en calma rodeado de cafetales y montañas.
+  en: Small-scale rural lodging with host families in the canyon, ideal for resting peacefully surrounded by coffee farms and mountains.
+includes:
+  - es: Alojamiento rural en pequeña escala
+    en: Small-scale rural accommodation
+  - es: Hospitalidad de familias anfitrionas
+    en: Hospitality from local host families

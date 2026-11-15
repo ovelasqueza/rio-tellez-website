@@ -26,7 +26,7 @@ const experiencias = defineCollection({
         /** Foto en la nube (subida desde /admin); tiene prioridad sobre `image`. */
         cloudinary: cloudImage.optional(),
         imageAlt: localized,
-        duration: localized,
+        duration: localized.optional(),
         /** Etiqueta inferior de la foto; si falta se muestra la altura del territorio. */
         chip: localized.optional(),
         badgeColor: z.enum(['primary', 'secondary']),

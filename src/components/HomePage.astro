@@ -7,6 +7,7 @@ import Booking from './sections/Booking.astro';
 import Gallery from './sections/Gallery.astro';
 import HowToArrive from './sections/HowToArrive.astro';
 import Coffee from './sections/Coffee.astro';
+import TerritoryDefense from './sections/TerritoryDefense.astro';
 import type { Lang } from '../i18n';
 
 interface Props {
@@ -24,4 +25,5 @@ const { lang } = Astro.props;
   <Coffee lang={lang} />
   <HowToArrive lang={lang} />
   <Booking lang={lang} />
+  <TerritoryDefense lang={lang} />
 </PageShell>

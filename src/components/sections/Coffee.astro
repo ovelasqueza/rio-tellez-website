@@ -5,7 +5,6 @@ import packImg from '../../assets/images/cafe-empaque.jpg';
 import coffeeLogo from '../../assets/logo-cafe-trim.png';
 import coopLogo from '../../assets/logo-trim.png';
 import { site } from '../../config/site';
-import { formatCopAmount } from '../../lib/price';
 import { buildCoffeeOrderMessage, buildWhatsAppUrl } from '../../lib/whatsapp';
 import { t, altitudeLabel, formatNumber, type Lang } from '../../i18n';
 
@@ -101,16 +100,12 @@ const specs = [
           }
         </dl>
 
-        <div class="flex items-center justify-between gap-4 border-t border-surface-container pt-3">
-          <div>
-            <span class="block font-caption text-[11px] text-on-surface-variant uppercase">{c.priceLabel}</span>
-            <span class="font-headline-sm text-headline-sm font-bold text-primary lg:text-headline-md">{formatCopAmount(site.coffeePriceCop)} <span class="font-sans text-caption font-normal">COP</span></span>
-          </div>
+        <div class="border-t border-surface-container pt-3">
           <a
             href={orderUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="flex min-h-11 items-center gap-1.5 rounded-lg bg-secondary px-space-md py-2.5 font-label-lg text-label-lg tracking-wider text-on-secondary uppercase shadow-sm transition-transform hover:bg-on-secondary-fixed-variant active:scale-95"
+            class="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-lg bg-secondary px-space-md py-2.5 font-label-lg text-label-lg tracking-wider text-on-secondary uppercase shadow-sm transition-transform hover:bg-on-secondary-fixed-variant active:scale-95"
           >
             <Icon name="material-symbols:shopping-bag-outline" class="h-[18px] w-[18px]" aria-hidden="true" />
             {c.order}

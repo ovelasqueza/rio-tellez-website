@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 
 // URL pública final. Cambiar al elegir hosting/dominio.
-const SITE_URL = 'https://riotellez.example.com';
+const SITE_URL = 'https://riotellez.com';
 
 export default defineConfig({
   site: SITE_URL,

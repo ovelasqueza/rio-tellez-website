@@ -84,13 +84,14 @@ export function validateExperience(raw: unknown, slug: string): ExperienceData {
     ...(image ? { image } : {}),
     ...(cloud ? { cloudinary: cloud } : {}),
     imageAlt: t('imageAlt', 'Descripción de la foto'),
-    duration: t('duration', 'Duración'),
     badgeColor: raw.badgeColor === 'primary' ? 'primary' : 'secondary',
     category: t('category', 'Categoría'),
     title: t('title', 'Título'),
     description: t('description', 'Descripción'),
     includes,
   };
+  const duration = localized(raw.duration);
+  if (duration) data.duration = duration;
   const chip = localized(raw.chip);
   if (chip) data.chip = chip;
   const price = optionalInt(raw.price, `precio (${slug})`, { min: 1 });
@@ -149,8 +150,8 @@ export function validateSite(raw: unknown, current: SiteData): SiteData {
     geo: { lat: num(geo.lat, 'Latitud'), lng: num(geo.lng, 'Longitud') },
     altitudeMsnm: int(raw.altitudeMsnm, 'Altura (msnm)', { min: 0, max: 9000 }),
     whatsapp,
-    defaultPriceCop: int(raw.defaultPriceCop, 'Precio por defecto', { min: 0 }),
-    coffeePriceCop: int(raw.coffeePriceCop, 'Precio del café', { min: 0 }),
+    defaultPriceCop: optionalInt(raw.defaultPriceCop, 'Precio por defecto', { min: 0 }) ?? current.defaultPriceCop,
+    coffeePriceCop: optionalInt(raw.coffeePriceCop, 'Precio del café', { min: 0 }) ?? current.coffeePriceCop,
     minTravelers,
     maxTravelers,
     departureTimes: [...new Set(departureTimes)].sort(),

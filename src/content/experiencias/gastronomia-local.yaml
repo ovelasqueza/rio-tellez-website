@@ -1,0 +1,23 @@
+order: 4
+image: ../../assets/images/experiencias/almuerzo-campesino.jpg
+imageAlt:
+  es: Mesa campesina con gastronomía local, trucha asada y bebidas tradicionales
+  en: Farm table with local food, grilled trout, and traditional drinks
+chip:
+  es: Cocina viva
+  en: Living kitchen
+badgeColor: secondary
+category:
+  es: Sabores del territorio
+  en: Local flavors
+title:
+  es: Gastronomía local
+  en: Local gastronomy
+description:
+  es: "Sabores auténticos preparados al fogón por las familias asociadas: desayunos campesinos, almuerzos típicos y bebidas tradicionales de la región."
+  en: "Authentic flavors cooked over firewood by member families: farm breakfasts, traditional lunches, and regional drinks."
+includes:
+  - es: Desayunos y almuerzos campesinos
+    en: Farm breakfasts and lunches
+  - es: Bebidas tradicionales e ingredientes locales
+    en: Traditional drinks and local ingredients

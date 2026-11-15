@@ -2,7 +2,6 @@
 import { Icon } from 'astro-icon/components';
 import { site } from '../../config/site';
 import { getExperiences } from '../../lib/content';
-import { formatCop, estimateTotal } from '../../lib/price';
 import { buildGenericBookingMessage } from '../../lib/whatsapp';
 import { t, type Lang } from '../../i18n';
 
@@ -21,7 +20,6 @@ function formatTime12(time: string): string {
   const [h = 0, m = 0] = time.split(':').map(Number);
   return `${String(h % 12 || 12).padStart(2, '0')}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
 }
-const initialTotal = estimateTotal(experiences[0]?.price ?? site.defaultPriceCop, initialTravelers);
 
 const config = {
   lang,
@@ -75,8 +73,8 @@ const labelClass = 'block font-label-caps text-label-caps font-semibold text-on-
             <select id="bk-experience" class={`${inputClass} appearance-none pr-10`}>
               {
                 experiences.map((e) => (
-                  <option value={e.id} data-price={e.price} data-title={e.title[lang]}>
-                    {e.title[lang]} — {formatCop(e.price)}
+                  <option value={e.id} data-title={e.title[lang]}>
+                    {e.title[lang]}
                   </option>
                 ))
               }
@@ -145,14 +143,6 @@ const labelClass = 'block font-label-caps text-label-caps font-semibold text-on-
             aria-describedby="bk-name-error"
           />
           <p id="bk-name-error" class="hidden font-caption text-caption text-error" role="alert"></p>
-        </div>
-
-        <div class="flex items-center justify-between rounded-xl bg-surface-container-low p-3 lg:p-4">
-          <div>
-            <span class="block font-caption text-[11px] text-on-surface-variant uppercase">{b.total}</span>
-            <output id="bk-total" aria-live="polite" class="font-headline-sm text-headline-sm font-bold text-primary">{formatCop(initialTotal)}</output>
-          </div>
-          <Icon name="material-symbols:payments-outline" class="h-7 w-7 text-on-tertiary-fixed-variant" aria-hidden="true" />
         </div>
 
         <button

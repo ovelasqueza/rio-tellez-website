@@ -1,8 +1,7 @@
 import { getCollection } from 'astro:content';
-import { site } from '../config/site';
 import { cloudSource, localSource } from './photo';
 
-/** Experiencias ordenadas con el precio final y la foto (local o Cloudinary) ya resueltos. */
+/** Experiencias ordenadas con la foto (local o Cloudinary) ya resuelta. */
 export async function getExperiences() {
   const items = await getCollection('experiencias');
   return items
@@ -10,7 +9,6 @@ export async function getExperiences() {
     .map((e) => ({
       id: e.id,
       ...e.data,
-      price: e.data.price ?? site.defaultPriceCop,
       source: e.data.cloudinary ? cloudSource(e.data.cloudinary) : localSource(e.data.image!),
     }));
 }

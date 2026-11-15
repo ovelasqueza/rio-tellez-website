@@ -619,17 +619,11 @@ function experienceForm(exp: ExperienceFile) {
       locField('Título', () => d.title, (v) => (d.title = v), sec, { required: true }),
       locField('Categoría', () => d.category, (v) => (d.category = v), sec, { required: true, hint: 'Texto pequeño sobre el título.' }),
       locField('Descripción', () => d.description, (v) => (d.description = v), sec, { textarea: true, required: true }),
-      locField('Duración', () => d.duration, (v) => (d.duration = v), sec, { required: true, hint: 'Ej.: “Día completo”, “3 horas”.' }),
       locField('Etiqueta de la foto', () => d.chip, (v) => (d.chip = v), sec, { hint: 'Opcional. Si se deja vacío se muestra la altura del territorio.' }),
       locField('Descripción de la foto (alt)', () => d.imageAlt, (v) => (d.imageAlt = v), sec, { required: true }),
       h(
         'div',
         { class: 'adm-row adm-row--fields' },
-        field('Precio por persona (COP)', d.price, (v) => (d.price = v ? Number(v.replace(/\D/g, '')) : undefined), sec, {
-          type: 'number',
-          placeholder: `${formatCop(state.site.defaultPriceCop)} (por defecto)`,
-          hint: 'Vacío = precio por defecto de “Datos del sitio”.',
-        }),
         field('Orden', d.order, (v) => (d.order = Number(v)), sec, { type: 'number', hint: '1 = primera.' }),
         h(
           'label',
@@ -680,7 +674,6 @@ function addExperience() {
     data: {
       order,
       imageAlt: emptyLoc(),
-      duration: emptyLoc(),
       badgeColor: 'primary',
       category: emptyLoc(),
       title: { es: title, en: '' },
@@ -697,7 +690,7 @@ function addExperience() {
 function renderExperiences() {
   const list = [...state.experiences].sort((a, b) => a.data.order - b.data.order);
   $('#adm-panel').replaceChildren(
-    saveBar('experiences', 'Experiencias', 'Precios, textos y fotos de los planes turísticos.'),
+    saveBar('experiences', 'Experiencias', 'Textos, orden y fotos de los planes turísticos.'),
     h('button', { type: 'button', class: 'adm-btn', onClick: addExperience },
       svg('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
         svg('line', { x1: '12', y1: '5', x2: '12', y2: '19' }),
@@ -718,7 +711,7 @@ function renderExperiences() {
             'summary',
             {},
             thumb ? h('img', { src: thumb, alt: '' }) : h('span', { class: 'adm-noimg' }, '—'),
-            h('span', { class: 'adm-exp-title' }, h('b', {}, d.title.es || exp.slug), h('small', { class: 'adm-muted' }, `${formatCop(d.price ?? state.site.defaultPriceCop)} COP · ${d.duration.es || 'sin duración'}`)),
+            h('span', { class: 'adm-exp-title' }, h('b', {}, d.title.es || exp.slug), h('small', { class: 'adm-muted' }, `${d.category.es || 'Sin categoría'} · Orden ${d.order}`)),
           ),
           experienceForm(exp),
         );
@@ -799,8 +792,6 @@ function renderSite() {
     group(
       'Reservas y contacto',
       field('WhatsApp (con indicativo, solo números)', s.whatsapp, (v) => (s.whatsapp = v.replace(/\D/g, '')), sec, { type: 'tel', placeholder: '573001234567' }),
-      field('Precio por persona por defecto (COP)', s.defaultPriceCop, (v) => (s.defaultPriceCop = n(v)), sec, { type: 'number', hint: 'Se usa en las experiencias que no tienen precio propio.' }),
-      field('Precio de la bolsa de café (COP)', s.coffeePriceCop, (v) => (s.coffeePriceCop = n(v)), sec, { type: 'number' }),
       h(
         'div',
         { class: 'adm-row adm-row--fields' },

@@ -24,7 +24,7 @@ const experiences = await getExperiences();
       <p class="max-w-md font-body-md text-body-md text-on-surface-variant">{d.experiences.text}</p>
     </div>
 
-    <div class="grid grid-cols-1 gap-space-md pt-space-xs sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 lg:pt-0">
+    <div class="grid grid-cols-1 gap-space-md pt-space-xs sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 lg:pt-0">
       {experiences.map((e) => <ExperienceCard lang={lang} experience={e} />)}
     </div>
   </div>

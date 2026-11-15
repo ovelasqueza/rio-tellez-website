@@ -1,0 +1,23 @@
+order: 3
+image: ../../assets/images/experiencias/caminatas-cascadas.jpg
+imageAlt:
+  es: Sendero ecológico Wayta Mayu rodeado de vegetación andina y río
+  en: Wayta Mayu ecological trail surrounded by Andean vegetation and river
+chip:
+  es: Wayta Mayu
+  en: Wayta Mayu
+badgeColor: secondary
+category:
+  es: Senderismo ecológico
+  en: Ecological hiking
+title:
+  es: Sendero Wayta Mayu
+  en: Wayta Mayu Trail
+description:
+  es: Travesía por el sendero ancestral Wayta Mayu entre bosque de niebla, quebradas cristalinas y paisajes vivos del territorio campesino.
+  en: Journey along the ancestral Wayta Mayu trail through cloud forest, crystal-clear streams, and living landscapes of the farming territory.
+includes:
+  - es: Acompañamiento de guía local
+    en: Local guide accompaniment
+  - es: Miradores y contacto con el río
+    en: Viewpoints and river connection

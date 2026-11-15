@@ -1,4 +1,4 @@
-import { clampTravelers, estimateTotal, formatCop, type Lang } from '../lib/price';
+import { clampTravelers, type Lang } from '../lib/price';
 import { buildBookingMessage, buildWhatsAppUrl } from '../lib/whatsapp';
 
 interface BookingConfig {
@@ -27,19 +27,15 @@ export function initBookingForm(): void {
   const time = form.querySelector<HTMLSelectElement>('#bk-time')!;
   const name = form.querySelector<HTMLInputElement>('#bk-name')!;
   const travelersOut = form.querySelector<HTMLOutputElement>('#bk-travelers')!;
-  const totalOut = form.querySelector<HTMLOutputElement>('#bk-total')!;
   const stepButtons = form.querySelectorAll<HTMLButtonElement>('[data-travelers-step]');
 
   let travelers = clampTravelers(Number(travelersOut.textContent), cfg.min, cfg.max);
   date.min = todayIso();
 
   const selected = () => experience.selectedOptions[0];
-  const price = () => Number(selected()?.dataset.price ?? 0);
-  const total = () => estimateTotal(price(), travelers);
 
   function render() {
     travelersOut.textContent = String(travelers);
-    totalOut.textContent = formatCop(total());
     stepButtons.forEach((btn) => {
       const step = Number(btn.dataset.travelersStep);
       btn.disabled = step < 0 ? travelers <= cfg.min : travelers >= cfg.max;
@@ -88,7 +84,6 @@ export function initBookingForm(): void {
       time: time.value,
       travelers,
       name: name.value,
-      totalCop: total(),
     });
     window.open(buildWhatsAppUrl(cfg.phone, message), '_blank', 'noopener');
   });

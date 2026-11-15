@@ -1,0 +1,20 @@
+order: 1
+image: ../../assets/images/experiencias/caminatas-cascadas.jpg
+imageAlt:
+  es: Recorrido agroturístico y ecológico por las montañas del Cañón del Río Téllez
+  en: Agrotourism and ecological tour through the Río Téllez Canyon mountains
+badgeColor: primary
+category:
+  es: Turismo de naturaleza
+  en: Nature tourism
+title:
+  es: Recorrido agroturístico y ecológico
+  en: Agrotourism & ecological tour
+description:
+  es: Conoce de cerca el trabajo de nuestros campesinos y recorridos ecológicos por orillas del Río Téllez.
+  en: Get to know our farmers' work up close and enjoy ecological walks along the banks of the Río Téllez.
+includes:
+  - es: Guianza comunitaria local
+    en: Local community guides
+  - es: Recorrido por parcelas agroecológicas
+    en: Walk through agroecological plots

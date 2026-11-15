@@ -44,7 +44,7 @@ export const es = {
   essence: {
     eyebrow: 'Nuestra esencia',
     title: 'Naturaleza que fluye en cada taza',
-    intro: 'nace en la Vereda La Vega, sector Puente Río Téllez, en el municipio de Funes, Nariño.',
+    intro: 'nace en las veredas Téllez Bajo y La Vega, sector Puente Río Téllez, en el municipio de Funes, Nariño, Colombia.',
     text: 'Nuestras familias campesinas son guardianas activas de las fuentes hídricas, los bosques de montaña y la biodiversidad de la región, integrando la producción de café de altura con agroturismo comunitario regenerativo.',
     pillars: [
       {
@@ -119,7 +119,7 @@ export const es = {
     filtersLabel: 'Filtrar fotos por categoría',
     all: 'Todos',
     categories: { rio: 'Río Téllez', cafe: 'Café', senderos: 'Senderos', gastronomia: 'Gastronomía', familias: 'Familias' },
-    location: 'Vereda La Vega · Funes, Nariño',
+    location: 'Vereda Téllez Bajo y Vereda La Vega · Funes, Nariño',
     ctaTitle: '¿Desea vivir estos paisajes en persona?',
     ctaText: 'Reserve su cupo en grupos reducidos con guías campesinos locales de ATURTELLEZCOOP.',
     ctaButton: 'Reservar visita',
@@ -188,6 +188,14 @@ export const es = {
     },
     priceLabel: 'Precio por bolsa',
     order: 'Pedir café',
+  },
+  defense: {
+    eyebrow: 'Pronunciamiento comunitario · Defensa del territorio',
+    title: 'No a la minería en el Río Téllez',
+    lead: 'Las familias y comunidades campesinas de la cuenca estamos unidas y rechazamos de manera total y categórica cualquier proyecto de minería en el Río Téllez.',
+    detail:
+      'Actualmente se están adjudicando nuevas concesiones mineras en la cuenca, una amenaza directa que destruye el agua, la biodiversidad, los suelos agrícolas y la vida de nuestras comunidades. La actividad minera ya avanza río abajo en el sector Salado y pretende seguir subiendo hasta alcanzar las veredas La Vega y Río Téllez.',
+    closing: 'Defendemos nuestro río vivo, nuestras veredas y el futuro del territorio en Funes, Nariño: el agua vale más que cualquier explotación minera.',
   },
   footer: {
     text: 'Familias campesinas asociadas protegiendo los ecosistemas, la fauna, la flora nativa y las fuentes hídricas del cañón. Fomentamos el café de altura y el agroturismo comunitario sostenible.',

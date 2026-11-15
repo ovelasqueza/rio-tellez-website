@@ -67,6 +67,13 @@ describe('buildBookingMessage', () => {
     expect(msg).toContain('• Date: Sunday, November 15, 2026');
     expect(msg).toContain('• People: 2');
   });
+
+  it('omite el total cuando no se pasa totalCop', () => {
+    const { totalCop: _omit, ...withoutTotal } = data;
+    const msg = buildBookingMessage('es', withoutTotal);
+    expect(msg).not.toContain('Total estimado');
+    expect(msg).toContain('• Nombre: Mariana Gómez');
+  });
 });
 
 describe('buildCoffeeOrderMessage', () => {

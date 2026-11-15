@@ -1,0 +1,20 @@
+order: 6
+image: ../../assets/images/experiencias/ruta-cafe.jpg
+imageAlt:
+  es: Cafetales de altura en las laderas de la montaña al amanecer
+  en: High-altitude coffee farms on the mountain slopes at sunrise
+badgeColor: secondary
+category:
+  es: Café de altura
+  en: High-altitude coffee
+title:
+  es: Visita a finca cafetera
+  en: Coffee farm visit
+description:
+  es: Recorrido por cafetales de altura bajo sombra para conocer el cultivo, la recolección manual, el beneficio campesino y la cata en finca.
+  en: Tour through shade-grown high-altitude coffee farms to learn about cultivation, hand harvesting, traditional processing, and on-farm tasting.
+includes:
+  - es: Recorrido por el cafetal con productores
+    en: Coffee grove walk with growers
+  - es: Degustación de café de origen
+    en: Origin coffee tasting

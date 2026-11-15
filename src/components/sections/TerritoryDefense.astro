@@ -1,0 +1,66 @@
+---
+import { Icon } from 'astro-icon/components';
+import { t, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const d = t(lang).defense;
+const zones =
+  lang === 'es'
+    ? ['Sector Salado (avance actual)', 'Vereda La Vega', 'Vereda Río Téllez']
+    : ['Salado sector (current advance)', 'Vereda La Vega', 'Vereda Río Téllez'];
+---
+
+<section
+  id="defensa-territorio"
+  aria-labelledby="defensa-title"
+  class="w-full border-t border-surface-container bg-background py-space-xl lg:py-24"
+>
+  <div class="container-site">
+    <div class="mx-auto max-w-4xl overflow-hidden rounded-2xl border-2 border-error/40 bg-surface-container-lowest shadow-md">
+      <div class="flex items-center gap-2.5 bg-error px-space-md py-3 text-white sm:px-space-lg">
+        <Icon name="material-symbols:warning-outline" class="h-5 w-5 shrink-0 sm:h-6 sm:w-6" aria-hidden="true" />
+        <p class="font-label-caps text-[11px] font-bold tracking-widest uppercase sm:text-label-caps">
+          {d.eyebrow}
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-space-md p-space-md sm:p-space-lg lg:p-10">
+        <div class="flex items-start gap-3 sm:gap-4">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-error/10 text-error sm:h-12 sm:w-12">
+            <Icon name="material-symbols:campaign-outline" class="h-6 w-6 sm:h-7 sm:w-7" aria-hidden="true" />
+          </span>
+          <h2 id="defensa-title" class="font-headline-md text-[26px] leading-tight font-bold text-primary sm:text-headline-lg">
+            {d.title}
+          </h2>
+        </div>
+
+        <p class="font-body-md text-[16px] leading-relaxed font-semibold text-on-surface sm:text-body-lg">
+          {d.lead}
+        </p>
+
+        <p class="font-body-md text-[15px] leading-relaxed text-on-surface-variant sm:text-body-md">
+          {d.detail}
+        </p>
+
+        <ul class="flex flex-wrap gap-2" aria-label={lang === 'es' ? 'Zonas en riesgo' : 'Areas at risk'}>
+          {
+            zones.map((z) => (
+              <li class="inline-flex items-center gap-1.5 rounded-full border border-error/30 bg-error/10 px-3 py-1 font-label-caps text-[11px] font-semibold text-error">
+                <Icon name="material-symbols:location-on-outline" class="h-3.5 w-3.5" aria-hidden="true" />
+                {z}
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="rounded-xl border-l-4 border-primary bg-surface-container-low p-space-sm font-body-md text-[15px] leading-relaxed font-semibold text-primary sm:p-space-md sm:text-body-md">
+          {d.closing}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

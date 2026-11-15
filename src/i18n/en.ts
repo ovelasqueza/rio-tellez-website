@@ -46,7 +46,7 @@ export const en: Dictionary = {
   essence: {
     eyebrow: 'Our essence',
     title: 'Nature flowing in every cup',
-    intro: 'was born in Vereda La Vega, at the Río Téllez Bridge, in the municipality of Funes, Nariño.',
+    intro: 'was born in the villages of Téllez Bajo and La Vega, at the Río Téllez Bridge, in the municipality of Funes, Nariño, Colombia.',
     text: 'Our farming families actively guard the water sources, mountain forests and biodiversity of the region, combining high-altitude coffee production with regenerative community agrotourism.',
     pillars: [
       {
@@ -121,7 +121,7 @@ export const en: Dictionary = {
     filtersLabel: 'Filter photos by category',
     all: 'All',
     categories: { rio: 'Río Téllez', cafe: 'Coffee', senderos: 'Trails', gastronomia: 'Food', familias: 'Families' },
-    location: 'Vereda La Vega · Funes, Nariño',
+    location: 'Vereda Téllez Bajo & Vereda La Vega · Funes, Nariño',
     ctaTitle: 'Would you like to see these landscapes in person?',
     ctaText: 'Book your spot in a small group with ATURTELLEZCOOP’s local farmer guides.',
     ctaButton: 'Book a visit',
@@ -190,6 +190,14 @@ export const en: Dictionary = {
     },
     priceLabel: 'Price per bag',
     order: 'Order coffee',
+  },
+  defense: {
+    eyebrow: 'Community statement · Defense of our territory',
+    title: 'No to mining in the Río Téllez',
+    lead: 'The farming families and communities of the basin stand united and categorically reject any mining activity in the Río Téllez.',
+    detail:
+      'New mining concessions are currently being granted along the river, directly threatening our water sources, biodiversity, farmland, and community livelihoods. Mining is already taking place downstream in the Salado sector and seeks to expand upstream toward the villages of La Vega and Río Téllez.',
+    closing: 'We defend our living river, our rural communities, and the future of Funes, Nariño: water and life are worth more than any mining project.',
   },
   footer: {
     text: 'Member farming families protecting the canyon’s ecosystems, wildlife, native flora and water sources. We promote high-altitude coffee and sustainable community agrotourism.',

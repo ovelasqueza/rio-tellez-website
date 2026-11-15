@@ -8,7 +8,7 @@ export interface BookingData {
   time: string;
   travelers: number;
   name: string;
-  totalCop: number;
+  totalCop?: number;
 }
 
 /** Construye la URL de WhatsApp con texto prellenado. */
@@ -68,15 +68,18 @@ const BOOKING_LABELS = {
 
 export function buildBookingMessage(lang: Lang, data: BookingData): string {
   const l = BOOKING_LABELS[lang];
-  return [
+  const lines = [
     l.greeting,
     `• ${l.experience}: ${data.experience}`,
     `• ${l.date}: ${formatIsoDate(data.date, lang)}`,
     `• ${l.time}: ${formatTime12h(data.time)}`,
     `• ${l.travelers}: ${data.travelers}`,
     `• ${l.name}: ${data.name.trim()}`,
-    `• ${l.total}: ${formatCop(data.totalCop)}`,
-  ].join('\n');
+  ];
+  if (data.totalCop && data.totalCop > 0) {
+    lines.push(`• ${l.total}: ${formatCop(data.totalCop)}`);
+  }
+  return lines.join('\n');
 }
 
 export function buildGenericBookingMessage(lang: Lang): string {

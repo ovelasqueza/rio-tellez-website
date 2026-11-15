@@ -28,7 +28,7 @@ export interface ExperienceData {
   image?: string;
   cloudinary?: CloudImage;
   imageAlt: Localized;
-  duration: Localized;
+  duration?: Localized;
   chip?: Localized;
   badgeColor: 'primary' | 'secondary';
   price?: number;
