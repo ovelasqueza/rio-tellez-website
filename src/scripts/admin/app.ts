@@ -73,6 +73,16 @@ function h<K extends keyof HTMLElementTagNameMap>(tag: K, props: Props = {}, ...
   return el;
 }
 
+function svg<K extends keyof SVGElementTagNameMap>(tag: K, attrs: Props = {}, ...children: Child[]): SVGElementTagNameMap[K] {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (v === undefined || v === null || v === false) continue;
+    el.setAttribute(k, v === true ? '' : String(v));
+  }
+  el.append(...(children.filter((c) => c !== null && c !== undefined && c !== false) as (Node | string)[]));
+  return el;
+}
+
 const $ = <T extends HTMLElement>(sel: string) => document.querySelector<T>(sel)!;
 
 function toast(message: string, kind: 'ok' | 'error' | 'info' = 'ok', link?: { href: string; text: string }) {
@@ -161,10 +171,10 @@ function saveBar(section: Section, title: string, info: Child) {
     h(
       'button',
       { class: 'adm-btn adm-btn--primary', 'data-save': section, disabled: !state.dirty[section] || state.busy, onClick: () => save(section) },
-      h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
-        h('path', { d: 'M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z' }),
-        h('polyline', { points: '17 21 17 13 7 13 7 21' }),
-        h('polyline', { points: '7 3 7 8 15 8' })
+      svg('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
+        svg('path', { d: 'M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z' }),
+        svg('polyline', { points: '17 21 17 13 7 13 7 21' }),
+        svg('polyline', { points: '7 3 7 8 15 8' })
       ),
       'Guardar y publicar',
     ),
@@ -373,31 +383,31 @@ function galleryCard(item: GalleryItem) {
         'div',
         { class: 'adm-row adm-row--actions' },
         h('button', { type: 'button', class: 'adm-icon', title: 'Mover al inicio', onClick: () => move(item, 'top') },
-          h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
-            h('path', { d: 'M12 19V5M5 12l7-7 7 7' })
+          svg('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
+            svg('path', { d: 'M12 19V5M5 12l7-7 7 7' })
           )
         ),
         h('button', { type: 'button', class: 'adm-icon', title: 'Mover antes', onClick: () => move(item, -1) },
-          h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
-            h('path', { d: 'M15 18l-6-6 6-6' })
+          svg('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
+            svg('path', { d: 'M15 18l-6-6 6-6' })
           )
         ),
         h('button', { type: 'button', class: 'adm-icon', title: 'Mover después', onClick: () => move(item, 1) },
-          h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
-            h('path', { d: 'M9 18l6-6-6-6' })
+          svg('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
+            svg('path', { d: 'M9 18l6-6-6-6' })
           )
         ),
         h('button', { type: 'button', class: 'adm-btn adm-btn--small', onClick: () => openPhotoEditor(item) },
-          h('svg', { viewBox: '0 0 24 24', width: '14', height: '14', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
-            h('path', { d: 'M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7' }),
-            h('path', { d: 'M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z' })
+          svg('svg', { viewBox: '0 0 24 24', width: '14', height: '14', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
+            svg('path', { d: 'M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7' }),
+            svg('path', { d: 'M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z' })
           ),
           'Editar'
         ),
         h('button', { type: 'button', class: 'adm-btn adm-btn--small adm-btn--danger', onClick: () => removePhoto(item) },
-          h('svg', { viewBox: '0 0 24 24', width: '14', height: '14', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
-            h('polyline', { points: '3 6 5 6 21 6' }),
-            h('path', { d: 'M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2' })
+          svg('svg', { viewBox: '0 0 24 24', width: '14', height: '14', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
+            svg('polyline', { points: '3 6 5 6 21 6' }),
+            svg('path', { d: 'M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2' })
           ),
           'Eliminar'
         ),
@@ -468,10 +478,10 @@ function renderGallery() {
       ),
     ),
     h('button', { type: 'button', class: 'adm-btn adm-btn--primary', onClick: () => input.click() },
-      h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
-        h('rect', { x: '3', y: '3', width: '18', height: '18', rx: '2' }),
-        h('circle', { cx: '8.5', cy: '8.5', r: '1.5' }),
-        h('path', { d: 'M21 15l-5-5L5 21' })
+      svg('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' },
+        svg('rect', { x: '3', y: '3', width: '18', height: '18', rx: '2' }),
+        svg('circle', { cx: '8.5', cy: '8.5', r: '1.5' }),
+        svg('path', { d: 'M21 15l-5-5L5 21' })
       ),
       'Subir fotos'
     ),
@@ -689,9 +699,9 @@ function renderExperiences() {
   $('#adm-panel').replaceChildren(
     saveBar('experiences', 'Experiencias', 'Precios, textos y fotos de los planes turísticos.'),
     h('button', { type: 'button', class: 'adm-btn', onClick: addExperience },
-      h('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
-        h('line', { x1: '12', y1: '5', x2: '12', y2: '19' }),
-        h('line', { x1: '5', y1: '12', x2: '19', y2: '12' })
+      svg('svg', { viewBox: '0 0 24 24', width: '16', height: '16', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'aria-hidden': 'true' },
+        svg('line', { x1: '12', y1: '5', x2: '12', y2: '19' }),
+        svg('line', { x1: '5', y1: '12', x2: '19', y2: '12' })
       ),
       'Nueva experiencia'
     ),
@@ -909,10 +919,10 @@ function renderLogin(initialError?: string) {
       },
     },
     h('div', { style: 'text-align: center; margin-bottom: 8px;' },
-      h('svg', { viewBox: '0 0 32 32', width: '40', height: '40', style: 'color: var(--adm-gold-500);', 'aria-hidden': 'true' },
-        h('circle', { cx: '16', cy: '16', r: '15', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.5' }),
-        h('path', { d: 'M8 22 c4-8 8-16 16-4', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.5', 'stroke-linecap': 'round' }),
-        h('path', { d: 'M6 18 c6-2 14-2 20 2', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.2', 'stroke-linecap': 'round', opacity: '.5' }),
+      svg('svg', { viewBox: '0 0 32 32', width: '40', height: '40', style: 'color: var(--adm-gold-500);', 'aria-hidden': 'true' },
+        svg('circle', { cx: '16', cy: '16', r: '15', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.5' }),
+        svg('path', { d: 'M8 22 c4-8 8-16 16-4', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.5', 'stroke-linecap': 'round' }),
+        svg('path', { d: 'M6 18 c6-2 14-2 20 2', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.2', 'stroke-linecap': 'round', opacity: '.5' }),
       ),
     ),
     h('h2', { style: 'margin: 0; color: var(--adm-green-900); font-size: 20px; font-weight: 700; text-align: center; letter-spacing: -0.01em;' }, 'Acceso Administrativo'),
