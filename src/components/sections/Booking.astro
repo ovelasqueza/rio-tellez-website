@@ -36,7 +36,7 @@ const labelClass = 'block font-label-caps text-label-caps font-semibold text-on-
 
 <section id="reservas" aria-labelledby="reservas-title" class="w-full bg-surface-container-high py-space-xl lg:py-28">
   <div class="container-site grid grid-cols-1 items-center gap-space-md lg:grid-cols-12 lg:gap-12">
-    <div class="flex flex-col gap-space-sm lg:col-span-5 lg:gap-6">
+    <div data-reveal class="flex flex-col gap-space-sm lg:col-span-5 lg:gap-6">
       <p class="inline-flex items-center gap-1.5 text-secondary">
         <Icon name="material-symbols:calendar-month-outline" class="h-5 w-5" aria-hidden="true" />
         <span class="font-label-caps text-label-caps tracking-widest uppercase">{b.eyebrow}</span>
@@ -49,7 +49,7 @@ const labelClass = 'block font-label-caps text-label-caps font-semibold text-on-
       </div>
     </div>
 
-    <div class="mt-2 rounded-xl bg-surface p-space-md shadow-md lg:col-span-7 lg:mt-0 lg:rounded-2xl lg:p-10 lg:shadow-xl">
+    <div data-reveal style="--reveal-delay: 180ms" class="mt-2 rounded-xl bg-surface p-space-md shadow-md lg:col-span-7 lg:mt-0 lg:rounded-2xl lg:p-10 lg:shadow-xl">
       <form
         id="booking-form"
         class="flex flex-col gap-space-md lg:gap-6"

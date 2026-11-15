@@ -13,7 +13,7 @@ const d = t(lang);
 
 <section id="origen" aria-labelledby="origen-title" class="w-full bg-surface-container-low py-space-xl lg:py-28">
   <div class="container-site flex flex-col gap-space-lg lg:gap-16">
-    <div class="flex flex-col gap-space-sm md:flex-row md:items-end md:justify-between md:gap-6">
+    <div data-reveal class="flex flex-col gap-space-sm md:flex-row md:items-end md:justify-between md:gap-6">
       <div class="max-w-xl">
         <p class="mb-2 inline-flex items-center gap-1.5 text-secondary">
           <Icon name="material-symbols:nature-outline" class="h-[18px] w-[18px]" aria-hidden="true" />
@@ -35,8 +35,8 @@ const d = t(lang);
 
     <ul class="grid grid-cols-1 gap-space-sm sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
       {
-        d.essence.pillars.map((p) => (
-          <li class="group flex items-start gap-space-md rounded-xl bg-surface p-space-md shadow-sm transition-shadow hover:shadow-md lg:flex-col lg:gap-0 lg:p-8">
+        d.essence.pillars.map((p, i) => (
+          <li data-reveal style={`--reveal-delay: ${(i % 4) * 140}ms`} class="group flex items-start gap-space-md rounded-xl bg-surface p-space-md shadow-sm transition-shadow hover:shadow-md lg:flex-col lg:gap-0 lg:p-8">
             <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary-container text-on-primary transition-transform group-hover:scale-110 lg:mb-6 lg:h-14 lg:w-14 lg:rounded-full lg:bg-primary-container/10 lg:text-primary">
               <Icon name={p.icon} class="h-6 w-6 lg:h-7 lg:w-7" aria-hidden="true" />
             </span>
@@ -51,7 +51,7 @@ const d = t(lang);
       }
     </ul>
 
-    <div class="flex items-start gap-4 rounded-xl bg-primary-container p-space-md text-on-primary shadow-md lg:items-center lg:gap-5 lg:rounded-2xl lg:p-10">
+    <div data-reveal class="flex items-start gap-4 rounded-xl bg-primary-container p-space-md text-on-primary shadow-md lg:items-center lg:gap-5 lg:rounded-2xl lg:p-10">
       <Icon name="material-symbols:spa-outline" class="h-8 w-8 shrink-0 text-tertiary-fixed lg:h-10 lg:w-10" aria-hidden="true" />
       <div>
         <p class="font-headline-sm text-[18px] leading-snug font-semibold text-surface lg:text-headline-sm">{d.essence.stripTitle}</p>

@@ -17,7 +17,7 @@ const galleryUrl = pagePath('galeria', lang);
 
 <section id="galeria" aria-labelledby="galeria-title" class="w-full border-t border-surface-container bg-surface py-space-xl lg:bg-background lg:py-28">
   <div class="container-site flex flex-col gap-space-md lg:gap-10">
-    <div class="flex flex-col gap-1 text-center md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
+    <div data-reveal class="flex flex-col gap-1 text-center md:flex-row md:items-end md:justify-between md:gap-6 md:text-left">
       <div>
         <p class="mb-1 inline-flex items-center justify-center gap-1.5 text-secondary">
           <Icon name="material-symbols:photo-camera-outline" class="h-[18px] w-[18px]" aria-hidden="true" />
@@ -34,7 +34,7 @@ const galleryUrl = pagePath('galeria', lang);
           const title = p.title?.[lang];
           const alt = p.alt?.[lang] ?? title ?? `${g.altFallback} ${g.categories[p.category]}`;
           return (
-            <li class="group flex flex-col overflow-hidden rounded-xl border border-surface-container bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl lg:rounded-2xl lg:border-0">
+            <li data-reveal style={`--reveal-delay: ${(i % 3) * 130}ms`} class="group flex flex-col overflow-hidden rounded-xl border border-surface-container bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl lg:rounded-2xl lg:border-0">
               <div class="relative h-40 overflow-hidden sm:h-56 lg:h-72">
                 <ResponsivePhoto
                   source={p.source}

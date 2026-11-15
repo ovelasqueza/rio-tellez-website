@@ -27,7 +27,7 @@ const specs = [
 
 <section id="cafe" aria-labelledby="cafe-title" class="w-full border-t border-surface-container bg-background py-space-xl lg:py-28">
   <div class="container-site flex flex-col gap-space-md lg:gap-16">
-    <div class="mx-auto flex max-w-2xl flex-col items-center gap-1 text-center">
+    <div data-reveal class="mx-auto flex max-w-2xl flex-col items-center gap-1 text-center">
       <Image src={coffeeLogo} alt={c.logoAlt} width={280} class="mb-space-sm h-28 w-auto lg:mb-space-md lg:h-36" />
       <p class="font-label-caps text-label-caps tracking-widest text-secondary uppercase">{c.eyebrow}</p>
       <h2 id="cafe-title" class="font-headline-md text-headline-md text-primary lg:mb-3 lg:font-headline-lg lg:text-headline-lg">{c.title}</h2>
@@ -35,7 +35,7 @@ const specs = [
     </div>
 
     <!-- Destacado: café de altura -->
-    <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm rounded-2xl bg-primary-container p-space-lg text-center text-on-primary shadow-md sm:flex-row sm:gap-space-lg sm:text-left lg:p-8">
+    <div data-reveal class="mx-auto flex w-full max-w-4xl flex-col items-center gap-space-sm rounded-2xl bg-primary-container p-space-lg text-center text-on-primary shadow-md sm:flex-row sm:gap-space-lg sm:text-left lg:p-8">
       <div class="flex shrink-0 flex-col items-center sm:border-r sm:border-on-primary-container/30 sm:pr-space-lg">
         <Icon name="material-symbols:landscape-outline" class="h-9 w-9 text-tertiary-fixed" aria-hidden="true" />
         <span class="mt-1 font-display-hero-mobile text-display-hero-mobile text-surface">{formatNumber(site.altitudeMsnm, lang)}</span>
@@ -47,7 +47,7 @@ const specs = [
       </div>
     </div>
 
-    <article class="mx-auto grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-2xl border border-surface-container bg-surface-container-lowest shadow-lg md:grid-cols-[5fr_6fr] lg:shadow-xl">
+    <article data-reveal class="mx-auto grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-2xl border border-surface-container bg-surface-container-lowest shadow-lg md:grid-cols-[5fr_6fr] lg:shadow-xl">
       <!-- Modelo del empaque -->
       <div class="group relative aspect-[4/5] overflow-hidden bg-surface-container md:aspect-auto md:min-h-full">
         <Picture

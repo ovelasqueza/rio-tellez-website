@@ -26,3 +26,8 @@ const { lang, page = '', title, description } = Astro.props;
   <BottomNav lang={lang} page={page} />
   <WhatsAppFloat lang={lang} />
 </BaseLayout>
+
+<script>
+  import { initScrollReveal } from '../scripts/scroll-reveal';
+  initScrollReveal();
+</script>

@@ -8,15 +8,16 @@ import { t, altitudeLabel, type Lang } from '../../i18n';
 interface Props {
   lang: Lang;
   experience: Experience;
+  index?: number;
 }
 
-const { lang, experience: e } = Astro.props;
+const { lang, experience: e, index = 0 } = Astro.props;
 const d = t(lang);
 const isPrimary = e.badgeColor === 'primary';
 const chip = e.chip ? e.chip[lang] : altitudeLabel(site.altitudeMsnm, lang);
 ---
 
-<article class="group flex flex-col overflow-hidden rounded-xl border border-surface-container bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl lg:rounded-2xl lg:border-0">
+<article data-reveal style={`--reveal-delay: ${(index % 3) * 150}ms`} class="group flex flex-col overflow-hidden rounded-xl border border-surface-container bg-surface-container-lowest shadow-sm transition-all duration-300 hover:shadow-xl lg:rounded-2xl lg:border-0">
   <div class="relative h-44 overflow-hidden lg:h-56">
     <ResponsivePhoto
       source={e.source}
